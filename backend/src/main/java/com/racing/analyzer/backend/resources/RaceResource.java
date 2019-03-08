@@ -1,5 +1,6 @@
 package com.racing.analyzer.backend.resources;
 
+import com.racing.analyzer.backend.ScheduledTask;
 import com.racing.analyzer.backend.assemblers.RaceAssembler;
 import com.racing.analyzer.backend.commands.CreateRaceCommand;
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
@@ -32,6 +33,9 @@ public class RaceResource {
     @Autowired
     private RaceAssembler assembler;
 
+    @Autowired
+    private ScheduledTask task;
+
     @GetMapping("/races")
     public ResponseEntity<?> getRaces() {
 
@@ -44,6 +48,12 @@ public class RaceResource {
         Resources resources = new Resources<>(races, linkTo(methodOn(RaceResource.class).getRaces()).withSelfRel());
         return ResponseEntity.ok().body(resources);
 
+    }
+
+    @GetMapping("/races/schedule/{id}")
+    public boolean startScheduledTask(@PathVariable Long id) {
+        task.setEnabled(!task.isEnabled());
+        return task.isEnabled();
     }
 
     @PostMapping("/races")
