@@ -46,6 +46,10 @@ public class LiveTimingCache {
             return false;
         }
 
+        if(oldValue.getPosition() != newValue.getPosition()) {
+            return false;
+        }
+
         return true;
     }
 }

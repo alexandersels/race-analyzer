@@ -77,12 +77,17 @@ public class LiveTimingParser {
                         .withCar(parseStringValue(splits[i + ParseType.CAR.getIndex()]))
                         .withState(parseState(splits[i + ParseType.STATE.getIndex()]))
                         .inPit(parseInPitTiming(splits[i + ParseType.LAST.getIndex()]))
+                        .withSectorOne(parseIntegerValue(splits[i + ParseType.S1.getIndex()]))
+                        .withSectorTwo(parseIntegerValue(splits[i + ParseType.S2.getIndex()]))
+                        .withSectorThree(parseIntegerValue(splits[i + ParseType.S3.getIndex()]))
                         .build();
 
                 if (dataCache.isNewEntry(liveTiming)) {
                     liveTimings.add(liveTiming);
                 }
             }
+
+            //TODO: Parse sector one, two and three.
 
             liveTimings.stream().forEach(x -> System.out.println(x));
 
@@ -149,7 +154,7 @@ public class LiveTimingParser {
                     return LiveTimingState.OUTLAP;
                 case "S?":
                     return LiveTimingState.UNKNOWN;
-                case "?SFinshd":
+                case "SFinshd":
                     return LiveTimingState.FINISHED;
                 default:
                     return LiveTimingState.RACING;

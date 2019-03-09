@@ -3,8 +3,10 @@ package com.racing.analyzer.backend.entities;
 import com.racing.analyzer.backend.builders.LiveTimingBuilder;
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.enums.LiveTimingState;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -30,10 +32,10 @@ public class LiveTiming extends BaseEntity {
     private int position;
 
     @Column(name = "lasttime")
-    private long lastTime;
+    private int lastTime;
 
     @Column(name = "besttime")
-    private long bestTime;
+    private int bestTime;
 
     @Column(name = "nationality")
     private String nationality;
@@ -47,8 +49,22 @@ public class LiveTiming extends BaseEntity {
     @Column(name = "state")
     private LiveTimingState state;
 
-    public LiveTiming(String name, int number, String cls, int position, long lastTime, long bestTime,
-                      String nationality, boolean inPit, String car, LiveTimingState state) {
+    @Column(name= "sectorOne")
+    private int sectorOne;
+
+    @Column(name = "sectorTwo")
+    private int sectorTwo;
+
+    @Column(name = "sectorThree")
+    private int sectorThree;
+
+    @CreationTimestamp
+    @Column(name = "creationTimestamp")
+    private Timestamp creationTimestamp;
+
+    public LiveTiming(String name, int number, String cls, int position, int lastTime, int bestTime,
+                      String nationality, boolean inPit, String car, LiveTimingState state,
+                      int sectorOne, int sectorTwo, int sectorThree) {
         this.name = name;
         this.number = number;
         this.cls = cls;
@@ -59,6 +75,9 @@ public class LiveTiming extends BaseEntity {
         this.inPit = inPit;
         this.car = car;
         this.state = state;
+        this.sectorOne = sectorOne;
+        this.sectorTwo = sectorTwo;
+        this.sectorThree = sectorThree;
     }
 
     public Long getId() {
@@ -81,11 +100,11 @@ public class LiveTiming extends BaseEntity {
         return position;
     }
 
-    public long getLastTime() {
+    public int getLastTime() {
         return lastTime;
     }
 
-    public long getBestTime() {
+    public int getBestTime() {
         return bestTime;
     }
 
@@ -105,6 +124,21 @@ public class LiveTiming extends BaseEntity {
         return state;
     }
 
+    public int getSectorOne() {
+        return sectorOne;
+    }
+
+    public int getSectorTwo() {
+        return sectorTwo;
+    }
+
+    public int getSectorThree() {
+        return sectorThree;
+    }
+
+    public Timestamp getCreationTimestamp() {
+        return creationTimestamp;
+    }
 
     @Override
     protected Collection<ICommandHandler> getCommandHandlers() {
@@ -119,7 +153,6 @@ public class LiveTiming extends BaseEntity {
     public String toString() {
         return "Position: " + position + ", Number: " + number + ", Name: " + name + ", CLS: " + cls +
                 ", Last: " + lastTime + ", Best: " + bestTime + ", Nat: " + nationality + " ,Car: " + car +
-                " ,State:" + state;
+                " ,State:" + state + " ,Sector One:" + sectorOne + " ,Sector Two:" + sectorTwo + " ,Sector Three:" + sectorThree;
     }
-
 }
