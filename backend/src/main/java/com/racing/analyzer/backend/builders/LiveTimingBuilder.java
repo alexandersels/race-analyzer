@@ -1,6 +1,7 @@
 package com.racing.analyzer.backend.builders;
 
 import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.enums.LiveTimingState;
 
 public class LiveTimingBuilder {
 
@@ -13,6 +14,7 @@ public class LiveTimingBuilder {
     private String nationality;
     private boolean inPit;
     private String car;
+    private LiveTimingState state;
 
     public LiveTimingBuilder withName(String name) {
         this.name = name;
@@ -59,9 +61,13 @@ public class LiveTimingBuilder {
         return this;
     }
 
-    public LiveTiming build() {
-        return new LiveTiming(name, number, cls, position, lastTime, bestTime, nationality, inPit, car);
+    public LiveTimingBuilder withState(LiveTimingState state) {
+        this.state = state;
+        return this;
     }
 
+    public LiveTiming build() {
+        return new LiveTiming(name, number, cls, position, lastTime, bestTime, nationality, inPit, car, state);
+    }
 
 }

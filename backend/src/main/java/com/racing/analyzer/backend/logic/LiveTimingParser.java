@@ -1,6 +1,7 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.enums.LiveTimingState;
 import com.racing.analyzer.backend.enums.ParseType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.DataNode;
@@ -19,6 +20,11 @@ import java.util.regex.Pattern;
 public class LiveTimingParser {
 
     private static final Pattern PATTERN = Pattern.compile("raceResultsViewModel\\.r_c\\(.*\\);");
+    private static LiveTimingCache dataCache = new LiveTimingCache();
+
+    public static void clearCache() {
+        dataCache.clear();
+    }
 
     public static Collection<LiveTiming> parseSite(String url) {
         try {
@@ -28,7 +34,9 @@ public class LiveTimingParser {
             String data = getDataAsString(document);
             return parse(data);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
+
         }
 
         return Collections.emptyList();
@@ -67,12 +75,17 @@ public class LiveTimingParser {
                         .withBestLapTime(parseBestLapTime(splits[i + ParseType.BEST.getIndex()]))
                         .withNationality(parseStringValue(splits[i + ParseType.NAT.getIndex()]))
                         .withCar(parseStringValue(splits[i + ParseType.CAR.getIndex()]))
+                        .withState(parseState(splits[i + ParseType.STATE.getIndex()]))
+                        .inPit(parseInPitTiming(splits[i + ParseType.LAST.getIndex()]))
                         .build();
 
-                liveTimings.add(liveTiming);
+                if (dataCache.isNewEntry(liveTiming)) {
+                    liveTimings.add(liveTiming);
+                }
             }
 
             liveTimings.stream().forEach(x -> System.out.println(x));
+
             return liveTimings;
         } else {
             return Collections.emptyList();
@@ -107,6 +120,43 @@ public class LiveTimingParser {
         return parseLapTime(3, data);
     }
 
+    private static boolean parseInPitTiming(String data) {
+        try {
+            String[] split = data.split(",");
+            if (split.length != 4) {
+                return false;
+            }
+
+            if (split[3].equals("-2")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static LiveTimingState parseState(String data) {
+        String[] split = data.split(",");
+        if (split.length != 3) {
+            return LiveTimingState.UNKNOWN;
+        } else {
+            switch (split[2]) {
+                case "SIn Pit":
+                    return LiveTimingState.PIT;
+                case "SOutLap":
+                    return LiveTimingState.OUTLAP;
+                case "S?":
+                    return LiveTimingState.UNKNOWN;
+                case "?SFinshd":
+                    return LiveTimingState.FINISHED;
+                default:
+                    return LiveTimingState.RACING;
+            }
+        }
+    }
+
     private static int parseLapTime(int expectedSize, String data) {
         try {
             String[] split = data.split(",");
@@ -117,6 +167,6 @@ public class LiveTimingParser {
         } catch (Exception e) {
             return -1;
         }
-
     }
+
 }

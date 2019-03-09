@@ -2,6 +2,7 @@ package com.racing.analyzer.backend.entities;
 
 import com.racing.analyzer.backend.builders.LiveTimingBuilder;
 import com.racing.analyzer.backend.commands.ICommandHandler;
+import com.racing.analyzer.backend.enums.LiveTimingState;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -43,7 +44,11 @@ public class LiveTiming extends BaseEntity {
     @Column(name = "car")
     private String car;
 
-    public LiveTiming(String name, int number, String cls, int position, long lastTime, long bestTime, String nationality, boolean inPit, String car) {
+    @Column(name = "state")
+    private LiveTimingState state;
+
+    public LiveTiming(String name, int number, String cls, int position, long lastTime, long bestTime,
+                      String nationality, boolean inPit, String car, LiveTimingState state) {
         this.name = name;
         this.number = number;
         this.cls = cls;
@@ -53,6 +58,7 @@ public class LiveTiming extends BaseEntity {
         this.nationality = nationality;
         this.inPit = inPit;
         this.car = car;
+        this.state = state;
     }
 
     public Long getId() {
@@ -95,6 +101,11 @@ public class LiveTiming extends BaseEntity {
         return car;
     }
 
+    public LiveTimingState getState() {
+        return state;
+    }
+
+
     @Override
     protected Collection<ICommandHandler> getCommandHandlers() {
         return Arrays.asList();
@@ -107,7 +118,8 @@ public class LiveTiming extends BaseEntity {
     @Override
     public String toString() {
         return "Position: " + position + ", Number: " + number + ", Name: " + name + ", CLS: " + cls +
-                ", Last: " + lastTime + ", Best: " + bestTime + ", Nat: " + nationality + " ,Car: " + car;
+                ", Last: " + lastTime + ", Best: " + bestTime + ", Nat: " + nationality + " ,Car: " + car +
+                " ,State:" + state;
     }
 
 }
