@@ -16,17 +16,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MyParser {
 
     private List<LiveTiming> inputData = new ArrayList<>();
+    private List<LiveTiming> inputDataWithoutCache = new ArrayList<>();
 
     @Before
     public void init() throws FileNotFoundException {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("TestData.csv").getFile());
+        File fileTwo = new File(classLoader.getResource("DemoExportWithoutCaching.csv").getFile());
 
         try (Scanner scanner = new Scanner(file)) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 inputData.add(parse(line));
+            }
+        }
+
+        try (Scanner scanner = new Scanner(fileTwo)) {
+            scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                inputDataWithoutCache.add(parse(line));
             }
         }
     }
@@ -36,7 +46,15 @@ public class MyParser {
         Map<Integer, List<LiveTiming>> mapping = inputData.stream().
                 collect(Collectors.groupingBy(LiveTiming::getNumber));
 
+        Map<Integer, List<LiveTiming>> mappingNoCache = inputDataWithoutCache.stream().
+                collect(Collectors.groupingBy(LiveTiming::getNumber));
+
         Collection<Round> rounds = mapping.entrySet()
+                .stream()
+                .flatMap(x -> lapsDone(x.getValue()))
+                .collect(Collectors.toList());
+
+        Collection<Round> roundsNoCache = mappingNoCache.entrySet()
                 .stream()
                 .flatMap(x -> lapsDone(x.getValue()))
                 .collect(Collectors.toList());
@@ -44,10 +62,18 @@ public class MyParser {
         int lapsDone = rounds.size();
         int pitStops = rounds.stream().mapToInt(x -> x.inPit ? 1 : 0).sum();
 
+        int lapsNoCache = roundsNoCache.size();
+        int pitStopsNoCache = roundsNoCache.stream().mapToInt(x -> x.inPit ? 1 : 0).sum();
+
         assertThat(inputData.size()).isEqualTo(1183); // # input sets
         assertThat(mapping.keySet().size()).isEqualTo(32); // # divers
         assertThat(lapsDone).isEqualTo(978); // # rounds
         assertThat(pitStops).isEqualTo(35); // # pit stops
+
+        assertThat(mappingNoCache.keySet().size()).isEqualTo(32);
+        assertThat(lapsNoCache).isEqualTo(978); // # rounds
+        assertThat(pitStopsNoCache).isEqualTo(35); // # pit stops
+
 
 
     }

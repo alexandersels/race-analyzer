@@ -10,18 +10,19 @@ public class LiveTimingCache {
     private Map<Integer, LiveTiming> dataCache = new HashMap<>();
 
     public boolean isNewEntry(LiveTiming liveTiming) {
-        if (!dataCache.containsKey(liveTiming.getNumber())) {
-            addLiveTiming(liveTiming);
-            return true;
-        } else {
-            LiveTiming cachedValue = dataCache.get(liveTiming.getNumber());
-            if (!isEqualTo(cachedValue, liveTiming)) {
-                addLiveTiming(liveTiming);
-                return true;
-            } else {
-                return false;
-            }
-        }
+//        if (!dataCache.containsKey(liveTiming.getNumber())) {
+//            addLiveTiming(liveTiming);
+//            return true;
+//        } else {
+//            LiveTiming cachedValue = dataCache.get(liveTiming.getNumber());
+//            if (!isEqualTo(cachedValue, liveTiming)) {
+//                addLiveTiming(liveTiming);
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        }
+        return true;
     }
 
     public void clear() {

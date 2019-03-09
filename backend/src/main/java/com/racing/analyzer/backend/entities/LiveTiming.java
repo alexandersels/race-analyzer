@@ -124,15 +124,15 @@ public class LiveTiming extends BaseEntity {
         return state;
     }
 
-    public int getSectorOne() {
+    public long getSectorOne() {
         return sectorOne;
     }
 
-    public int getSectorTwo() {
+    public long getSectorTwo() {
         return sectorTwo;
     }
 
-    public int getSectorThree() {
+    public long getSectorThree() {
         return sectorThree;
     }
 

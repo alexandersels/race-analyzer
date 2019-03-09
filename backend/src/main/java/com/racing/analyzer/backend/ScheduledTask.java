@@ -24,7 +24,7 @@ public class ScheduledTask {
     @Autowired
     private LiveTimingRepository repository;
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 10000)
     public void scrapWebsite() {
         if (enabled) {
             LOGGER.info("Fixed Rate Task :: Execution Time - {}", DATE_TIME_FORMATTER.format(LocalDateTime.now()));

@@ -66,54 +66,48 @@ public class LiveTimingParser {
             List<LiveTiming> liveTimings = new ArrayList<>();
             for (int i = 0; i < splits.length; i += 17) {
 
-                LiveTiming liveTiming = LiveTiming.getBuilder()
-                        .withPosition(parseIntegerValue(splits[i + ParseType.POSITION.getIndex()]))
-                        .withNumber(parseIntegerValue(splits[i + ParseType.NUMBER.getIndex()]))
-                        .withName(parseStringValue(splits[i + ParseType.NAME.getIndex()]))
-                        .withCls(parseStringValue(splits[i + ParseType.CLS.getIndex()]))
-                        .withLastLapTime(parseLastLapTime(splits[i + ParseType.LAST.getIndex()]))
-                        .withBestLapTime(parseBestLapTime(splits[i + ParseType.BEST.getIndex()]))
-                        .withNationality(parseStringValue(splits[i + ParseType.NAT.getIndex()]))
-                        .withCar(parseStringValue(splits[i + ParseType.CAR.getIndex()]))
-                        .withState(parseState(splits[i + ParseType.STATE.getIndex()]))
-                        .inPit(parseInPitTiming(splits[i + ParseType.LAST.getIndex()]))
-                        .withSectorOne(parseIntegerValue(splits[i + ParseType.S1.getIndex()]))
-                        .withSectorTwo(parseIntegerValue(splits[i + ParseType.S2.getIndex()]))
-                        .withSectorThree(parseIntegerValue(splits[i + ParseType.S3.getIndex()]))
-                        .build();
+                if (splits[i + ParseType.NAME.getIndex()].contains("BERRY")) {
+                    System.out.println("ja");
+                }
+
+                LiveTiming liveTiming = buildLiveTiming(splits, i);
 
                 if (dataCache.isNewEntry(liveTiming)) {
                     liveTimings.add(liveTiming);
                 }
             }
-
-            //TODO: Parse sector one, two and three.
-
             liveTimings.stream().forEach(x -> System.out.println(x));
-
             return liveTimings;
         } else {
             return Collections.emptyList();
         }
     }
 
+    private static LiveTiming buildLiveTiming(String[] splits, int i) {
+        return LiveTiming.getBuilder()
+                .withPosition(parseIntegerValue(splits[i + ParseType.POSITION.getIndex()]))
+                .withNumber(parseIntegerValue(splits[i + ParseType.NUMBER.getIndex()]))
+                .withName(parseStringValue(splits[i + ParseType.NAME.getIndex()]))
+                .withCls(parseStringValue(splits[i + ParseType.CLS.getIndex()]))
+                .withLastLapTime(parseLastLapTime(splits[i + ParseType.LAST.getIndex()]))
+                .withBestLapTime(parseBestLapTime(splits[i + ParseType.BEST.getIndex()]))
+                .withNationality(parseStringValue(splits[i + ParseType.NAT.getIndex()]))
+                .withCar(parseStringValue(splits[i + ParseType.CAR.getIndex()]))
+                .withState(parseState(splits[i + ParseType.STATE.getIndex()]))
+                .inPit(parseInPitTiming(splits[i + ParseType.LAST.getIndex()]))
+                .withSectorOne(parseIntegerValue(splits[i + ParseType.S1.getIndex()]))
+                .withSectorTwo(parseIntegerValue(splits[i + ParseType.S2.getIndex()]))
+                .withSectorThree(parseIntegerValue(splits[i + ParseType.S3.getIndex()]))
+                .build();
+    }
+
     private static int parseIntegerValue(String data) {
-        try {
-            String[] split = data.split(",");
-            if (split.length != 3) {
-                return -1;
-            }
-            return Integer.parseInt(split[2]);
-        } catch (Exception e) {
-            return -1;
-        }
+        String[] split = data.split(",");
+        return Integer.parseInt(split[2]);
     }
 
     private static String parseStringValue(String data) {
         String[] split = data.split(",");
-        if (split.length != 3) {
-            return "";
-        }
         return split[2];
     }
 
@@ -144,21 +138,17 @@ public class LiveTimingParser {
 
     private static LiveTimingState parseState(String data) {
         String[] split = data.split(",");
-        if (split.length != 3) {
-            return LiveTimingState.UNKNOWN;
-        } else {
-            switch (split[2]) {
-                case "SIn Pit":
-                    return LiveTimingState.PIT;
-                case "SOutLap":
-                    return LiveTimingState.OUTLAP;
-                case "S?":
-                    return LiveTimingState.UNKNOWN;
-                case "SFinshd":
-                    return LiveTimingState.FINISHED;
-                default:
-                    return LiveTimingState.RACING;
-            }
+        switch (split[2]) {
+            case "SIn Pit":
+                return LiveTimingState.PIT;
+            case "SOutLap":
+                return LiveTimingState.OUTLAP;
+            case "S?":
+                return LiveTimingState.UNKNOWN;
+            case "SFinshd":
+                return LiveTimingState.FINISHED;
+            default:
+                return LiveTimingState.RACING;
         }
     }
 
