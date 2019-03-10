@@ -32,10 +32,10 @@ public class LiveTiming extends BaseEntity {
     private int position;
 
     @Column(name = "lasttime")
-    private int lastTime;
+    private long lastTime;
 
     @Column(name = "besttime")
-    private int bestTime;
+    private long bestTime;
 
     @Column(name = "nationality")
     private String nationality;
@@ -49,22 +49,22 @@ public class LiveTiming extends BaseEntity {
     @Column(name = "state")
     private LiveTimingState state;
 
-    @Column(name= "sectorOne")
-    private int sectorOne;
+    @Column(name = "sectorOne")
+    private long sectorOne;
 
     @Column(name = "sectorTwo")
-    private int sectorTwo;
+    private long sectorTwo;
 
     @Column(name = "sectorThree")
-    private int sectorThree;
+    private long sectorThree;
 
     @CreationTimestamp
     @Column(name = "creationTimestamp")
     private Timestamp creationTimestamp;
 
-    public LiveTiming(String name, int number, String cls, int position, int lastTime, int bestTime,
+    public LiveTiming(String name, int number, String cls, int position, long lastTime, long bestTime,
                       String nationality, boolean inPit, String car, LiveTimingState state,
-                      int sectorOne, int sectorTwo, int sectorThree) {
+                      long sectorOne, long sectorTwo, long sectorThree) {
         this.name = name;
         this.number = number;
         this.cls = cls;
@@ -78,6 +78,10 @@ public class LiveTiming extends BaseEntity {
         this.sectorOne = sectorOne;
         this.sectorTwo = sectorTwo;
         this.sectorThree = sectorThree;
+    }
+
+    public static LiveTimingBuilder getBuilder() {
+        return new LiveTimingBuilder();
     }
 
     public Long getId() {
@@ -100,11 +104,11 @@ public class LiveTiming extends BaseEntity {
         return position;
     }
 
-    public int getLastTime() {
+    public long getLastTime() {
         return lastTime;
     }
 
-    public int getBestTime() {
+    public long getBestTime() {
         return bestTime;
     }
 
@@ -140,13 +144,8 @@ public class LiveTiming extends BaseEntity {
         return creationTimestamp;
     }
 
-    @Override
-    protected Collection<ICommandHandler> getCommandHandlers() {
-        return Arrays.asList();
-    }
-
-    public static LiveTimingBuilder getBuilder() {
-        return new LiveTimingBuilder();
+    public boolean areSectorsFilledIn() {
+        return (sectorOne != -1) && (sectorTwo != -1) && (sectorThree != -1);
     }
 
     @Override
@@ -154,5 +153,10 @@ public class LiveTiming extends BaseEntity {
         return "Position: " + position + ", Number: " + number + ", Name: " + name + ", CLS: " + cls +
                 ", Last: " + lastTime + ", Best: " + bestTime + ", Nat: " + nationality + " ,Car: " + car +
                 " ,State:" + state + " ,Sector One:" + sectorOne + " ,Sector Two:" + sectorTwo + " ,Sector Three:" + sectorThree;
+    }
+
+    @Override
+    protected Collection<ICommandHandler> getCommandHandlers() {
+        return Arrays.asList();
     }
 }

@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 public class LiveTimingParser {
 
     private static final Pattern PATTERN = Pattern.compile("raceResultsViewModel\\.r_c\\(.*\\);");
+    private static final long MAX_LONG = 9223372036854775807L;
     private static LiveTimingCache dataCache = new LiveTimingCache();
 
     public static void clearCache() {
@@ -30,6 +31,7 @@ public class LiveTimingParser {
         try {
             Document document = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7")
+                    .timeout(5 * 1000)
                     .get();
             String data = getDataAsString(document);
             return parse(data);
@@ -66,17 +68,11 @@ public class LiveTimingParser {
             List<LiveTiming> liveTimings = new ArrayList<>();
             for (int i = 0; i < splits.length; i += 17) {
 
-                if (splits[i + ParseType.NAME.getIndex()].contains("BERRY")) {
-                    System.out.println("ja");
-                }
-
                 LiveTiming liveTiming = buildLiveTiming(splits, i);
-
                 if (dataCache.isNewEntry(liveTiming)) {
                     liveTimings.add(liveTiming);
                 }
             }
-            liveTimings.stream().forEach(x -> System.out.println(x));
             return liveTimings;
         } else {
             return Collections.emptyList();
@@ -89,54 +85,57 @@ public class LiveTimingParser {
                 .withNumber(parseIntegerValue(splits[i + ParseType.NUMBER.getIndex()]))
                 .withName(parseStringValue(splits[i + ParseType.NAME.getIndex()]))
                 .withCls(parseStringValue(splits[i + ParseType.CLS.getIndex()]))
-                .withLastLapTime(parseLastLapTime(splits[i + ParseType.LAST.getIndex()]))
-                .withBestLapTime(parseBestLapTime(splits[i + ParseType.BEST.getIndex()]))
+                .withLastLapTime(parseLongValue(splits[i + ParseType.LAST.getIndex()]))
+                .withBestLapTime(parseLongValue(splits[i + ParseType.BEST.getIndex()]))
                 .withNationality(parseStringValue(splits[i + ParseType.NAT.getIndex()]))
                 .withCar(parseStringValue(splits[i + ParseType.CAR.getIndex()]))
                 .withState(parseState(splits[i + ParseType.STATE.getIndex()]))
                 .inPit(parseInPitTiming(splits[i + ParseType.LAST.getIndex()]))
-                .withSectorOne(parseIntegerValue(splits[i + ParseType.S1.getIndex()]))
-                .withSectorTwo(parseIntegerValue(splits[i + ParseType.S2.getIndex()]))
-                .withSectorThree(parseIntegerValue(splits[i + ParseType.S3.getIndex()]))
+                .withSectorOne(parseLongValue(splits[i + ParseType.S1.getIndex()]))
+                .withSectorTwo(parseLongValue(splits[i + ParseType.S2.getIndex()]))
+                .withSectorThree(parseLongValue(splits[i + ParseType.S3.getIndex()]))
                 .build();
     }
 
     private static int parseIntegerValue(String data) {
+        data = stripInvalidCharacter(data);
         String[] split = data.split(",");
         return Integer.parseInt(split[2]);
     }
 
     private static String parseStringValue(String data) {
+        data = stripInvalidCharacter(data);
         String[] split = data.split(",");
         return split[2];
     }
 
-    private static int parseLastLapTime(String data) {
-        return parseLapTime(4, data);
-    }
-
-    private static int parseBestLapTime(String data) {
-        return parseLapTime(3, data);
+    private static long parseLongValue(String data) {
+        data = stripInvalidCharacter(data);
+        String[] split = data.split(",");
+        long parsedLong = Long.parseLong(split[2]);
+        if (parsedLong == MAX_LONG) {
+            return -1;
+        } else {
+            return parsedLong;
+        }
     }
 
     private static boolean parseInPitTiming(String data) {
-        try {
-            String[] split = data.split(",");
-            if (split.length != 4) {
-                return false;
-            }
+        data = stripInvalidCharacter(data);
+        String[] split = data.split(",");
+        if (split.length != 4) {
+            return false;
+        }
 
-            if (split[3].equals("-2")) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
+        if (split[3].equals("-2")) {
+            return true;
+        } else {
             return false;
         }
     }
 
     private static LiveTimingState parseState(String data) {
+        data = data.replace(")", "").replace("]", "").replace(";", "");
         String[] split = data.split(",");
         switch (split[2]) {
             case "SIn Pit":
@@ -152,16 +151,9 @@ public class LiveTimingParser {
         }
     }
 
-    private static int parseLapTime(int expectedSize, String data) {
-        try {
-            String[] split = data.split(",");
-            if (split.length != expectedSize) {
-                return -1;
-            }
-            return Integer.parseInt(split[2]);
-        } catch (Exception e) {
-            return -1;
-        }
+    private static String stripInvalidCharacter(String data) {
+        return data.replace(")", "")
+                .replace("]", "")
+                .replace(";", "");
     }
-
 }

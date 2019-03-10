@@ -10,19 +10,18 @@ public class LiveTimingCache {
     private Map<Integer, LiveTiming> dataCache = new HashMap<>();
 
     public boolean isNewEntry(LiveTiming liveTiming) {
-//        if (!dataCache.containsKey(liveTiming.getNumber())) {
-//            addLiveTiming(liveTiming);
-//            return true;
-//        } else {
-//            LiveTiming cachedValue = dataCache.get(liveTiming.getNumber());
-//            if (!isEqualTo(cachedValue, liveTiming)) {
-//                addLiveTiming(liveTiming);
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }
-        return true;
+        if (!dataCache.containsKey(liveTiming.getNumber())) {
+            addLiveTiming(liveTiming);
+            return true;
+        } else {
+            LiveTiming cachedValue = dataCache.get(liveTiming.getNumber());
+            if (!isEqualTo(cachedValue, liveTiming)) {
+                addLiveTiming(liveTiming);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     public void clear() {
@@ -35,22 +34,37 @@ public class LiveTimingCache {
 
     private boolean isEqualTo(LiveTiming oldValue, LiveTiming newValue) {
 
-        if(oldValue.getLastTime() != newValue.getLastTime()) {
+        if (oldValue.getLastTime() != newValue.getLastTime()) {
             return false;
         }
 
-        if(oldValue.isInPit() != newValue.isInPit()) {
+        if(sectorsChanged(oldValue, newValue)) {
             return false;
         }
 
-        if(oldValue.getState() != newValue.getState()) {
+        if (oldValue.isInPit() != newValue.isInPit()) {
             return false;
         }
 
-        if(oldValue.getPosition() != newValue.getPosition()) {
+        if (oldValue.getState() != newValue.getState()) {
+            return false;
+        }
+
+        if (oldValue.getPosition() != newValue.getPosition()) {
             return false;
         }
 
         return true;
     }
+
+    private boolean sectorsChanged(LiveTiming oldValue, LiveTiming newValue) {
+        if (oldValue.getSectorOne() != newValue.getSectorOne() ||
+                oldValue.getSectorTwo() != newValue.getSectorTwo() ||
+                oldValue.getSectorThree() != oldValue.getSectorThree()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

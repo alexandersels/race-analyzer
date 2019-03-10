@@ -9,15 +9,15 @@ public class LiveTimingBuilder {
     private int number;
     private String cls;
     private int position;
-    private int lastTime;
-    private int bestTime;
+    private long lastTime;
+    private long bestTime;
     private String nationality;
     private boolean inPit;
     private String car;
     private LiveTimingState state;
-    private int sectorOne;
-    private int sectorTwo;
-    private int sectorThree;
+    private long sectorOne;
+    private long sectorTwo;
+    private long sectorThree;
 
     public LiveTimingBuilder withName(String name) {
         this.name = name;
@@ -39,12 +39,12 @@ public class LiveTimingBuilder {
         return this;
     }
 
-    public LiveTimingBuilder withLastLapTime(int lastLapTime) {
+    public LiveTimingBuilder withLastLapTime(long lastLapTime) {
         this.lastTime = lastLapTime;
         return this;
     }
 
-    public LiveTimingBuilder withBestLapTime(int bestLapTime) {
+    public LiveTimingBuilder withBestLapTime(long bestLapTime) {
         this.bestTime = bestLapTime;
         return this;
     }
@@ -69,17 +69,17 @@ public class LiveTimingBuilder {
         return this;
     }
 
-    public LiveTimingBuilder withSectorOne(int sectorOne) {
+    public LiveTimingBuilder withSectorOne(long sectorOne) {
         this.sectorOne = sectorOne;
         return this;
     }
 
-    public LiveTimingBuilder withSectorTwo(int sectorTwo) {
+    public LiveTimingBuilder withSectorTwo(long sectorTwo) {
         this.sectorTwo = sectorTwo;
         return this;
     }
 
-    public LiveTimingBuilder withSectorThree(int sectorThree) {
+    public LiveTimingBuilder withSectorThree(long sectorThree) {
         this.sectorThree = sectorThree;
         return this;
     }
