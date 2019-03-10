@@ -25,10 +25,15 @@ public class ScheduledTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTask.class);
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    private static final ScheduledTaskAction ACTION = ScheduledTaskAction.DOWNLOAD;
+    private static final boolean DOWNLOAD = true;
+    private static final ScheduledTaskAction ACTION = ScheduledTaskAction.PARSE_URL;
+    private static final String URL = "https://livetiming.getraceresults.com/demo/zolder#screen-results";
+
     private boolean enabled = false;
     private int i = 0;
     private int maxNr = 6;
+
+
 
     @Autowired
     private LiveTimingRepository repository;
@@ -37,19 +42,18 @@ public class ScheduledTask {
     public void scrapWebsite() throws IOException {
         if (enabled) {
             switch (ACTION) {
-                case DOWNLOAD:
-                    LOGGER.info("Downloading");
-                    parseFile();
-                    break;
                 case PARSE_URL:
                     LOGGER.info("Fixed Rate Task :: Execution Time - {}", DATE_TIME_FORMATTER.format(LocalDateTime.now()));
-                    parseSite("https://livetiming.getraceresults.com/demo/zolder#screen-results");
+                    parseSite(URL);
                     break;
                 case PARSE_DOCUMENT:
                     parseDocument();
                     break;
-                default:
-                    break;
+            }
+
+            if (DOWNLOAD) {
+                LOGGER.info("Downloading");
+                parseFile(URL);
             }
         }
     }
@@ -83,9 +87,9 @@ public class ScheduledTask {
         }
     }
 
-    private void parseFile() throws IOException {
+    private void parseFile(String url) throws IOException {
         PrintWriter file = new PrintWriter("C:\\Users\\AlexanderSE\\Desktop\\Exports\\" + i + ".txt", "UTF-8");
-        file.println(Jsoup.connect("https://livetiming.getraceresults.com/demo/zolder#screen-results")
+        file.println(Jsoup.connect(url)
                 .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7")
                 .get()
                 .getElementsByTag("script"));
