@@ -71,7 +71,7 @@ public class LiveTimingCache {
     private boolean sectorsChanged(LiveTiming oldValue, LiveTiming newValue) {
         if (oldValue.getSectorOne() != newValue.getSectorOne() ||
                 oldValue.getSectorTwo() != newValue.getSectorTwo() ||
-                oldValue.getSectorThree() != oldValue.getSectorThree()) {
+                oldValue.getSectorThree() != newValue.getSectorThree()) {
             return true;
         } else {
             return false;

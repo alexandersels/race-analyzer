@@ -25,20 +25,18 @@ public class ScheduledTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTask.class);
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    private static final boolean DOWNLOAD = true;
-    private static final ScheduledTaskAction ACTION = ScheduledTaskAction.PARSE_URL;
+    private static final boolean DOWNLOAD = false;
+    private static final ScheduledTaskAction ACTION = ScheduledTaskAction.PARSE_DOCUMENT;
     private static final String URL = "https://livetiming.getraceresults.com/demo/zolder#screen-results";
 
     private boolean enabled = false;
-    private int i = 0;
-    private int maxNr = 6;
-
-
+    private int i = 80;
+    private int maxNr = 114;
 
     @Autowired
     private LiveTimingRepository repository;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1)
     public void scrapWebsite() throws IOException {
         if (enabled) {
             switch (ACTION) {
