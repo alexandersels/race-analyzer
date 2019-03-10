@@ -3,13 +3,11 @@ package com.racing.analyzer.backend.logic;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 import com.racing.analyzer.backend.enums.ParseType;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,24 +25,16 @@ public class LiveTimingParser {
         dataCache.clear();
     }
 
-    public static Collection<LiveTiming> parseSite(String url) {
-        try {
-            Document document = Jsoup.connect(url)
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7")
-                    .timeout(5 * 1000)
-                    .get();
-            String data = getDataAsString(document);
-            return parse(data);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-
+    public static Collection<LiveTiming> parse(Document document) {
+        String text = getRelevantData(document);
+        if (text != null) {
+            return extractLiveTimings(text);
+        } else {
+            return Collections.emptyList();
         }
-
-        return Collections.emptyList();
     }
 
-    private static String getDataAsString(Document document) {
+    private static String getRelevantData(Document document) {
         Elements scriptElements = document.getElementsByTag("script");
         for (Element element : scriptElements) {
             for (DataNode node : element.dataNodes()) {
@@ -57,26 +47,23 @@ public class LiveTimingParser {
         return null;
     }
 
-    private static Collection<LiveTiming> parse(String data) {
-        if (data != null) {
-            data = data.replace("raceResultsViewModel.r_c", "")
-                    .replace("([", "")
-                    .replace("], true", "")
-                    .replace("\"", "");
+    private static Collection<LiveTiming> extractLiveTimings(String data) {
+        data = data.replace("raceResultsViewModel.r_c", "")
+                .replace("([", "")
+                .replace("], true", "")
+                .replace("\"", "");
 
-            String[] splits = data.split("],\\[");
-            List<LiveTiming> liveTimings = new ArrayList<>();
-            for (int i = 0; i < splits.length; i += 17) {
-
-                LiveTiming liveTiming = buildLiveTiming(splits, i);
-                if (dataCache.isNewEntry(liveTiming)) {
-                    liveTimings.add(liveTiming);
-                }
+        String[] splits = data.split("],\\[");
+        List<LiveTiming> liveTimings = new ArrayList<>();
+        for (int i = 0; i < splits.length; i += 17) {
+            LiveTiming liveTiming = buildLiveTiming(splits, i);
+            if (liveTiming.getNumber() == 127) {
+                dataCache.isNewEntry(liveTiming);
+                liveTimings.add(liveTiming);
+                //}
             }
-            return liveTimings;
-        } else {
-            return Collections.emptyList();
         }
+        return liveTimings;
     }
 
     private static LiveTiming buildLiveTiming(String[] splits, int i) {
