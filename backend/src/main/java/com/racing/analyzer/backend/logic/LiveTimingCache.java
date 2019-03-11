@@ -11,32 +11,17 @@ public class LiveTimingCache {
 
     public boolean isNewEntry(LiveTiming liveTiming) {
         if (!dataCache.containsKey(liveTiming.getNumber())) {
-            System.out.println("Previous: ");
-            System.out.println("New:      " + liveTiming.getLastTime() + " " + liveTiming.isInPit() + " " +
-                    liveTiming.getSectorOne() + " " + liveTiming.getSectorTwo() + " " + liveTiming.getSectorThree());
-            System.out.println("Added this timing.");
             addLiveTiming(liveTiming);
             return true;
         } else {
             LiveTiming cachedValue = dataCache.get(liveTiming.getNumber());
-
-            System.out.println("Previous: " + cachedValue.getLastTime() + " " + cachedValue.isInPit() + " " +
-                    cachedValue.getSectorOne() + " " + cachedValue.getSectorTwo() + " " + cachedValue.getSectorThree());
-            System.out.println("New:      " + liveTiming.getLastTime() + " " + liveTiming.isInPit() + " " +
-                    liveTiming.getSectorOne() + " " + liveTiming.getSectorTwo() + " " + liveTiming.getSectorThree());
-
             if (!isEqualTo(cachedValue, liveTiming)) {
                 addLiveTiming(liveTiming);
-                System.out.println("Added this timing.");
                 return true;
             } else {
                 return false;
             }
         }
-    }
-
-    public void clear() {
-        dataCache.clear();
     }
 
     private void addLiveTiming(LiveTiming liveTiming) {
