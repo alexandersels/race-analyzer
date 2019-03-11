@@ -26,15 +26,19 @@ public class Race extends BaseEntity {
     @Column(name = "recording")
     private boolean recording;
 
+    @Column(name = "url")
+    private String url;
+
     @OneToMany(mappedBy = "race",fetch = FetchType.LAZY)
     private List<LiveTiming> timings;
 
     public Race() {
     }
 
-    public Race(String name, boolean recording) {
+    public Race(String name, boolean recording, String url) {
         this.name = name;
         this.recording = recording;
+        this.url = url;
     }
 
     public static RaceBuilder getBuilder() {
@@ -77,6 +81,13 @@ public class Race extends BaseEntity {
             recording = command.isRecording();
         }
 
+        if(!url.equals(command.getUrl())) {
+            url = command.getUrl();
+        }
+
     }
 
+    public String getUrl() {
+        return url;
+    }
 }

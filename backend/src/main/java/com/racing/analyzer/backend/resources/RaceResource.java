@@ -113,6 +113,9 @@ public class RaceResource extends BaseResource {
     public ResponseEntity<?> switchRecordState(@PathVariable Long id, @PathVariable boolean shouldRecord) {
         return service.getById(id)
                 .map(race -> {
+                    if (shouldRecord) {
+                        service.stopAllRecordings();
+                    }
                     UpdateRaceCommand updateRaceCommand = UpdateRaceCommand.getBuilder()
                             .startFrom(race)
                             .isRecording(shouldRecord)
