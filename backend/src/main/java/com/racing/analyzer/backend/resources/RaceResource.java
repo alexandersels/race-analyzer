@@ -52,7 +52,7 @@ public class RaceResource extends BaseResource {
     @GetMapping("/races/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
 
-        if (id != null) {
+        if (id == null) {
             return ResponseEntity.badRequest().build();
         }
 
