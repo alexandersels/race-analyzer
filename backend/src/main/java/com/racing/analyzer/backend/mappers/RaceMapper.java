@@ -10,6 +10,7 @@ public class RaceMapper {
         dto.id = race.getId();
         dto.name = race.getName();
         dto.recording = race.isRecording();
+        dto.url = race.getUrl();
 
         return dto;
     }
