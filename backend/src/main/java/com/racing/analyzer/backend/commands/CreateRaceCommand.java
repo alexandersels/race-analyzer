@@ -8,15 +8,19 @@ public class CreateRaceCommand {
 
     private String name;
     private boolean isRecording;
+    private String url;
 
-    public CreateRaceCommand(String name, boolean isRecording) {
+    public CreateRaceCommand(String name, boolean isRecording, String url) {
         this.name = name;
         this.isRecording = isRecording;
+        this.url = url;
     }
 
     public Race getEntityToCreate() {
         return Race.getBuilder()
                 .withName(name)
+                .withUrl(url)
+                .isRecording(isRecording)
                 .build();
     }
 

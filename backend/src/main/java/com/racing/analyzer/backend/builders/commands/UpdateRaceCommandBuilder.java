@@ -8,11 +8,17 @@ import com.racing.analyzer.backend.entities.Race;
 public class UpdateRaceCommandBuilder extends BaseBuilder<UpdateRaceCommand> {
 
     private String name;
+    private String url;
     private boolean isRecording;
     private int version;
 
     public UpdateRaceCommandBuilder withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public UpdateRaceCommandBuilder withUrl(String url) {
+        this.url = url;
         return this;
     }
 
@@ -28,6 +34,7 @@ public class UpdateRaceCommandBuilder extends BaseBuilder<UpdateRaceCommand> {
 
     public UpdateRaceCommandBuilder startFrom(RaceDTO dto) {
         this.name = dto.name;
+        this.url = dto.url;
         this.version = dto.version;
         this.isRecording = dto.recording;
         return this;
@@ -35,6 +42,7 @@ public class UpdateRaceCommandBuilder extends BaseBuilder<UpdateRaceCommand> {
 
     public UpdateRaceCommandBuilder startFrom(Race race) {
         this.name = race.getName();
+        this.url = race.getUrl();
         this.version = race.getVersion();
         this.isRecording = race.isRecording();
         return this;
@@ -42,6 +50,6 @@ public class UpdateRaceCommandBuilder extends BaseBuilder<UpdateRaceCommand> {
 
     @Override
     protected UpdateRaceCommand createInstance() {
-        return new UpdateRaceCommand(name, isRecording, version);
+        return new UpdateRaceCommand(name, isRecording, url, version);
     }
 }

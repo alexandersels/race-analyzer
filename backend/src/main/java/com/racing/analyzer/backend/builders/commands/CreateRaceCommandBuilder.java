@@ -8,9 +8,15 @@ public class CreateRaceCommandBuilder extends BaseBuilder<CreateRaceCommand> {
 
     private String name;
     private boolean isRecording;
+    private String url;
 
     public CreateRaceCommandBuilder withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public CreateRaceCommandBuilder withUrl(String url) {
+        this.url = url;
         return this;
     }
 
@@ -22,11 +28,12 @@ public class CreateRaceCommandBuilder extends BaseBuilder<CreateRaceCommand> {
     public CreateRaceCommandBuilder startFrom(RaceDTO dto) {
         this.name = dto.name;
         this.isRecording = dto.recording;
+        this.url = dto.url;
         return this;
     }
 
     @Override
     protected CreateRaceCommand createInstance() {
-        return new CreateRaceCommand(name, isRecording);
+        return new CreateRaceCommand(name, isRecording, url);
     }
 }
