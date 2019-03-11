@@ -14,7 +14,6 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -25,10 +24,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-public class RaceResource {
+public class RaceResource extends BaseResource {
 
     @Autowired
-    private RaceService raceService;
+    private RaceService service;
 
     @Autowired
     private RaceAssembler assembler;
@@ -39,7 +38,7 @@ public class RaceResource {
     @GetMapping("/races")
     public ResponseEntity<?> getRaces() {
 
-        Collection<Resource<RaceDTO>> races = raceService.getAll()
+        Collection<Resource<RaceDTO>> races = service.getAll()
                 .stream()
                 .map(RaceMapper::toDto)
                 .map(assembler::toResource)
@@ -50,36 +49,14 @@ public class RaceResource {
 
     }
 
-    @GetMapping("/races/schedule/{id}")
-    public boolean startScheduledTask(@PathVariable Long id) {
-        task.setEnabled(!task.isEnabled());
-        return task.isEnabled();
-    }
-
-    @PostMapping("/races")
-    public ResponseEntity<?> createCustomer(@RequestBody RaceDTO raceDTO) throws URISyntaxException {
-
-        if(raceDTO != null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        CreateRaceCommand command = CreateRaceCommand.of(raceDTO);
-        RaceDTO createdDTO = RaceMapper.toDto(raceService.create(command));
-        Resource<RaceDTO> resource = assembler.toResource(createdDTO);
-
-        return ResponseEntity
-                .created(new URI(resource.getId().expand().getHref()))
-                .body(resource);
-    }
-
     @GetMapping("/races/{id}")
-    public ResponseEntity<?> getRace(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Long id) {
 
-        if(id != null) {
+        if (id != null) {
             return ResponseEntity.badRequest().build();
         }
 
-        return raceService.getById(id)
+        return service.getById(id)
                 .map(customer -> {
                     RaceDTO dto = RaceMapper.toDto(customer);
                     Resource resource = assembler.toResource(dto);
@@ -89,33 +66,75 @@ public class RaceResource {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PostMapping("/races")
+    public ResponseEntity<?> create(@RequestBody RaceDTO raceDTO) throws URISyntaxException {
+
+        if (raceDTO != null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        CreateRaceCommand command = CreateRaceCommand
+                .getBuilder()
+                .startFrom(raceDTO)
+                .build();
+        RaceDTO createdDTO = RaceMapper.toDto(service.create(command));
+        Resource<RaceDTO> resource = assembler.toResource(createdDTO);
+
+        return ResponseEntity
+                .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
+    }
+
     @PutMapping("/races/{id}")
-    public ResponseEntity<?> updateCustomer(@RequestBody RaceDTO raceDTO, @PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<?> update(@RequestBody RaceDTO raceDTO, @PathVariable Long id) throws URISyntaxException {
 
-        if(id != null) {
+        if (id != null) {
             return ResponseEntity.badRequest().build();
         }
 
-        if(raceDTO != null) {
+        if (raceDTO != null) {
             return ResponseEntity.badRequest().build();
         }
 
-        Optional<Race> result = raceService.getById(id);
-        if(!result.isPresent()) {
+        Optional<Race> result = service.getById(id);
+        if (!result.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
         Race race = result.get();
-        race.execute(UpdateRaceCommand.of(raceDTO));
-        raceService.update(race);
+        race.execute(UpdateRaceCommand.getBuilder().startFrom(raceDTO).build());
+        service.update(race);
 
         Resource<RaceDTO> resource = assembler.toResource(RaceMapper.toDto(race));
         return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(raceDTO);
     }
 
+    @PutMapping("/races/{id}/record/{shouldRecord}")
+    public ResponseEntity<?> switchRecordState(@PathVariable Long id, @PathVariable boolean shouldRecord) {
+        return service.getById(id)
+                .map(race -> {
+                    UpdateRaceCommand updateRaceCommand = UpdateRaceCommand.getBuilder()
+                            .startFrom(race)
+                            .isRecording(shouldRecord)
+                            .build();
+                    race.execute(updateRaceCommand);
+                    service.update(race);
+                    task.recordingFor(shouldRecord, race);
+
+                    RaceDTO updated = RaceMapper.toDto(race);
+                    Resource<RaceDTO> resource = assembler.toResource(updated);
+
+                    return ResponseEntity
+                            .created(createUri(resource))
+                            .body(updated);
+
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/races")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
-        raceService.delete(id);
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

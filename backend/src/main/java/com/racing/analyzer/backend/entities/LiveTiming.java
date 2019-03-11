@@ -4,6 +4,7 @@ import com.racing.analyzer.backend.builders.LiveTimingBuilder;
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,6 +17,7 @@ public class LiveTiming extends BaseEntity {
 
     @Id
     @Column(name = "id")
+    @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -62,9 +64,13 @@ public class LiveTiming extends BaseEntity {
     @Column(name = "creationTimestamp")
     private Timestamp creationTimestamp;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "race_id")
+    private Race race;
+
     public LiveTiming(String name, int number, String cls, int position, long lastTime, long bestTime,
                       String nationality, boolean inPit, String car, LiveTimingState state,
-                      long sectorOne, long sectorTwo, long sectorThree) {
+                      long sectorOne, long sectorTwo, long sectorThree, Race race) {
         this.name = name;
         this.number = number;
         this.cls = cls;
@@ -78,14 +84,15 @@ public class LiveTiming extends BaseEntity {
         this.sectorOne = sectorOne;
         this.sectorTwo = sectorTwo;
         this.sectorThree = sectorThree;
-    }
-
-    public static LiveTimingBuilder getBuilder() {
-        return new LiveTimingBuilder();
+        this.race = race;
     }
 
     public Long getId() {
         return id;
+    }
+
+    private void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -144,15 +151,16 @@ public class LiveTiming extends BaseEntity {
         return creationTimestamp;
     }
 
+    public Race getRace() {
+        return race;
+    }
+
     public boolean areSectorsFilledIn() {
         return (sectorOne != -1) && (sectorTwo != -1) && (sectorThree != -1);
     }
 
-    @Override
-    public String toString() {
-        return "Position: " + position + ", Number: " + number + ", Name: " + name + ", CLS: " + cls +
-                ", Last: " + lastTime + ", Best: " + bestTime + ", Nat: " + nationality + " ,Car: " + car +
-                " ,State:" + state + " ,Sector One:" + sectorOne + " ,Sector Two:" + sectorTwo + " ,Sector Three:" + sectorThree;
+    public static LiveTimingBuilder getBuilder() {
+        return new LiveTimingBuilder();
     }
 
     @Override

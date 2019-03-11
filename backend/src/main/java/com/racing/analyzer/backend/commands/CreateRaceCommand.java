@@ -1,14 +1,17 @@
 package com.racing.analyzer.backend.commands;
 
+import com.racing.analyzer.backend.builders.commands.CreateRaceCommandBuilder;
 import com.racing.analyzer.backend.dto.RaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 
 public class CreateRaceCommand {
 
-    private final String name;
+    private String name;
+    private boolean isRecording;
 
-    private CreateRaceCommand(String name) {
+    public CreateRaceCommand(String name, boolean isRecording) {
         this.name = name;
+        this.isRecording = isRecording;
     }
 
     public Race getEntityToCreate() {
@@ -17,10 +20,8 @@ public class CreateRaceCommand {
                 .build();
     }
 
-    public static CreateRaceCommand of(RaceDTO dto) {
-        if(dto == null) {
-            throw new NullPointerException("dto");
-        }
-        return new CreateRaceCommand(dto.name);
+    public static CreateRaceCommandBuilder getBuilder() {
+        return new CreateRaceCommandBuilder();
     }
+
 }

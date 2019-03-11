@@ -8,13 +8,15 @@ import com.racing.analyzer.backend.commands.UpdateRaceCommand;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "Race")
-public class Race extends BaseEntity{
+public class Race extends BaseEntity {
 
     @Id
     @Column(name = "id")
+    @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -24,21 +26,39 @@ public class Race extends BaseEntity{
     @Column(name = "recording")
     private boolean recording;
 
+    @OneToMany(mappedBy = "race",fetch = FetchType.LAZY)
+    private List<LiveTiming> timings;
+
+    public Race() {
+    }
+
     public Race(String name, boolean recording) {
         this.name = name;
         this.recording = recording;
+    }
+
+    public static RaceBuilder getBuilder() {
+        return new RaceBuilder();
     }
 
     public Long getId() {
         return id;
     }
 
+    private void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public boolean getRecording() {
+    public boolean isRecording() {
         return recording;
+    }
+
+    public List<LiveTiming> getTimings() {
+        return timings;
     }
 
     @Override
@@ -49,19 +69,14 @@ public class Race extends BaseEntity{
 
     private void update(UpdateRaceCommand command) {
 
-        if(!name.equals(command.getName())) {
+        if (!name.equals(command.getName())) {
             name = command.getName();
         }
 
-        if(recording != command.isRecording()) {
+        if (recording != command.isRecording()) {
             recording = command.isRecording();
         }
 
     }
-
-    public static RaceBuilder getBuilder() {
-        return new RaceBuilder();
-    }
-
 
 }

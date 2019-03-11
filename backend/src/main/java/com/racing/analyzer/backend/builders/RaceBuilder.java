@@ -2,7 +2,7 @@ package com.racing.analyzer.backend.builders;
 
 import com.racing.analyzer.backend.entities.Race;
 
-public class RaceBuilder {
+public class RaceBuilder extends BaseBuilder<Race> {
 
     private String name;
 
@@ -11,7 +11,8 @@ public class RaceBuilder {
         return this;
     }
 
-    public Race build() {
+    @Override
+    protected Race createInstance() {
         return new Race(name, false);
     }
 

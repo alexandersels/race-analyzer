@@ -9,7 +9,7 @@ public class RaceMapper {
         final RaceDTO dto = new RaceDTO();
         dto.id = race.getId();
         dto.name = race.getName();
-        dto.recording = race.getRecording();
+        dto.recording = race.isRecording();
 
         return dto;
     }

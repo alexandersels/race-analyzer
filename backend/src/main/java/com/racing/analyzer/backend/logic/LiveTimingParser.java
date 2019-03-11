@@ -1,13 +1,13 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 import com.racing.analyzer.backend.enums.ParseType;
 import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,12 +20,13 @@ public class LiveTimingParser {
     private static final Pattern PATTERN = Pattern.compile("raceResultsViewModel\\.r_c\\(.*\\);");
     private static final long MAX_LONG = 9223372036854775807L;
     private static LiveTimingCache dataCache = new LiveTimingCache();
+    private Race race;
 
-    public static void clearCache() {
-        dataCache.clear();
+    private LiveTimingParser(Race race) {
+        this.race = race;
     }
 
-    public static Collection<LiveTiming> parse(Document document) {
+    public Collection<LiveTiming> parse(Document document) {
         String text = getRelevantData(document);
         if (text != null) {
             return extractLiveTimings(text);
@@ -34,7 +35,7 @@ public class LiveTimingParser {
         }
     }
 
-    private static String getRelevantData(Document document) {
+    private String getRelevantData(Document document) {
         Elements scriptElements = document.getElementsByTag("script");
         for (Element element : scriptElements) {
             for (DataNode node : element.dataNodes()) {
@@ -47,7 +48,7 @@ public class LiveTimingParser {
         return null;
     }
 
-    private static Collection<LiveTiming> extractLiveTimings(String data) {
+    private Collection<LiveTiming> extractLiveTimings(String data) {
         data = data.replace("raceResultsViewModel.r_c", "")
                 .replace("([", "")
                 .replace("], true", "")
@@ -56,17 +57,15 @@ public class LiveTimingParser {
         String[] splits = data.split("],\\[");
         List<LiveTiming> liveTimings = new ArrayList<>();
         for (int i = 0; i < splits.length; i += 17) {
-            LiveTiming liveTiming = buildLiveTiming(splits, i);
-            if (liveTiming.getNumber() == 127) {
-                dataCache.isNewEntry(liveTiming);
+            LiveTiming liveTiming = buildLiveTiming(i, splits);
+            if (dataCache.isNewEntry(liveTiming)) {
                 liveTimings.add(liveTiming);
-                //}
             }
         }
         return liveTimings;
     }
 
-    private static LiveTiming buildLiveTiming(String[] splits, int i) {
+    private LiveTiming buildLiveTiming(int i, String[] splits) {
         return LiveTiming.getBuilder()
                 .withPosition(parseIntegerValue(splits[i + ParseType.POSITION.getIndex()]))
                 .withNumber(parseIntegerValue(splits[i + ParseType.NUMBER.getIndex()]))
@@ -81,22 +80,23 @@ public class LiveTimingParser {
                 .withSectorOne(parseLongValue(splits[i + ParseType.S1.getIndex()]))
                 .withSectorTwo(parseLongValue(splits[i + ParseType.S2.getIndex()]))
                 .withSectorThree(parseLongValue(splits[i + ParseType.S3.getIndex()]))
+                .withRace(race)
                 .build();
     }
 
-    private static int parseIntegerValue(String data) {
+    private int parseIntegerValue(String data) {
         data = stripInvalidCharacter(data);
         String[] split = data.split(",");
         return Integer.parseInt(split[2]);
     }
 
-    private static String parseStringValue(String data) {
+    private String parseStringValue(String data) {
         data = stripInvalidCharacter(data);
         String[] split = data.split(",");
         return split[2];
     }
 
-    private static long parseLongValue(String data) {
+    private long parseLongValue(String data) {
         data = stripInvalidCharacter(data);
         String[] split = data.split(",");
         long parsedLong = Long.parseLong(split[2]);
@@ -107,7 +107,7 @@ public class LiveTimingParser {
         }
     }
 
-    private static boolean parseInPitTiming(String data) {
+    private boolean parseInPitTiming(String data) {
         data = stripInvalidCharacter(data);
         String[] split = data.split(",");
         if (split.length != 4) {
@@ -121,7 +121,7 @@ public class LiveTimingParser {
         }
     }
 
-    private static LiveTimingState parseState(String data) {
+    private LiveTimingState parseState(String data) {
         data = data.replace(")", "").replace("]", "").replace(";", "");
         String[] split = data.split(",");
         switch (split[2]) {
@@ -138,9 +138,13 @@ public class LiveTimingParser {
         }
     }
 
-    private static String stripInvalidCharacter(String data) {
+    private String stripInvalidCharacter(String data) {
         return data.replace(")", "")
                 .replace("]", "")
                 .replace(";", "");
+    }
+
+    public static LiveTimingParser forRace(Race race) {
+        return new LiveTimingParser(race);
     }
 }

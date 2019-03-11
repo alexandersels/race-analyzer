@@ -1,9 +1,10 @@
 package com.racing.analyzer.backend.builders;
 
 import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 
-public class LiveTimingBuilder {
+public class LiveTimingBuilder extends BaseBuilder<LiveTiming> {
 
     private String name;
     private int number;
@@ -18,6 +19,7 @@ public class LiveTimingBuilder {
     private long sectorOne;
     private long sectorTwo;
     private long sectorThree;
+    private Race race;
 
     public LiveTimingBuilder withName(String name) {
         this.name = name;
@@ -84,9 +86,15 @@ public class LiveTimingBuilder {
         return this;
     }
 
-    public LiveTiming build() {
+    public LiveTimingBuilder withRace(Race race) {
+        this.race = race;
+        return this;
+    }
+
+    @Override
+    protected LiveTiming createInstance() {
         return new LiveTiming(name, number, cls, position, lastTime, bestTime, nationality, inPit, car, state,
-                sectorOne, sectorTwo, sectorThree);
+                sectorOne, sectorTwo, sectorThree, race);
     }
 
 }
