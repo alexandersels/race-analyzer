@@ -16,6 +16,18 @@ public class CreateRaceCommand {
         this.url = url;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isRecording() {
+        return isRecording;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     public Race getEntityToCreate() {
         return Race.getBuilder()
                 .withName(name)
@@ -27,5 +39,4 @@ public class CreateRaceCommand {
     public static CreateRaceCommandBuilder getBuilder() {
         return new CreateRaceCommandBuilder();
     }
-
 }
