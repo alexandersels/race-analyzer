@@ -2,95 +2,109 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f551b6bf-cfc1-432c-8693-5578115593e9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/RaceBuilderTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/commands/CreateRaceCommandBuilderTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/commands/UpdateRaceCommandBuilderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/commands/CreateRaceCommandTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/commands/UpdateRaceCommandTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/logic/RoundParserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/CreateRaceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/CreateRaceCommand.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/backend/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/commands/CreateRaceCommandBuilderTest.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="375">
-                  <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/builders/commands/UpdateRaceCommandBuilder.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="383">
-                  <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/commands/UpdateRaceCommandBuilderTest.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="285">
-                  <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/CreateRaceCommand.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="390">
-                  <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-                  <folding>
-                    <element signature="e#869#870#0" expanded="true" />
-                    <element signature="e#896#897#0" expanded="true" />
-                    <element signature="e#932#933#0" expanded="true" />
-                    <element signature="e#966#967#0" expanded="true" />
-                    <element signature="e#996#997#0" expanded="true" />
-                    <element signature="e#1022#1023#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/builders/commands/CreateRaceCommandBuilder.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="135">
-                  <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Race.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/entities/Race.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-102">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <folding>
+                <element signature="method#getCommandHandlers#0;class#Race#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoundParserTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/logic/RoundParserTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoundDTO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/dto/RoundDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoundParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/logic/RoundParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LiveTiming.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/entities/LiveTiming.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="169">
+              <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/repositories/MyParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="28" selection-start-line="28" selection-end-line="29" selection-end-column="70" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#599#600#0" expanded="true" />
+                <element signature="e#687#688#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -114,9 +128,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/LiveTimingState.java" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/dto/LiveTimingDTO.java" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/entities/IRaceRepository.java" />
         <option value="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/repositories/ILiveTimingRepository.java" />
         <option value="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/repositories/IRaceRepository.java" />
         <option value="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/mappers/RaceBuilder.java" />
@@ -165,6 +176,9 @@
         <option value="$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/CreateRaceCommand.java" />
         <option value="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/commands/CreateRaceCommandBuilderTest.java" />
         <option value="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/commands/UpdateRaceCommandBuilderTest.java" />
+        <option value="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/commands/CreateRaceCommandTest.java" />
+        <option value="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/commands/UpdateRaceCommandTest.java" />
+        <option value="$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/logic/RoundParserTest.java" />
       </list>
     </option>
   </component>
@@ -201,10 +215,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-7" />
+    <option name="width" value="954" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -212,130 +225,137 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="builders" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="builders" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="Readers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="repositories" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="builders" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Analyzer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Analyzer" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="builders" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -358,14 +378,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.racing.analyzer.backend.repositories" />
       <recent name="com.racing.analyzer.backend" />
+      <recent name="com.racing.analyzer.backend.repositories" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.racing.analyzer.backend.commands" />
       <recent name="com.racing.analyzer.backend.builders.commands" />
       <recent name="com.racing.analyzer.backend.enums" />
       <recent name="com.racing.analyzer.backend.repositories" />
-      <recent name="com.racing.analyzer.backend.commands" />
       <recent name="com.racing.analyzer.backend.assemblers" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -385,69 +405,98 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in backend">
+  <component name="RunManager" selected="JUnit.RoundParserTest.amountOfRoundsIsCorrect">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
+      <method>
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="All in backend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
     </configuration>
-    <configuration name="LiveTimingBuilderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CreateRaceCommandTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.racing.analyzer.backend.builders.*" />
+          <option name="PATTERN" value="com.racing.analyzer.backend.commands.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.racing.analyzer.backend.builders" />
-      <option name="MAIN_CLASS_NAME" value="com.racing.analyzer.backend.builders.LiveTimingBuilderTest" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.racing.analyzer.backend.commands" />
+      <option name="MAIN_CLASS_NAME" value="com.racing.analyzer.backend.commands.CreateRaceCommandTest" />
+      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
     </configuration>
-    <configuration name="MyParser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RoundParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.racing.analyzer.backend.repositories.*" />
+          <option name="PATTERN" value="com.racing.analyzer.backend.logic.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.racing.analyzer.backend.repositories" />
-      <option name="MAIN_CLASS_NAME" value="com.racing.analyzer.backend.repositories.MyParser" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.racing.analyzer.backend.logic" />
+      <option name="MAIN_CLASS_NAME" value="com.racing.analyzer.backend.logic.RoundParserTest" />
+      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
     </configuration>
-    <configuration name="RaceBuilderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RoundParserTest.amountOfRoundsIsCorrect" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.racing.analyzer.backend.builders.*" />
+          <option name="PATTERN" value="com.racing.analyzer.backend.logic.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.racing.analyzer.backend.builders" />
-      <option name="MAIN_CLASS_NAME" value="com.racing.analyzer.backend.builders.RaceBuilderTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.racing.analyzer.backend.logic" />
+      <option name="MAIN_CLASS_NAME" value="com.racing.analyzer.backend.logic.RoundParserTest" />
+      <option name="METHOD_NAME" value="amountOfRoundsIsCorrect" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
     </configuration>
     <configuration name="UpdateRaceCommandBuilderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="backend" />
@@ -457,18 +506,37 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.racing.analyzer.backend.builders.commands" />
       <option name="MAIN_CLASS_NAME" value="com.racing.analyzer.backend.builders.commands.UpdateRaceCommandBuilderTest" />
+      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+      <method>
         <option name="Make" enabled="true" />
       </method>
     </configuration>
@@ -476,29 +544,46 @@
       <module name="backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.racing.analyzer.backend.BackendApplication" />
     </configuration>
-    <configuration default="true" type="TestNG">
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
       <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
       <properties />
       <listeners />
-      <method v="2">
+      <method>
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.MyParser" />
-      <item itemvalue="JUnit.LiveTimingBuilderTest" />
-      <item itemvalue="JUnit.RaceBuilderTest" />
+      <item itemvalue="Spring Boot.BackendApplication" />
       <item itemvalue="JUnit.UpdateRaceCommandBuilderTest" />
       <item itemvalue="JUnit.All in backend" />
+      <item itemvalue="JUnit.CreateRaceCommandTest" />
+      <item itemvalue="JUnit.RoundParserTest" />
+      <item itemvalue="JUnit.RoundParserTest.amountOfRoundsIsCorrect" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RoundParserTest.amountOfRoundsIsCorrect" />
+        <item itemvalue="JUnit.RoundParserTest" />
+        <item itemvalue="JUnit.CreateRaceCommandTest" />
         <item itemvalue="JUnit.All in backend" />
         <item itemvalue="JUnit.UpdateRaceCommandBuilderTest" />
-        <item itemvalue="JUnit.RaceBuilderTest" />
-        <item itemvalue="JUnit.LiveTimingBuilderTest" />
-        <item itemvalue="JUnit.MyParser" />
       </list>
     </recent_temporary>
   </component>
@@ -614,27 +699,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="MyParser - 2019.03.11 at 19h 27m 53s.xml">
-      <configuration name="MyParser" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MyParser - 2019.03.11 at 20h 20m 33s.xml">
-      <configuration name="MyParser" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="LiveTimingBuilderTest - 2019.03.11 at 21h 39m 04s.xml">
-      <configuration name="LiveTimingBuilderTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="LiveTimingBuilderTest - 2019.03.11 at 21h 39m 15s.xml">
-      <configuration name="LiveTimingBuilderTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="LiveTimingBuilderTest - 2019.03.11 at 21h 39m 39s.xml">
-      <configuration name="LiveTimingBuilderTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="LiveTimingBuilderTest - 2019.03.11 at 21h 43m 29s.xml">
-      <configuration name="LiveTimingBuilderTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RaceBuilderTest - 2019.03.11 at 22h 39m 58s.xml">
-      <configuration name="RaceBuilderTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="RaceBuilderTest - 2019.03.11 at 22h 40m 21s.xml">
       <configuration name="RaceBuilderTest" configurationId="JUnit" />
     </history-entry>
@@ -644,9 +708,30 @@
     <history-entry file="All_in_backend - 2019.03.11 at 22h 52m 29s.xml">
       <configuration name="All in backend" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CreateRaceCommandTest - 2019.03.11 at 23h 26m 34s.xml">
+      <configuration name="CreateRaceCommandTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CreateRaceCommandTest - 2019.03.11 at 23h 34m 59s.xml">
+      <configuration name="CreateRaceCommandTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RoundParserTest - 2019.03.11 at 23h 37m 01s.xml">
+      <configuration name="RoundParserTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RoundParserTest_amountOfRoundsIsCorrect - 2019.03.12 at 00h 03m 15s.xml">
+      <configuration name="RoundParserTest.amountOfRoundsIsCorrect" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RoundParserTest_amountOfRoundsIsCorrect - 2019.03.12 at 00h 04m 08s.xml">
+      <configuration name="RoundParserTest.amountOfRoundsIsCorrect" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RoundParserTest_amountOfRoundsIsCorrect - 2019.03.12 at 00h 05m 20s.xml">
+      <configuration name="RoundParserTest.amountOfRoundsIsCorrect" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RoundParserTest_amountOfRoundsIsCorrect - 2019.03.12 at 00h 13m 14s.xml">
+      <configuration name="RoundParserTest.amountOfRoundsIsCorrect" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87977000" />
+    <option name="totallyTimeSpent" value="91159000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -658,44 +743,67 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1920" height="1002" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1995731" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info id="Web" order="6" side_tool="true" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
-      <window_info anchor="bottom" id="CheckStyle" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32760596" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.39404353" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="8" weight="0.32995737" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3943355" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3278867" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info id="Image Layers" order="3" />
+      <window_info anchor="bottom" id="Java Enterprise" order="9" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32897604" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3278867" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.32897604" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32897604" />
-      <window_info anchor="bottom" id="Java Enterprise" order="9" />
-      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32897604" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.3278867" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19936034" />
+      <window_info anchor="right" id="Bean Validation" order="7" />
+      <window_info id="Web" order="6" side_tool="true" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3278867" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="PlantUML" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1995731" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Database" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="bottom" id="Java Enterprise" order="9" />
       <window_info anchor="right" id="Theme Preview" order="7" />
-      <window_info anchor="right" id="Bean Validation" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32897604" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Maven Projects" order="9" />
+      <window_info id="Web" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Spring" order="7" weight="0.32897604" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="Image Layers" order="3" />
+      <window_info anchor="right" id="Bean Validation" order="8" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32897604" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3943355" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3278867" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info id="Designer" order="2" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -726,7 +834,14 @@
           </properties>
           <option name="timeStamp" value="111" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/logic/RoundParserTest.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
       </breakpoints>
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -798,35 +913,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/BackendApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/Integer.java" />
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/PersistanceJpaConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="39" column="67" selection-start-line="39" selection-start-column="67" selection-end-line="39" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/resources/persistence.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="87" selection-start-line="3" selection-start-column="87" selection-end-line="3" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="48" lean-forward="true" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -874,35 +960,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/dto/RoundDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/util/Map.java" />
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/dto/DriverDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/logic/DriverParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
           <caret line="19" column="46" lean-forward="true" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/logic/RoundParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="25" column="51" selection-start-line="25" selection-start-column="51" selection-end-line="25" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -941,16 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="559">
           <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/entities/LiveTiming.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="66" column="38" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1005,13 +1057,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/UpdateRaceCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1078,29 +1123,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/builders/LiveTimingBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#withName#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withNumber#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withCls#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withPosition#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withLastLapTime#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withBestLapTime#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withNationality#0;class#LiveTimingBuilder#0" />
-            <element signature="method#inPit#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withCar#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withState#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withSectorOne#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withSectorTwo#0;class#LiveTimingBuilder#0" />
-            <element signature="method#withSectorThree#0;class#LiveTimingBuilder#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/builders/RaceBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -1118,56 +1140,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/LiveTimingBuilderTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="7" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/entities/Race.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-45">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding>
-            <element signature="method#getCommandHandlers#0;class#Race#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/repositories/MyParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#599#600#0" expanded="true" />
-            <element signature="e#687#688#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/builders/commands/CreateRaceCommandBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/CreateRaceCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-          <folding>
-            <element signature="e#869#870#0" expanded="true" />
-            <element signature="e#896#897#0" expanded="true" />
-            <element signature="e#932#933#0" expanded="true" />
-            <element signature="e#966#967#0" expanded="true" />
-            <element signature="e#996#997#0" expanded="true" />
-            <element signature="e#1022#1023#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1193,6 +1171,153 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/builders/LiveTimingBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-106">
+          <caret line="33" column="49" selection-start-line="33" selection-start-column="49" selection-end-line="33" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#withName#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withNumber#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withCls#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withPosition#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withLastLapTime#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withBestLapTime#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withNationality#0;class#LiveTimingBuilder#0" />
+            <element signature="method#inPit#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withCar#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withState#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withSectorOne#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withSectorTwo#0;class#LiveTimingBuilder#0" />
+            <element signature="method#withSectorThree#0;class#LiveTimingBuilder#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/CreateRaceCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+          <folding>
+            <element signature="method#getEntityToCreate#0;class#CreateRaceCommand#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/commands/UpdateRaceCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/commands/CreateRaceCommandTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="34" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/builders/LiveTimingBuilderTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="7" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/dto/DriverDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/dto/LiveTimingDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/commands/UpdateRaceCommandTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="4" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/repositories/MyParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="28" selection-start-line="28" selection-end-line="29" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+            <element signature="e#687#688#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/entities/Race.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="method#getCommandHandlers#0;class#Race#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/entities/LiveTiming.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/logic/RoundParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/racing/analyzer/backend/dto/RoundDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/test/java/com/racing/analyzer/backend/logic/RoundParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
