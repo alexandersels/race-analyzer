@@ -15,6 +15,9 @@
 *.iws
 *.iml
 *.ipr
+.idea/*
+!.idea/runConfigurations
+*.iml
 
 ### NetBeans ###
 /nbproject/private/
