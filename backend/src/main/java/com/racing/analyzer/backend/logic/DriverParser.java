@@ -1,6 +1,7 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.dto.DriverDTO;
+import com.racing.analyzer.backend.dto.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 
 import java.util.Collection;
@@ -28,8 +29,24 @@ public class DriverParser {
                     dto.car = timing.getCar();
                     dto.name = timing.getName();
                     dto.rounds = RoundParser.createRoundDataForSpecificDriver(timings);
-                    dto.pitStops = dto.rounds.stream().mapToInt(r -> r.inPit ? 1 : 0).sum();
+                    calculateRoundBasedMetrics(dto);
                     return dto;
                 }).orElse(null);
+    }
+
+    private static void calculateRoundBasedMetrics(DriverDTO driver) {
+        long bestLap = -1L;
+        int pitsStops = 0;
+        for(RoundDTO round : driver.rounds) {
+            if(round.lapTime < bestLap || bestLap == -1L) {
+                bestLap = round.lapTime;
+            }
+            if(round.inPit) {
+                pitsStops++;
+            }
+        }
+
+        driver.pitStops = pitsStops;
+        driver.bestLap = bestLap;
     }
 }

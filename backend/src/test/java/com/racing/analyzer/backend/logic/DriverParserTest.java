@@ -23,6 +23,7 @@ public class DriverParserTest {
         assertThat(driver.number).isEqualTo(69);
         assertThat(driver.pitStops).isEqualTo(1);
         assertThat(driver.rounds.size()).isEqualTo(3);
+        assertThat(driver.bestLap).isEqualTo(5L);
 
     }
 
