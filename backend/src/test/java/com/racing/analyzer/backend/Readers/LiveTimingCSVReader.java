@@ -47,8 +47,8 @@ public class LiveTimingCSVReader {
                 .withState(getStateFrom(split[11]))
                 .inPit(Integer.parseInt(split[4].replace("\"", "")) == 1)
                 .withSectorOne(Integer.parseInt(split[12]))
-                .withSectorTwo(Integer.parseInt(split[13]))
-                .withSectorThree(Integer.parseInt(split[14]))
+                .withSectorTwo(Integer.parseInt(split[14]))
+                .withSectorThree(Integer.parseInt(split[13]))
                 .build();
     }
 

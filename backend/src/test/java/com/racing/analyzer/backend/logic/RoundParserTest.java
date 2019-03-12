@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RoundParserTest {
 
@@ -37,17 +37,72 @@ public class RoundParserTest {
     @Test
     public void testFirstLapRegistered() {
         final Collection<RoundDTO> rounds = RoundParser.createRoundDataForSpecificDriver(createFirstLapDataSet());
-        RoundDTO round = rounds.stream().findFirst().get();
 
-        assertThat(rounds.size()).isEqualTo(1);
-        assertThat(round.inPit).isFalse();
-        assertThat(round.lapTime).isEqualTo(80000L);
-        assertThat(round.sectorOneTime).isEqualTo(30000L);
-        assertThat(round.sectorTwoTime).isEqualTo(25000L);
-        assertThat(round.sectorThreeTime).isEqualTo(24000L);
+        RoundDTO expected = new RoundDTO();
+        expected.inPit = false;
+        expected.lapTime = 79000L;
+        expected.sectorOneTime = 30000L;
+        expected.sectorTwoTime = 25000L;
+        expected.sectorThreeTime = 24000L;
 
+        assertThat(rounds).containsExactly(expected);
     }
 
+    @Test
+    public void testConsecutiveLapsRegistered() {
+        final Collection<RoundDTO> rounds = RoundParser.createRoundDataForSpecificDriver(createConsecutiveLapDataSet());
+
+        RoundDTO expectedRoundOne = new RoundDTO();
+        expectedRoundOne.inPit = false;
+        expectedRoundOne.lapTime = 5L;
+        expectedRoundOne.sectorOneTime = 2L;
+        expectedRoundOne.sectorTwoTime = 1L;
+        expectedRoundOne.sectorThreeTime = 2L;
+
+        RoundDTO expectedRoundTwo = new RoundDTO();
+        expectedRoundTwo.inPit = false;
+        expectedRoundTwo.lapTime = 10L;
+        expectedRoundTwo.sectorOneTime = 3L;
+        expectedRoundTwo.sectorTwoTime = 2L;
+        expectedRoundTwo.sectorThreeTime = 5L;
+
+        RoundDTO expectedRoundThree = new RoundDTO();
+        expectedRoundThree.inPit = false;
+        expectedRoundThree.lapTime = 14L;
+        expectedRoundThree.sectorOneTime = 4L;
+        expectedRoundThree.sectorTwoTime = 4L;
+        expectedRoundThree.sectorThreeTime = 6L;
+
+        assertThat(rounds).containsExactly(expectedRoundOne, expectedRoundTwo, expectedRoundThree);
+    }
+
+    @Test
+    public void testConsecutiveLapsWithGapsRegistered() {
+        final Collection<RoundDTO> rounds = RoundParser.createRoundDataForSpecificDriver(createConsecutiveLapDataSetWithGap());
+
+        RoundDTO expectedRoundOne = new RoundDTO();
+        expectedRoundOne.inPit = false;
+        expectedRoundOne.lapTime = 5L;
+        expectedRoundOne.sectorOneTime = 2L;
+        expectedRoundOne.sectorTwoTime = 1L;
+        expectedRoundOne.sectorThreeTime = 2L;
+
+        RoundDTO expectedRoundTwo = new RoundDTO();
+        expectedRoundTwo.inPit = true;
+        expectedRoundTwo.lapTime = 8L;
+        expectedRoundTwo.sectorOneTime = 3L;
+        expectedRoundTwo.sectorTwoTime = 2L;
+        expectedRoundTwo.sectorThreeTime = -1L;
+
+        RoundDTO expectedRoundThree = new RoundDTO();
+        expectedRoundThree.inPit = false;
+        expectedRoundThree.lapTime = 20L;
+        expectedRoundThree.sectorOneTime = -1L;
+        expectedRoundThree.sectorTwoTime = 5L;
+        expectedRoundThree.sectorThreeTime = 6L;
+
+        assertThat(rounds).containsExactly(expectedRoundOne, expectedRoundTwo, expectedRoundThree);
+    }
 
     private Collection<LiveTiming> expectedDataSet() {
         Race race = new Race("Zolder", false, "url");
@@ -69,7 +124,7 @@ public class RoundParserTest {
                 new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 95844000L, 95703000L, "NLD", false, "CAR", LiveTimingState.RACING, 31500000L, 34844000L, 29500000L, race),
                 new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 96406000L, 95703000L, "NLD", false, "CAR", LiveTimingState.RACING, 31343000L, 35375000L, 29688000L, race),
                 new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 96953000L, 95703000L, "NLD", false, "CAR", LiveTimingState.RACING, 31734000L, 35484000L, 29735000L, race),
-                new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 105859000L, 95703000L, "NLD", true, "CAR", LiveTimingState.PIT, 31281000L,35094000L, -1L, race),
+                new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 105859000L, 95703000L, "NLD", true, "CAR", LiveTimingState.PIT, 31281000L, 35094000L, -1L, race),
                 new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 179234000L, 95703000L, "NLD", true, "CAR", LiveTimingState.OUTLAP, -1L, 35531000L, 29719000L, race),
                 new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 96719000L, 95703000L, "NLD", true, "CAR", LiveTimingState.RACING, 31625000L, 35437000L, 29657000L, race),
                 new LiveTiming("DANNY WERKMAN", 127, "SGT", 14, 95609000L, 95609000L, "NLD", true, "CAR", LiveTimingState.RACING, 30968000L, 34875000L, 29766000L, race),
@@ -99,10 +154,50 @@ public class RoundParserTest {
                                "CAR", LiveTimingState.RACING, -1L, -1L, -1L, race),
                 new LiveTiming("Sels", 69, "SGT", 1, -1L, -1L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 30000L, -1L, -1L, race),
-        new LiveTiming("Sels", 69, "SGT", 1, -1L, -1L, "NLD", false,
-                       "CAR", LiveTimingState.RACING, 30000L, 25000L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, -1L, -1L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 30000L, 25000L, -1L, race),
                 new LiveTiming("Sels", 69, "SGT", 1, 79000L, 80000L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 30000L, 25000L, 24000L, race)
+                            );
+    }
+
+    private Collection<LiveTiming> createConsecutiveLapDataSet() {
+        Race race = new Race("Zolder", false, "url");
+        return Arrays.asList(
+                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 2L, 1L, 2L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 3L, -1L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 10L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 3L, 2L, 5L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 10L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 4L, -1L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 10L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 4L, 4L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 14L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 4L, 4L, 6L, race)
+                            );
+    }
+
+    private Collection<LiveTiming> createConsecutiveLapDataSetWithGap() {
+        Race race = new Race("Zolder", false, "url");
+        return Arrays.asList(
+                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 2L, 1L, 2L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 3L, -1L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                               "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                               "CAR", LiveTimingState.OUTLAP, -1L, -1L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                               "CAR", LiveTimingState.OUTLAP, -1L, 5L, -1L, race),
+                new LiveTiming("Sels", 69, "SGT", 1, 20L, 5L, "NLD", false,
+                               "CAR", LiveTimingState.RACING, -1L, 5L, 6L, race)
                             );
     }
 }
