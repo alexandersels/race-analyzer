@@ -34,10 +34,10 @@ public class LiveTiming extends BaseEntity {
     private int position;
 
     @Column(name = "lasttime")
-    private long lastTime;
+    private Long lastTime;
 
     @Column(name = "besttime")
-    private long bestTime;
+    private Long bestTime;
 
     @Column(name = "nationality")
     private String nationality;
@@ -52,13 +52,13 @@ public class LiveTiming extends BaseEntity {
     private LiveTimingState state;
 
     @Column(name = "sectorOne")
-    private long sectorOne;
+    private Long sectorOne;
 
     @Column(name = "sectorTwo")
-    private long sectorTwo;
+    private Long sectorTwo;
 
     @Column(name = "sectorThree")
-    private long sectorThree;
+    private Long sectorThree;
 
     @CreationTimestamp
     @Column(name = "creationTimestamp")
@@ -68,9 +68,9 @@ public class LiveTiming extends BaseEntity {
     @JoinColumn(name = "race_id")
     private Race race;
 
-    public LiveTiming(String name, int number, String cls, int position, long lastTime, long bestTime,
+    public LiveTiming(String name, int number, String cls, int position, Long lastTime, Long bestTime,
                       String nationality, boolean inPit, String car, LiveTimingState state,
-                      long sectorOne, long sectorTwo, long sectorThree, Race race) {
+                      Long sectorOne, Long sectorTwo, Long sectorThree, Race race) {
         this.name = name;
         this.number = number;
         this.cls = cls;
@@ -111,11 +111,11 @@ public class LiveTiming extends BaseEntity {
         return position;
     }
 
-    public long getLastTime() {
+    public Long getLastTime() {
         return lastTime;
     }
 
-    public long getBestTime() {
+    public Long getBestTime() {
         return bestTime;
     }
 
@@ -135,15 +135,15 @@ public class LiveTiming extends BaseEntity {
         return state;
     }
 
-    public long getSectorOne() {
+    public Long getSectorOne() {
         return sectorOne;
     }
 
-    public long getSectorTwo() {
+    public Long getSectorTwo() {
         return sectorTwo;
     }
 
-    public long getSectorThree() {
+    public Long getSectorThree() {
         return sectorThree;
     }
 

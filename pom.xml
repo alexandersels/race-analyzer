@@ -7,6 +7,11 @@
     <groupId>com.racing</groupId>
     <artifactId>analyzer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>backend</module>
+    </modules>
 
 
 </project>

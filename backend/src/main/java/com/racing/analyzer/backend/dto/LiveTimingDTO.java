@@ -4,17 +4,18 @@ import com.racing.analyzer.backend.enums.LiveTimingState;
 
 public class LiveTimingDTO {
 
-    public long id;
+    public Long id;
     public String driverName;
     public int carNumber;
     public String car;
     public int position;
     public LiveTimingState state;
     public String nationality;
-    public long lastTime;
-    public long bestTime;
-    public long sectorOneTime;
-    public long sectorTwoTime;
-    public long sectorThreeTime;
+    public Long lastTime;
+    public Long bestTime;
+    public Long sectorOneTime;
+    public Long sectorTwoTime;
+    public Long sectorThreeTime;
+    public Long race_if;
 
 }
