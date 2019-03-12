@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RoundParser
-{
+public class RoundParser {
 
     public static Collection<RoundDTO> createRoundDataForSpecificDriver(Collection<LiveTiming> timings) {
 
@@ -20,18 +19,18 @@ public class RoundParser
             if (liveTiming.isInPit()) {
                 if (!previousTiming.isInPit()) {
                     previousTiming = liveTiming;
-                    rounds.add(new RoundDTO());
+                    rounds.add(createRoundData(liveTiming));
                 }
             } else {
                 if (liveTiming.areSectorsFilledIn() || (previousTiming != null && previousTiming.isInPit())) {
                     if (previousTiming == null) {
                         previousTiming = liveTiming;
-                        rounds.add(new RoundDTO());
+                        rounds.add(createRoundData(liveTiming));
                     } else {
                         if ((previousTiming.getLastTime() != liveTiming.getLastTime()) || // the lap times are different
                                 ((previousTiming.getLastTime() == liveTiming.getLastTime()) && sectorsAreDifferent(previousTiming, liveTiming))) { // lap times are identical but sectores times changed
                             previousTiming = liveTiming;
-                            rounds.add(new RoundDTO());
+                            rounds.add(createRoundData(liveTiming));
                         }
                     }
                 }
@@ -42,7 +41,14 @@ public class RoundParser
     }
 
     private static RoundDTO createRoundData(LiveTiming timing) {
-        return new RoundDTO();
+        RoundDTO dto = new RoundDTO();
+        dto.inPit = timing.isInPit();
+        dto.lapTime = timing.getLastTime();
+        dto.sectorOneTime = timing.getSectorOne();
+        dto.sectorTwoTime = timing.getSectorTwo();
+        dto.sectorThreeTime = timing.getSectorThree();
+
+        return dto;
     }
 
     private static boolean sectorsAreDifferent(LiveTiming oldValue, LiveTiming newValue) {
