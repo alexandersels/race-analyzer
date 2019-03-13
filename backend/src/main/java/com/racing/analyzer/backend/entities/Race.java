@@ -11,14 +11,14 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "Race")
+@Table(name = "race")
 public class Race extends BaseEntity {
 
     @Id
     @Column(name = "id")
     @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;

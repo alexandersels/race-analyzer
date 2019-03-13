@@ -21,6 +21,19 @@ public class LiveTimingCacheTest {
     }
 
     @Test
+    public void nothingChanged() {
+        LiveTimingCache cache = new LiveTimingCache();
+        cache.isNewEntry(firstEntry);
+
+        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
+                "BEL", false, "Car", LiveTimingState.RACING,
+                3L, 4L, 5L, race);
+
+
+        assertThat(cache.isNewEntry(secondEntry)).isFalse();
+    }
+
+    @Test
     public void lastTimeChangedResultsInNewEntry() {
         LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 2L, 2L,
                 "BEL", false, "Car", LiveTimingState.RACING,

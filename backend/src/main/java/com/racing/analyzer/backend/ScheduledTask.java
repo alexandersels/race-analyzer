@@ -27,7 +27,7 @@ public class ScheduledTask {
     @Autowired
     private LiveTimingRepository repository;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000)
     public void scrapWebsite() {
         if (enabled) {
             LOGGER.info("Parsing site: {}", race.getUrl());

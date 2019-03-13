@@ -1,7 +1,11 @@
-package com.racing.analyzer.backend.services;
+package com.racing.analyzer.backend;
 
-import com.racing.analyzer.backend.entities.Race;
+import com.racing.analyzer.backend.dto.DriverDTO;
+import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.logic.DriverParser;
+import com.racing.analyzer.backend.repositories.LiveTimingRepository;
 import com.racing.analyzer.backend.repositories.RaceRepository;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,33 +16,37 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.MySQLContainer;
 
+import java.util.Collection;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(initializers = RaceServiceTest.Initializer.class)
+@ContextConfiguration(initializers = ParserIntegrationTest.Initializer.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class RaceServiceTest {
+public class ParserIntegrationTest {
 
     @ClassRule
-    public static MySQLContainer mySQLContainer = new MySQLContainer("mysql:5.5")
+    public static MySQLContainer mySQLContainer = (MySQLContainer) new MySQLContainer("mysql:5.7")
             .withDatabaseName("racing");
 
     @Autowired
-    private RaceRepository repository;
+    private RaceRepository raceRepository;
+
+    @Autowired
+    private LiveTimingRepository liveTimingRepository;
 
     @Test
-    public void test() {
-        System.out.println("Hallo");
-        final List<Race> all = repository.findAll();
-        assert (all.size() == 0);
-
-        repository.save(new Race());
-        final List<Race> allTwo = repository.findAll();
-        assert (allTwo.size() == 1);
+    @Sql({"/RaceDemoData.sql","/LiveTimingDemoData.sql"})
+    public void run() {
+        List<LiveTiming> all = liveTimingRepository.findAll();
+        final Collection<DriverDTO> driverData = DriverParser.createDriverData(all);
+        assertThat(driverData.size()).isEqualTo(32);
     }
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
@@ -50,7 +58,7 @@ public class RaceServiceTest {
                     "spring.datasource.password=" + mySQLContainer.getPassword(),
                     "spring.jpa.hibernate.ddl-auto=create",
                     "spring.jpa.show-sql=true"
-                                                             );
+            );
             values.applyTo(configurableApplicationContext);
         }
     }

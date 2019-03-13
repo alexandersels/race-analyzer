@@ -9,6 +9,6 @@ public class DriverDTO {
     public String car;
     public Collection<RoundDTO> rounds;
     public int pitStops;
-    public Long bestLap;
+    public long bestLap;
 
 }

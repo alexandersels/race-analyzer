@@ -4,7 +4,6 @@ import com.racing.analyzer.backend.builders.LiveTimingBuilder;
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,14 +11,14 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Entity
-@Table(name = "LiveTiming")
+@Table(name = "livetiming")
 public class LiveTiming extends BaseEntity {
 
     @Id
     @Column(name = "id")
     @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -34,15 +33,15 @@ public class LiveTiming extends BaseEntity {
     private int position;
 
     @Column(name = "lasttime")
-    private Long lastTime;
+    private long lastTime;
 
     @Column(name = "besttime")
-    private Long bestTime;
+    private long bestTime;
 
     @Column(name = "nationality")
     private String nationality;
 
-    @Column(name = "inPit")
+    @Column(name = "pit")
     private boolean inPit;
 
     @Column(name = "car")
@@ -51,26 +50,28 @@ public class LiveTiming extends BaseEntity {
     @Column(name = "state")
     private LiveTimingState state;
 
-    @Column(name = "sectorOne")
-    private Long sectorOne;
+    @Column(name = "sectorone")
+    private long sectorOne;
 
-    @Column(name = "sectorTwo")
-    private Long sectorTwo;
+    @Column(name = "sectortwo")
+    private long sectorTwo;
 
-    @Column(name = "sectorThree")
-    private Long sectorThree;
+    @Column(name = "sectorthree")
+    private long sectorThree;
 
     @CreationTimestamp
-    @Column(name = "creationTimestamp")
-    private Timestamp creationTimestamp;
+    @Column(name = "creation")
+    private Timestamp creation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "race_id")
     private Race race;
 
-    public LiveTiming(String name, int number, String cls, int position, Long lastTime, Long bestTime,
+    private LiveTiming() { }
+
+    public LiveTiming(String name, int number, String cls, int position, long lastTime, long bestTime,
                       String nationality, boolean inPit, String car, LiveTimingState state,
-                      Long sectorOne, Long sectorTwo, Long sectorThree, Race race) {
+                      long sectorOne, long sectorTwo, long sectorThree, Race race) {
         this.name = name;
         this.number = number;
         this.cls = cls;
@@ -87,7 +88,11 @@ public class LiveTiming extends BaseEntity {
         this.race = race;
     }
 
-    public Long getId() {
+    public static LiveTimingBuilder getBuilder() {
+        return new LiveTimingBuilder();
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -111,11 +116,11 @@ public class LiveTiming extends BaseEntity {
         return position;
     }
 
-    public Long getLastTime() {
+    public long getLastTime() {
         return lastTime;
     }
 
-    public Long getBestTime() {
+    public long getBestTime() {
         return bestTime;
     }
 
@@ -135,20 +140,20 @@ public class LiveTiming extends BaseEntity {
         return state;
     }
 
-    public Long getSectorOne() {
+    public long getSectorOne() {
         return sectorOne;
     }
 
-    public Long getSectorTwo() {
+    public long getSectorTwo() {
         return sectorTwo;
     }
 
-    public Long getSectorThree() {
+    public long getSectorThree() {
         return sectorThree;
     }
 
-    public Timestamp getCreationTimestamp() {
-        return creationTimestamp;
+    public Timestamp getCreation() {
+        return creation;
     }
 
     public Race getRace() {
@@ -157,10 +162,6 @@ public class LiveTiming extends BaseEntity {
 
     public boolean areSectorsFilledIn() {
         return (sectorOne != -1) && (sectorTwo != -1) && (sectorThree != -1);
-    }
-
-    public static LiveTimingBuilder getBuilder() {
-        return new LiveTimingBuilder();
     }
 
     @Override
