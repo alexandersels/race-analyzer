@@ -44,9 +44,11 @@ public class ParserIntegrationTest {
     @Test
     @Sql({"/RaceDemoData.sql","/LiveTimingDemoData.sql"})
     public void run() {
-        List<LiveTiming> all = liveTimingRepository.findAll();
-        final Collection<DriverDTO> driverData = DriverParser.createDriverData(all);
+        List<LiveTiming> allTimings = liveTimingRepository.findAll();
+        final Collection<DriverDTO> driverData = DriverParser.createDriverData(allTimings);
         assertThat(driverData.size()).isEqualTo(32);
+        assertThat(driverData.stream().mapToInt(d -> d.rounds.size()).sum()).isEqualTo(978);
+        assertThat(driverData.stream().mapToInt(d -> d.pitStops).sum()).isEqualTo(35);
     }
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
