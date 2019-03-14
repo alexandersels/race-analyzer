@@ -1,7 +1,9 @@
 package com.racing.analyzer.backend.services;
 
-import com.racing.analyzer.backend.entities.Race;
-import com.racing.analyzer.backend.repositories.RaceRepository;
+import com.racing.analyzer.backend.dto.DriverDTO;
+import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.logic.DriverParser;
+import com.racing.analyzer.backend.repositories.LiveTimingRepository;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,10 +14,14 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.MySQLContainer;
 
+import java.util.Collection;
 import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @RunWith(SpringRunner.class)
@@ -24,21 +30,23 @@ import java.util.List;
 public class RaceServiceTest {
 
     @ClassRule
-    public static MySQLContainer mySQLContainer = new MySQLContainer("mysql:5.5")
+    public static MySQLContainer mySQLContainer = new MySQLContainer("mysql:5.7")
             .withDatabaseName("racing");
 
     @Autowired
-    private RaceRepository repository;
+    private LiveTimingRepository repository;
 
     @Test
+    @Sql({"/RaceDemoData.sql", "/LiveTimingDemoData.sql"})
     public void test() {
-        System.out.println("Hallo");
-        final List<Race> all = repository.findAll();
-        assert (all.size() == 0);
+        final List<LiveTiming> liveTimings = repository.findAll();
+        final Collection<DriverDTO> driverData = DriverParser.createDriverData(liveTimings);
 
-        repository.save(new Race());
-        final List<Race> allTwo = repository.findAll();
-        assert (allTwo.size() == 1);
+        assertThat(driverData.size()).isEqualTo(32);
+        assertThat(driverData.stream().mapToInt(d -> d.rounds.size()).sum()).isEqualTo(978);
+        assertThat(driverData.stream().mapToInt(d -> d.pitStops).sum()).isEqualTo(35);
+        assertThat(driverData.stream().mapToInt(d -> d.pitStops).sum()).isEqualTo(35);
+
     }
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {

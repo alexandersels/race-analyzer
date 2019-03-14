@@ -1,4 +1,4 @@
-package com.racing.analyzer.backend.Readers;
+package com.racing.analyzer.backend.readers;
 
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.enums.LiveTimingState;

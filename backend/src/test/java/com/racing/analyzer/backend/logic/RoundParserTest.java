@@ -1,6 +1,6 @@
 package com.racing.analyzer.backend.logic;
 
-import com.racing.analyzer.backend.Readers.LiveTimingCSVReader;
+import com.racing.analyzer.backend.readers.LiveTimingCSVReader;
 import com.racing.analyzer.backend.dto.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
