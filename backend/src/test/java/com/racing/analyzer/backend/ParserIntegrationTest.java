@@ -42,7 +42,6 @@ public class ParserIntegrationTest {
     @Autowired
     private LiveTimingRepository liveTimingRepository;
 
-    @Ignore
     @Test
     @Sql({"/RaceDemoData.sql","/LiveTimingDemoData.sql"})
     public void run() {
