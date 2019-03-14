@@ -7,6 +7,7 @@ import com.racing.analyzer.backend.repositories.LiveTimingRepository;
 import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class ParserIntegrationTest {
     @Autowired
     private LiveTimingRepository liveTimingRepository;
 
+    @Ignore
     @Test
     @Sql({"/RaceDemoData.sql","/LiveTimingDemoData.sql"})
     public void run() {
