@@ -26,9 +26,9 @@ public class CreateRaceCommandBuilder extends BaseBuilder<CreateRaceCommand> {
     }
 
     public CreateRaceCommandBuilder startFrom(RaceDTO dto) {
-        this.name = dto.name;
-        this.isRecording = dto.recording;
-        this.url = dto.url;
+        this.name = dto.getName();
+        this.isRecording = dto.isRecording();
+        this.url = dto.getUrl();
         return this;
     }
 

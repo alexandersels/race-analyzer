@@ -16,7 +16,7 @@ public class RaceAssembler implements ResourceAssembler<RaceDTO, Resource<RaceDT
     public Resource<RaceDTO> toResource(RaceDTO raceDTO) {
 
         return new Resource<>(raceDTO,
-                linkTo(methodOn(RaceResource.class).getById(raceDTO.id)).withSelfRel(),
+                linkTo(methodOn(RaceResource.class).getById(raceDTO.getId())).withSelfRel(),
                 linkTo(methodOn(RaceResource.class).getRaces()).withRel("races"));
 
     }

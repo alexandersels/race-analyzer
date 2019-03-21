@@ -33,10 +33,10 @@ public class UpdateRaceCommandBuilder extends BaseBuilder<UpdateRaceCommand> {
     }
 
     public UpdateRaceCommandBuilder startFrom(RaceDTO dto) {
-        this.name = dto.name;
-        this.url = dto.url;
-        this.version = dto.version;
-        this.isRecording = dto.recording;
+        this.name = dto.getName();
+        this.url = dto.getUrl();
+        this.version = dto.getVersion();
+        this.isRecording = dto.isRecording();
         return this;
     }
 

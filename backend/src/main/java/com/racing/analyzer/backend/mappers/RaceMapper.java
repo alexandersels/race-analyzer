@@ -10,12 +10,11 @@ public class RaceMapper {
     public static RaceDTO toDto(Race race) {
         checkNotNull(race);
 
-        final RaceDTO dto = new RaceDTO();
-        dto.id = race.getId();
-        dto.name = race.getName();
-        dto.recording = race.isRecording();
-        dto.url = race.getUrl();
-
-        return dto;
+        return RaceDTO.builder()
+                .id(race.getId())
+                .name(race.getName())
+                .recording(race.isRecording())
+                .url(race.getUrl())
+                .build();
     }
 }

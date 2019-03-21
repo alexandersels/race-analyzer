@@ -1,6 +1,7 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.dto.DriverDTO;
+import com.racing.analyzer.backend.dto.RaceDTO;
 import com.racing.analyzer.backend.dto.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 
