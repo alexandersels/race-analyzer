@@ -1,6 +1,6 @@
 package com.racing.analyzer.backend.mappers;
 
-import com.racing.analyzer.backend.dto.RaceDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 
 import static com.google.common.base.Preconditions.checkNotNull;

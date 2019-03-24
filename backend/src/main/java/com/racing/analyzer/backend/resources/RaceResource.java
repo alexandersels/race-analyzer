@@ -4,7 +4,7 @@ import com.racing.analyzer.backend.ScheduledTask;
 import com.racing.analyzer.backend.assemblers.RaceAssembler;
 import com.racing.analyzer.backend.commands.CreateRaceCommand;
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
-import com.racing.analyzer.backend.dto.RaceDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.mappers.RaceMapper;
 import com.racing.analyzer.backend.services.RaceService;

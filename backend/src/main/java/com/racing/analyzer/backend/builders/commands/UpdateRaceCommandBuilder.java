@@ -2,7 +2,7 @@ package com.racing.analyzer.backend.builders.commands;
 
 import com.racing.analyzer.backend.builders.BaseBuilder;
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
-import com.racing.analyzer.backend.dto.RaceDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 
 public class UpdateRaceCommandBuilder extends BaseBuilder<UpdateRaceCommand> {

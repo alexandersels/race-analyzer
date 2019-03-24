@@ -1,6 +1,6 @@
 package com.racing.analyzer.backend.assemblers;
 
-import com.racing.analyzer.backend.dto.RaceDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.resources.RaceResource;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;

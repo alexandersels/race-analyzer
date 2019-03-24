@@ -1,7 +1,6 @@
 package com.racing.analyzer.backend.commands;
 
 import com.racing.analyzer.backend.builders.commands.CreateRaceCommandBuilder;
-import com.racing.analyzer.backend.dto.RaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 
 public class CreateRaceCommand {

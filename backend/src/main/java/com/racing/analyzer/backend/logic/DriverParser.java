@@ -1,7 +1,6 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.dto.DriverDTO;
-import com.racing.analyzer.backend.dto.RaceDTO;
 import com.racing.analyzer.backend.dto.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 
@@ -38,11 +37,11 @@ public class DriverParser {
     private static void calculateRoundBasedMetrics(DriverDTO driver) {
         long bestLap = -1L;
         int pitsStops = 0;
-        for(RoundDTO round : driver.rounds) {
-            if(round.lapTime < bestLap || bestLap == -1L) {
+        for (RoundDTO round : driver.rounds) {
+            if (round.lapTime < bestLap || bestLap == -1L) {
                 bestLap = round.lapTime;
             }
-            if(round.inPit) {
+            if (round.inPit) {
                 pitsStops++;
             }
         }

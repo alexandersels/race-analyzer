@@ -1,9 +1,9 @@
-package com.racing.analyzer.backend.dto;
+package com.racing.analyzer.backend.dto.race;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @Builder
 public class RaceDTO {
 
@@ -14,6 +14,3 @@ public class RaceDTO {
     private int version;
 
 }
-
-
-

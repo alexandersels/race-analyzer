@@ -1,7 +1,7 @@
 package com.racing.analyzer.backend.builders.commands;
 
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
-import com.racing.analyzer.backend.dto.RaceDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 import org.junit.Test;
 
@@ -42,11 +42,12 @@ public class UpdateRaceCommandBuilderTest {
 
     @Test
     public void startFromDTOIsCorrect() {
-        RaceDTO dto = new RaceDTO();
-        dto.name = "Zolder";
-        dto.recording = true;
-        dto.url = "website";
-        dto.version = 2;
+        RaceDTO dto = RaceDTO.builder()
+                .name("Zolder")
+                .recording(true)
+                .url("website")
+                .version(2)
+                .build();
 
         UpdateRaceCommand command = UpdateRaceCommand.getBuilder()
                                                            .startFrom(dto)
