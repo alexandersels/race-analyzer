@@ -14,8 +14,8 @@ public class TestMapperTest {
     public void test() {
         TestMapper mapper = Mappers.getMapper(TestMapper.class);
 
-        LiveTiming timing = LiveTiming.getBuilder()
-                .withName("Name")
+        LiveTiming timing = LiveTiming.builder()
+                .name("Name")
                 .build();
         assertThat(mapper.toDto(timing).getDriverName()).isEqualTo("Name");
     }

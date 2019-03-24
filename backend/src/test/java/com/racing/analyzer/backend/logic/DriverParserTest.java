@@ -28,21 +28,26 @@ public class DriverParserTest {
     }
 
     private Collection<LiveTiming> createTestData() {
-        Race race = new Race("Zolder", false, "url");
+        Race race = Race.builder()
+            .name("Zolder")
+            .recording(false)
+            .url("url")
+            .build();
+
         return Arrays.asList(
-                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                new LiveTiming(1,"Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 2L, 1L, 2L, race),
-                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                new LiveTiming(1,"Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 3L, -1L, -1L, race),
-                new LiveTiming("Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                new LiveTiming(1, "Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
-                new LiveTiming("Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                new LiveTiming(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
                                "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
-                new LiveTiming("Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                new LiveTiming(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
                                "CAR", LiveTimingState.OUTLAP, -1L, -1L, -1L, race),
-                new LiveTiming("Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                new LiveTiming(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
                                "CAR", LiveTimingState.OUTLAP, -1L, 5L, -1L, race),
-                new LiveTiming("Sels", 69, "SGT", 1, 20L, 5L, "NLD", false,
+                new LiveTiming(1, "Sels", 69, "SGT", 1, 20L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, -1L, 5L, 6L, race)
                             );
     }

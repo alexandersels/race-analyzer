@@ -66,21 +66,21 @@ public class LiveTimingParser {
     }
 
     private LiveTiming buildLiveTiming(int i, String[] splits) {
-        return LiveTiming.getBuilder()
-                .withPosition(parseIntegerValue(splits[i + ParseType.POSITION.getIndex()]))
-                .withNumber(parseIntegerValue(splits[i + ParseType.NUMBER.getIndex()]))
-                .withName(parseStringValue(splits[i + ParseType.NAME.getIndex()]))
-                .withCls(parseStringValue(splits[i + ParseType.CLS.getIndex()]))
-                .withLastLapTime(parseLongValue(splits[i + ParseType.LAST.getIndex()]))
-                .withBestLapTime(parseLongValue(splits[i + ParseType.BEST.getIndex()]))
-                .withNationality(parseStringValue(splits[i + ParseType.NAT.getIndex()]))
-                .withCar(parseStringValue(splits[i + ParseType.CAR.getIndex()]))
-                .withState(parseState(splits[i + ParseType.STATE.getIndex()]))
+        return LiveTiming.builder()
+                .position(parseIntegerValue(splits[i + ParseType.POSITION.getIndex()]))
+                .number(parseIntegerValue(splits[i + ParseType.NUMBER.getIndex()]))
+                .name(parseStringValue(splits[i + ParseType.NAME.getIndex()]))
+                .cls(parseStringValue(splits[i + ParseType.CLS.getIndex()]))
+                .lastTime(parseLongValue(splits[i + ParseType.LAST.getIndex()]))
+                .bestTime(parseLongValue(splits[i + ParseType.BEST.getIndex()]))
+                .nationality(parseStringValue(splits[i + ParseType.NAT.getIndex()]))
+                .car(parseStringValue(splits[i + ParseType.CAR.getIndex()]))
+                .state(parseState(splits[i + ParseType.STATE.getIndex()]))
                 .inPit(parseInPitTiming(splits[i + ParseType.LAST.getIndex()]))
-                .withSectorOne(parseLongValue(splits[i + ParseType.S1.getIndex()]))
-                .withSectorTwo(parseLongValue(splits[i + ParseType.S2.getIndex()]))
-                .withSectorThree(parseLongValue(splits[i + ParseType.S3.getIndex()]))
-                .withRace(race)
+                .sectorOne(parseLongValue(splits[i + ParseType.S1.getIndex()]))
+                .sectorTwo(parseLongValue(splits[i + ParseType.S2.getIndex()]))
+                .sectorThree(parseLongValue(splits[i + ParseType.S3.getIndex()]))
+                .race(race)
                 .build();
     }
 

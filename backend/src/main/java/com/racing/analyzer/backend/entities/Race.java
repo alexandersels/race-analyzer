@@ -1,14 +1,25 @@
 package com.racing.analyzer.backend.entities;
 
-import com.racing.analyzer.backend.builders.RaceBuilder;
 import com.racing.analyzer.backend.commands.HandlerImplementation;
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "race")
@@ -18,51 +29,35 @@ public class Race extends BaseEntity {
     @Column(name = "id")
     @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
+    @Setter
     private long id;
 
     @Column(name = "name")
+    @Getter
+    @Setter
     private String name;
 
     @Column(name = "recording")
+    @Getter
+    @Setter
     private boolean recording;
 
     @Column(name = "url")
+    @Getter
+    @Setter
     private String url;
 
-    @OneToMany(mappedBy = "race",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "race", fetch = FetchType.LAZY)
+    @Getter
     private List<LiveTiming> timings;
 
-    public Race() {
-    }
-
-    public Race(String name, boolean recording, String url) {
+    @Builder
+    public Race(long id, String name, boolean recording, String url) {
+        this.id = id;
         this.name = name;
         this.recording = recording;
         this.url = url;
-    }
-
-    public static RaceBuilder getBuilder() {
-        return new RaceBuilder();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isRecording() {
-        return recording;
-    }
-
-    public List<LiveTiming> getTimings() {
-        return timings;
     }
 
     @Override
@@ -81,7 +76,7 @@ public class Race extends BaseEntity {
             recording = command.isRecording();
         }
 
-        if(!url.equals(command.getUrl())) {
+        if (!url.equals(command.getUrl())) {
             url = command.getUrl();
         }
 

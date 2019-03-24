@@ -15,9 +15,14 @@ public class LiveTimingMapperTest {
 
     @Before
     public void init() {
-        Race race = new Race();
-        liveTiming = new LiveTiming("Sels", 69, "SGT", 1, 5L, 6L, "NLD", true,
-                                    "CAR", LiveTimingState.RACING, 2L, 1L, 3L, race);
+        Race race = Race.builder()
+                        .id(1)
+                        .url("url")
+                        .recording(false)
+                        .build();
+
+        liveTiming = new LiveTiming(1, "Sels", 69, "SGT", 1, 5L, 6L, "NLD",
+                                    true, "CAR", LiveTimingState.RACING, 2L, 1L, 3L, race);
     }
 
     @Test
@@ -101,6 +106,6 @@ public class LiveTimingMapperTest {
     @Test
     public void testRaceMapping() {
         LiveTimingDTO mappedDto = LiveTimingMapper.toDto(liveTiming);
-        assertThat(mappedDto.race).isEqualTo(0);
+        assertThat(mappedDto.race).isEqualTo(1);
     }
 }

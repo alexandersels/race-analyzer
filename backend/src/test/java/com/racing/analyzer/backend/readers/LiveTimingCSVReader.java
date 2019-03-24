@@ -35,20 +35,20 @@ public class LiveTimingCSVReader {
 
         String[] split = data.split(";");
 
-        return LiveTiming.getBuilder()
-                .withPosition(Integer.parseInt(split[9]))
-                .withNumber(Integer.parseInt(split[8]))
-                .withName(split[6])
-                .withCls(split[3])
-                .withLastLapTime(Integer.parseInt(split[5]))
-                .withBestLapTime(Integer.parseInt(split[2]))
-                .withNationality(split[7])
-                .withCar(split[10])
-                .withState(getStateFrom(split[11]))
+        return LiveTiming.builder()
+                .position(Integer.parseInt(split[9]))
+                .number(Integer.parseInt(split[8]))
+                .name(split[6])
+                .cls(split[3])
+                .lastTime(Integer.parseInt(split[5]))
+                .bestTime(Integer.parseInt(split[2]))
+                .nationality(split[7])
+                .car(split[10])
+                .state(getStateFrom(split[11]))
                 .inPit(Integer.parseInt(split[4].replace("\"", "")) == 1)
-                .withSectorOne(Integer.parseInt(split[12]))
-                .withSectorTwo(Integer.parseInt(split[14]))
-                .withSectorThree(Integer.parseInt(split[13]))
+                .sectorOne(Integer.parseInt(split[12]))
+                .sectorTwo(Integer.parseInt(split[14]))
+                .sectorThree(Integer.parseInt(split[13]))
                 .build();
     }
 

@@ -61,10 +61,10 @@ public class UpdateRaceCommandBuilderTest {
 
     @Test
     public void startFromEntityIsCorrect() {
-        Race dto = Race.getBuilder()
-                .withName("Zolder")
-                .isRecording(true)
-                .withUrl("website")
+        Race dto = Race.builder()
+                .name("Zolder")
+                .recording(true)
+                .url("website")
                 .build();
 
         UpdateRaceCommand command = UpdateRaceCommand.getBuilder()

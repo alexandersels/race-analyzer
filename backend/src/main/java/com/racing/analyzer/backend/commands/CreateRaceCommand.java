@@ -28,10 +28,10 @@ public class CreateRaceCommand {
     }
 
     public Race getEntityToCreate() {
-        return Race.getBuilder()
-                .withName(name)
-                .withUrl(url)
-                .isRecording(isRecording)
+        return Race.builder()
+                .name(name)
+                .url(url)
+                .recording(isRecording)
                 .build();
     }
 

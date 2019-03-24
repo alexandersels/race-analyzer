@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LiveTimingCacheTest {
 
-    private final Race race = new Race();
+    private final Race race = Race.builder().id(1).build();
     private LiveTiming firstEntry;
 
     @Before
     public void init() {
-        firstEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
-                "BEL", false, "Car", LiveTimingState.RACING,
-                3L, 4L, 5L, race);
+        firstEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 1L, 2L,
+                                    "BEL", false, "Car", LiveTimingState.RACING,
+                                    3L, 4L, 5L, race);
     }
 
     @Test
@@ -25,9 +25,9 @@ public class LiveTimingCacheTest {
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);
 
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
-                "BEL", false, "Car", LiveTimingState.RACING,
-                3L, 4L, 5L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 1L, 2L,
+                                                "BEL", false, "Car", LiveTimingState.RACING,
+                                                3L, 4L, 5L, race);
 
 
         assertThat(cache.isNewEntry(secondEntry)).isFalse();
@@ -35,9 +35,9 @@ public class LiveTimingCacheTest {
 
     @Test
     public void lastTimeChangedResultsInNewEntry() {
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 2L, 2L,
-                "BEL", false, "Car", LiveTimingState.RACING,
-                3L, 4L, 5L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 2L, 2L,
+                                                "BEL", false, "Car", LiveTimingState.RACING,
+                                                3L, 4L, 5L, race);
 
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);
@@ -47,9 +47,9 @@ public class LiveTimingCacheTest {
 
     @Test
     public void sectorOneChangedResultsInNewEntry() {
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
-                "BEL", false, "Car", LiveTimingState.RACING,
-                4L, 4L, 5L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 1L, 2L,
+                                                "BEL", false, "Car", LiveTimingState.RACING,
+                                                4L, 4L, 5L, race);
 
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);
@@ -59,9 +59,9 @@ public class LiveTimingCacheTest {
 
     @Test
     public void sectorTwoChangedResultsInNewEntry() {
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
-                "BEL", false, "Car", LiveTimingState.RACING,
-                3L, 5L, 5L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 1L, 2L,
+                                                "BEL", false, "Car", LiveTimingState.RACING,
+                                                3L, 5L, 5L, race);
 
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);
@@ -71,9 +71,9 @@ public class LiveTimingCacheTest {
 
     @Test
     public void sectorThreeChangedResultsInNewEntry() {
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
-                "BEL", false, "Car", LiveTimingState.RACING,
-                3L, 4L, 6L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 1L, 2L,
+                                                "BEL", false, "Car", LiveTimingState.RACING,
+                                                3L, 4L, 6L, race);
 
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);
@@ -83,9 +83,9 @@ public class LiveTimingCacheTest {
 
     @Test
     public void pitChangedResultsInNewEntry() {
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
-                "BEL", true, "Car", LiveTimingState.RACING,
-                3L, 4L, 5L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 1L, 2L,
+                                                "BEL", true, "Car", LiveTimingState.RACING,
+                                                3L, 4L, 5L, race);
 
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);
@@ -95,9 +95,9 @@ public class LiveTimingCacheTest {
 
     @Test
     public void stateChangedResultsInNewEntry() {
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 1, 1L, 2L,
-                "BEL", false, "Car", LiveTimingState.PIT,
-                3L, 4L, 5L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 1, 1L, 2L,
+                                                "BEL", false, "Car", LiveTimingState.PIT,
+                                                3L, 4L, 5L, race);
 
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);
@@ -107,9 +107,9 @@ public class LiveTimingCacheTest {
 
     @Test
     public void positionChangedResultsInNewEntry() {
-        LiveTiming secondEntry = new LiveTiming("Sels", 69, "CLS", 2, 1L, 2L,
-                "BEL", false, "Car", LiveTimingState.RACING,
-                3L, 4L, 5L, race);
+        LiveTiming secondEntry = new LiveTiming(1, "Sels", 69, "CLS", 2, 1L, 2L,
+                                                "BEL", false, "Car", LiveTimingState.RACING,
+                                                3L, 4L, 5L, race);
 
         LiveTimingCache cache = new LiveTimingCache();
         cache.isNewEntry(firstEntry);

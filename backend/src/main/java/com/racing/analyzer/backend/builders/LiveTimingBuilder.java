@@ -93,7 +93,7 @@ public class LiveTimingBuilder extends BaseBuilder<LiveTiming> {
 
     @Override
     protected LiveTiming createInstance() {
-        return new LiveTiming(name, number, cls, position, lastTime, bestTime, nationality, inPit, car, state,
+        return new LiveTiming(1, name, number, cls, position, lastTime, bestTime, nationality, inPit, car, state,
                 sectorOne, sectorTwo, sectorThree, race);
     }
 

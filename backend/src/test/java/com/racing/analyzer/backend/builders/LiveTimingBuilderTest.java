@@ -102,7 +102,7 @@ public class LiveTimingBuilderTest {
 
     @Test
     public void withRaceIsCorrect() {
-        Race race = new Race();
+        Race race = Race.builder().id(1).build();
         LiveTimingBuilder builder = new LiveTimingBuilder();
         LiveTiming liveTiming = builder.withRace(race).build();
         assertThat(liveTiming.getRace()).isEqualTo(race);

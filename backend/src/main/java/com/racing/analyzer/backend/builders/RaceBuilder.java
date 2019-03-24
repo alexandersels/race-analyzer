@@ -23,11 +23,13 @@ public class RaceBuilder extends BaseBuilder<Race> {
         return this;
     }
 
-
-
     @Override
     protected Race createInstance() {
-        return new Race(name, isRecording, url);
+        return Race.builder()
+                   .name(name)
+                   .recording(isRecording)
+                   .url(url)
+                   .build();
     }
 
 }
