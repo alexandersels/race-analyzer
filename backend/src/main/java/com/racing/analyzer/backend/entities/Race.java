@@ -4,7 +4,9 @@ import com.racing.analyzer.backend.commands.HandlerImplementation;
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Arrays;
@@ -23,42 +25,28 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "race")
+@Data
+@Builder
+@NoArgsConstructor
 public class Race extends BaseEntity {
 
     @Id
     @Column(name = "id")
     @Access(AccessType.PROPERTY)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
-    @Setter
     private long id;
 
     @Column(name = "name")
-    @Getter
-    @Setter
     private String name;
 
     @Column(name = "recording")
-    @Getter
-    @Setter
     private boolean recording;
 
     @Column(name = "url")
-    @Getter
-    @Setter
     private String url;
 
     @OneToMany(mappedBy = "race", fetch = FetchType.LAZY)
-    @Getter
     private List<LiveTiming> timings;
-
-    @Builder
-    public Race(long id, String name, boolean recording, String url) {
-        this.id = id;
-        this.name = name;
-        this.recording = recording;
-        this.url = url;
-    }
 
     @Override
     protected Collection<ICommandHandler> getCommandHandlers() {
