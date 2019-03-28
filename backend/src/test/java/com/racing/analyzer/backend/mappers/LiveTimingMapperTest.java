@@ -1,5 +1,6 @@
 package com.racing.analyzer.backend.mappers;
 
+import com.racing.analyzer.backend.LiveTimingHelper;
 import com.racing.analyzer.backend.dto.LiveTimingDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
@@ -21,8 +22,8 @@ public class LiveTimingMapperTest {
                         .recording(false)
                         .build();
 
-        liveTiming = new LiveTiming(1, "Sels", 69, "SGT", 1, 5L, 6L, "NLD",
-                                    true, "CAR", LiveTimingState.RACING, 2L, 1L, 3L, race);
+        liveTiming = LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 5L, 6L, "NLD",
+                                      true, "CAR", LiveTimingState.RACING, 2L, 1L, 3L, race);
     }
 
     @Test
