@@ -1,8 +1,8 @@
 package com.racing.analyzer.backend;
 
-import com.racing.analyzer.backend.dto.statistics.DriverDTO;
+import com.racing.analyzer.backend.dto.statistics.AggregatedRaceDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
-import com.racing.analyzer.backend.logic.DriverParser;
+import com.racing.analyzer.backend.logic.aggregators.RaceDataAggregator;
 import com.racing.analyzer.backend.repositories.LiveTimingRepository;
 import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.junit.ClassRule;
@@ -19,7 +19,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.MySQLContainer;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,13 +40,13 @@ public class ParserIntegrationTest {
     private LiveTimingRepository liveTimingRepository;
 
     @Test
-    @Sql({"/RaceDemoData.sql","/LiveTimingDemoData.sql"})
+    @Sql({"/RaceDemoData.sql", "/LiveTimingDemoData.sql"})
     public void run() {
         List<LiveTiming> allTimings = liveTimingRepository.findAll();
-        final Collection<DriverDTO> driverData = DriverParser.createDriverData(allTimings);
-        assertThat(driverData.size()).isEqualTo(32);
-        assertThat(driverData.stream().mapToInt(d -> d.rounds.size()).sum()).isEqualTo(978);
-        assertThat(driverData.stream().mapToInt(d -> d.pitStops).sum()).isEqualTo(35);
+        AggregatedRaceDTO raceData = RaceDataAggregator.aggregate(allTimings);
+        assertThat(raceData.getAmountOfDrivers()).isEqualTo(32);
+        assertThat(raceData.getAmountOfRounds()).isEqualTo(978);
+        assertThat(raceData.getAmountOfPitStops()).isEqualTo(35);
     }
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {

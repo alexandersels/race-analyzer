@@ -1,17 +1,23 @@
-package com.racing.analyzer.backend.logic;
+package com.racing.analyzer.backend.logic.aggregators;
 
-import com.racing.analyzer.backend.dto.statistics.RoundDTO;
+import com.racing.analyzer.backend.dto.statistics.AggregatedRoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RoundParser {
+public class RoundDataAggregator {
 
-    public static Collection<RoundDTO> createRoundDataForSpecificDriver(Collection<LiveTiming> timings) {
+    /**
+     * Transforms the given live timing data for a specific driver into aggregated round dto objects.
+     *
+     * @param timings the given live timing data for a specific driver.
+     * @return the mapped collection of round data for a specific driver.
+     */
+    public static Collection<AggregatedRoundDTO> aggregate(Collection<LiveTiming> timings) {
 
-        List<RoundDTO> rounds = new ArrayList<>();
+        List<AggregatedRoundDTO> rounds = new ArrayList<>();
 
         LiveTiming previousTiming = null;
         for (LiveTiming liveTiming : timings) {
@@ -40,15 +46,16 @@ public class RoundParser {
         return rounds;
     }
 
-    private static RoundDTO createRoundData(LiveTiming timing) {
-        RoundDTO dto = new RoundDTO();
-        dto.inPit = timing.isInPit();
-        dto.lapTime = timing.getLastTime();
-        dto.sectorOneTime = timing.getSectorOne();
-        dto.sectorTwoTime = timing.getSectorTwo();
-        dto.sectorThreeTime = timing.getSectorThree();
-
-        return dto;
+    private static AggregatedRoundDTO createRoundData(LiveTiming timing) {
+        return AggregatedRoundDTO.builder()
+                .inPit(timing.isInPit())
+                .lapTime(timing.getLastTime())
+                .sectorOneTime(timing.getSectorOne())
+                .sectorTwoTime(timing.getSectorTwo())
+                .sectorThreeTime(timing.getSectorThree())
+                .position(timing.getPosition())
+                .state(timing.getState())
+                .build();
     }
 
     private static boolean sectorsAreDifferent(LiveTiming oldValue, LiveTiming newValue) {

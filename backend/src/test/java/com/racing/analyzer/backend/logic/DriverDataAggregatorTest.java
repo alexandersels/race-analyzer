@@ -1,10 +1,11 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.LiveTimingHelper;
-import com.racing.analyzer.backend.dto.statistics.DriverDTO;
+import com.racing.analyzer.backend.dto.statistics.AggregatedDriverDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.enums.LiveTimingState;
+import com.racing.analyzer.backend.logic.aggregators.DriverDataAggregator;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -12,19 +13,19 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DriverParserTest {
+public class DriverDataAggregatorTest {
 
     @Test
     public void testFirstLapRegistered() {
-        final Collection<DriverDTO> driverData = DriverParser.createDriverData(createTestData());
-        final DriverDTO driver = driverData.stream().findFirst().get();
+        final Collection<AggregatedDriverDTO> driverData = DriverDataAggregator.aggregate(createTestData());
+        final AggregatedDriverDTO driver = driverData.stream().findFirst().get();
 
-        assertThat(driver.car).isEqualTo("CAR");
-        assertThat(driver.name).isEqualTo("Sels");
-        assertThat(driver.number).isEqualTo(69);
-        assertThat(driver.pitStops).isEqualTo(1);
-        assertThat(driver.rounds.size()).isEqualTo(3);
-        assertThat(driver.bestLap).isEqualTo(5L);
+        assertThat(driver.getCar()).isEqualTo("CAR");
+        assertThat(driver.getName()).isEqualTo("Sels");
+        assertThat(driver.getNumber()).isEqualTo(69);
+        assertThat(driver.getPitStops()).isEqualTo(1);
+        assertThat(driver.getRounds().size()).isEqualTo(3);
+        assertThat(driver.getBestLap()).isEqualTo(5L);
 
     }
 

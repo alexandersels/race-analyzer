@@ -1,10 +1,11 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.LiveTimingHelper;
-import com.racing.analyzer.backend.dto.statistics.RoundDTO;
+import com.racing.analyzer.backend.dto.statistics.AggregatedRoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.enums.LiveTimingState;
+import com.racing.analyzer.backend.logic.aggregators.RoundDataAggregator;
 import com.racing.analyzer.backend.readers.LiveTimingCSVReader;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RoundParserTest {
+public class RoundDataAggregatorTest {
 
     private Collection<LiveTiming> driverData = new ArrayList<>();
 
@@ -31,76 +32,47 @@ public class RoundParserTest {
 
     @Test
     public void amountOfRoundsIsCorrect() {
-        Collection<RoundDTO> actualSet = RoundParser.createRoundDataForSpecificDriver(driverData);
+        Collection<AggregatedRoundDTO> actualSet = RoundDataAggregator.aggregate(driverData);
         assertThat(actualSet.size()).isEqualTo(expectedDataSet().size());
     }
 
     @Test
     public void testFirstLapRegistered() {
-        final Collection<RoundDTO> rounds = RoundParser.createRoundDataForSpecificDriver(createFirstLapDataSet());
+        final Collection<AggregatedRoundDTO> rounds = RoundDataAggregator.aggregate(createFirstLapDataSet());
 
-        RoundDTO expected = new RoundDTO();
-        expected.inPit = false;
-        expected.lapTime = 79000L;
-        expected.sectorOneTime = 30000L;
-        expected.sectorTwoTime = 25000L;
-        expected.sectorThreeTime = 24000L;
-
+        AggregatedRoundDTO expected = new AggregatedRoundDTO(79000L, false, 30000L,
+                25000L, 24000L, 1, LiveTimingState.RACING);
         assertThat(rounds).containsExactly(expected);
     }
 
     @Test
     public void testConsecutiveLapsRegistered() {
-        final Collection<RoundDTO> rounds = RoundParser.createRoundDataForSpecificDriver(createConsecutiveLapDataSet());
+        final Collection<AggregatedRoundDTO> rounds = RoundDataAggregator.aggregate(createConsecutiveLapDataSet());
 
-        RoundDTO expectedRoundOne = new RoundDTO();
-        expectedRoundOne.inPit = false;
-        expectedRoundOne.lapTime = 5L;
-        expectedRoundOne.sectorOneTime = 2L;
-        expectedRoundOne.sectorTwoTime = 1L;
-        expectedRoundOne.sectorThreeTime = 2L;
+        AggregatedRoundDTO expected = new AggregatedRoundDTO(5L, false, 2L,
+                1L, 2L,1, LiveTimingState.RACING);
 
-        RoundDTO expectedRoundTwo = new RoundDTO();
-        expectedRoundTwo.inPit = false;
-        expectedRoundTwo.lapTime = 10L;
-        expectedRoundTwo.sectorOneTime = 3L;
-        expectedRoundTwo.sectorTwoTime = 2L;
-        expectedRoundTwo.sectorThreeTime = 5L;
+        AggregatedRoundDTO expectedRoundTwo = new AggregatedRoundDTO(10L, false, 3L,
+                2L, 5L,1, LiveTimingState.RACING);
 
-        RoundDTO expectedRoundThree = new RoundDTO();
-        expectedRoundThree.inPit = false;
-        expectedRoundThree.lapTime = 14L;
-        expectedRoundThree.sectorOneTime = 4L;
-        expectedRoundThree.sectorTwoTime = 4L;
-        expectedRoundThree.sectorThreeTime = 6L;
+        AggregatedRoundDTO expectedRoundThree = new AggregatedRoundDTO(14L, false, 4L,
+                4L, 6L,1, LiveTimingState.RACING);
 
-        assertThat(rounds).containsExactly(expectedRoundOne, expectedRoundTwo, expectedRoundThree);
+        assertThat(rounds).containsExactly(expected, expectedRoundTwo, expectedRoundThree);
     }
 
     @Test
     public void testConsecutiveLapsWithGapsRegistered() {
-        final Collection<RoundDTO> rounds = RoundParser.createRoundDataForSpecificDriver(createConsecutiveLapDataSetWithGap());
+        final Collection<AggregatedRoundDTO> rounds = RoundDataAggregator.aggregate(createConsecutiveLapDataSetWithGap());
 
-        RoundDTO expectedRoundOne = new RoundDTO();
-        expectedRoundOne.inPit = false;
-        expectedRoundOne.lapTime = 5L;
-        expectedRoundOne.sectorOneTime = 2L;
-        expectedRoundOne.sectorTwoTime = 1L;
-        expectedRoundOne.sectorThreeTime = 2L;
+        AggregatedRoundDTO expectedRoundOne = new AggregatedRoundDTO(5L, false, 2L,
+                1L, 2L,1, LiveTimingState.RACING);
 
-        RoundDTO expectedRoundTwo = new RoundDTO();
-        expectedRoundTwo.inPit = true;
-        expectedRoundTwo.lapTime = 8L;
-        expectedRoundTwo.sectorOneTime = 3L;
-        expectedRoundTwo.sectorTwoTime = 2L;
-        expectedRoundTwo.sectorThreeTime = -1L;
+        AggregatedRoundDTO expectedRoundTwo = new AggregatedRoundDTO(8L, true, 3L,
+                2L, -1L,1, LiveTimingState.PIT);
 
-        RoundDTO expectedRoundThree = new RoundDTO();
-        expectedRoundThree.inPit = false;
-        expectedRoundThree.lapTime = 20L;
-        expectedRoundThree.sectorOneTime = -1L;
-        expectedRoundThree.sectorTwoTime = 5L;
-        expectedRoundThree.sectorThreeTime = 6L;
+        AggregatedRoundDTO expectedRoundThree = new AggregatedRoundDTO(20L, false, -1L,
+                5L, 6L,1, LiveTimingState.RACING);
 
         assertThat(rounds).containsExactly(expectedRoundOne, expectedRoundTwo, expectedRoundThree);
     }
@@ -244,12 +216,14 @@ public class RoundParserTest {
         return Arrays.asList(
                 LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                         "CAR", LiveTimingState.RACING, 2L, 1L, 2L, race),
+
                 LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                         "CAR", LiveTimingState.RACING, 3L, -1L, -1L, race),
                 LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                         "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
                 LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
-                        "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
+                        "CAR", LiveTimingState.PIT, 3L, 2L, -1L, race),
+
                 LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
                         "CAR", LiveTimingState.OUTLAP, -1L, -1L, -1L, race),
                 LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
