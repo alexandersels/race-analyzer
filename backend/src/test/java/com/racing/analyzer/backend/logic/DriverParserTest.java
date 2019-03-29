@@ -1,5 +1,6 @@
 package com.racing.analyzer.backend.logic;
 
+import com.racing.analyzer.backend.LiveTimingHelper;
 import com.racing.analyzer.backend.dto.DriverDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
@@ -35,19 +36,19 @@ public class DriverParserTest {
             .build();
 
         return Arrays.asList(
-                new LiveTiming(1,"Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                LiveTimingHelper.create(1,"Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 2L, 1L, 2L, race),
-                new LiveTiming(1,"Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                LiveTimingHelper.create(1,"Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 3L, -1L, -1L, race),
-                new LiveTiming(1, "Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
+                LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 5L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
-                new LiveTiming(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
                                "CAR", LiveTimingState.RACING, 3L, 2L, -1L, race),
-                new LiveTiming(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
                                "CAR", LiveTimingState.OUTLAP, -1L, -1L, -1L, race),
-                new LiveTiming(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
+                LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 8L, 5L, "NLD", true,
                                "CAR", LiveTimingState.OUTLAP, -1L, 5L, -1L, race),
-                new LiveTiming(1, "Sels", 69, "SGT", 1, 20L, 5L, "NLD", false,
+                LiveTimingHelper.create(1, "Sels", 69, "SGT", 1, 20L, 5L, "NLD", false,
                                "CAR", LiveTimingState.RACING, -1L, 5L, 6L, race)
                             );
     }

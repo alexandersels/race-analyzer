@@ -3,11 +3,7 @@ package com.racing.analyzer.backend.entities;
 import com.racing.analyzer.backend.commands.HandlerImplementation;
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,6 +24,7 @@ import javax.persistence.Table;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Race extends BaseEntity {
 
     @Id

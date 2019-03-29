@@ -2,6 +2,7 @@ package com.racing.analyzer.backend.entities;
 
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.enums.LiveTimingState;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class LiveTiming extends BaseEntity {
 
     @Id
