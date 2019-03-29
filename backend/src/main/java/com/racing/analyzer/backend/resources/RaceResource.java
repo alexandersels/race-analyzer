@@ -1,19 +1,16 @@
 package com.racing.analyzer.backend.resources;
 
-import com.racing.analyzer.backend.ScheduledTask;
 import com.racing.analyzer.backend.assemblers.RaceAssembler;
 import com.racing.analyzer.backend.commands.CreateRaceCommand;
 import com.racing.analyzer.backend.commands.UpdateRaceCommand;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
-import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -60,11 +57,10 @@ public class RaceResource extends BaseResource {
 
         CreateRaceCommand command = CreateRaceCommand.fromDTO(createRaceDTO);
         Optional<RaceDTO> created = service.create(command);
-        if(created.isPresent()) {
+        if (created.isPresent()) {
             Resource resource = assembler.toResource(created.get());
             return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
-        }
-        else{
+        } else {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -78,11 +74,10 @@ public class RaceResource extends BaseResource {
 
         UpdateRaceCommand command = UpdateRaceCommand.fromDto(updateRaceDTO);
         Optional<RaceDTO> update = service.update(command);
-        if(update.isPresent()) {
+        if (update.isPresent()) {
             Resource resource = assembler.toResource(update.get());
             return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
-        }
-        else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

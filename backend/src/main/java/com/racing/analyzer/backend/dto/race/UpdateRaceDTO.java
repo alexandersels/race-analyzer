@@ -2,11 +2,12 @@ package com.racing.analyzer.backend.dto.race;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class UpdateRaceDTO {
 
     @NotNull
@@ -19,9 +20,18 @@ public class UpdateRaceDTO {
     private String url;
 
     @NotNull
-    private boolean isRecording;
+    private boolean recording;
 
     @NotNull
     private int version;
+
+    @Builder
+    public UpdateRaceDTO(long id, String name, String url, boolean recording, int version) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.recording = recording;
+        this.version = version;
+    }
 
 }

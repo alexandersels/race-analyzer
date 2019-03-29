@@ -2,25 +2,21 @@ package com.racing.analyzer.backend.entities;
 
 import com.racing.analyzer.backend.commands.Command;
 import com.racing.analyzer.backend.commands.ICommandHandler;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@MappedSuperclass
 public abstract class BaseEntity {
 
     @Transient
     private final Collection<ICommandHandler> commandHandlers = new ArrayList<>();
 
+    @Getter
     @Column(name = "version")
     @Version
-    @Getter
     protected int version;
 
     protected BaseEntity() {
