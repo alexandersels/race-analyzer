@@ -1,5 +1,6 @@
 package com.racing.analyzer.backend.commands;
 
+import com.racing.analyzer.backend.commands.race.CreateRaceCommand;
 import com.racing.analyzer.backend.entities.Race;
 import org.junit.Test;
 

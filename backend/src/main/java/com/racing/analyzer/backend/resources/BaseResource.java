@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 public abstract class BaseResource {
 
     protected BaseResource() {
-
     }
 
     protected URI createUri(Resource<?> resource) {

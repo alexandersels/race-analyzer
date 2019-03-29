@@ -1,8 +1,8 @@
 package com.racing.analyzer.backend.resources;
 
 import com.racing.analyzer.backend.assemblers.RaceAssembler;
-import com.racing.analyzer.backend.commands.CreateRaceCommand;
-import com.racing.analyzer.backend.commands.UpdateRaceCommand;
+import com.racing.analyzer.backend.commands.race.CreateRaceCommand;
+import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
@@ -13,8 +13,6 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -30,17 +28,8 @@ public class RaceResource extends BaseResource {
     @Autowired
     private RaceAssembler assembler;
 
-    @GetMapping("/races")
-    public ResponseEntity<?> getRaces() {
-
-        Collection<RaceDTO> races = service.getAll();
-        Resources resources = new Resources<>(races, linkTo(methodOn(RaceResource.class).getRaces()).withSelfRel());
-        return ResponseEntity.ok().body(resources);
-    }
-
     @GetMapping("/races/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-
         Optional<RaceDTO> race = service.getById(id);
         return race.map(dto -> {
             Resource resource = assembler.toResource(dto);
@@ -48,8 +37,15 @@ public class RaceResource extends BaseResource {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/races")
+    public ResponseEntity<?> getRaces() {
+        Collection<RaceDTO> races = service.getAll();
+        Resources resources = new Resources<>(races, linkTo(methodOn(RaceResource.class).getRaces()).withSelfRel());
+        return ResponseEntity.ok().body(resources);
+    }
+
     @PostMapping("/races")
-    public ResponseEntity<?> create(@RequestBody CreateRaceDTO createRaceDTO) throws URISyntaxException {
+    public ResponseEntity<?> create(@RequestBody CreateRaceDTO createRaceDTO) {
 
         if (createRaceDTO == null) {
             return ResponseEntity.badRequest().build();
@@ -59,14 +55,14 @@ public class RaceResource extends BaseResource {
         Optional<RaceDTO> created = service.create(command);
         if (created.isPresent()) {
             Resource resource = assembler.toResource(created.get());
-            return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+            return ResponseEntity.created(createUri(resource)).body(resource);
         } else {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/races/")
-    public ResponseEntity<?> update(@RequestBody UpdateRaceDTO updateRaceDTO) throws URISyntaxException {
+    public ResponseEntity<?> update(@RequestBody UpdateRaceDTO updateRaceDTO) {
 
         if (updateRaceDTO == null) {
             return ResponseEntity.badRequest().build();
@@ -76,7 +72,7 @@ public class RaceResource extends BaseResource {
         Optional<RaceDTO> update = service.update(command);
         if (update.isPresent()) {
             Resource resource = assembler.toResource(update.get());
-            return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+            return ResponseEntity.created(createUri(resource)).body(resource);
         } else {
             return ResponseEntity.notFound().build();
         }

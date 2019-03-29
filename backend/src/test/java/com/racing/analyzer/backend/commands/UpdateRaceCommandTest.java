@@ -1,5 +1,6 @@
 package com.racing.analyzer.backend.commands;
 
+import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

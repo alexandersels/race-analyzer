@@ -1,6 +1,6 @@
 package com.racing.analyzer.backend.logic;
 
-import com.racing.analyzer.backend.dto.RoundDTO;
+import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 
 import java.util.ArrayList;

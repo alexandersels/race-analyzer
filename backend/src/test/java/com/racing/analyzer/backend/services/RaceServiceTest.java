@@ -1,6 +1,6 @@
 package com.racing.analyzer.backend.services;
 
-import com.racing.analyzer.backend.dto.DriverDTO;
+import com.racing.analyzer.backend.dto.statistics.DriverDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.logic.DriverParser;
 import com.racing.analyzer.backend.repositories.LiveTimingRepository;

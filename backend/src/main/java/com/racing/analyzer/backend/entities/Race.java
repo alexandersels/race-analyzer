@@ -2,7 +2,7 @@ package com.racing.analyzer.backend.entities;
 
 import com.racing.analyzer.backend.commands.HandlerImplementation;
 import com.racing.analyzer.backend.commands.ICommandHandler;
-import com.racing.analyzer.backend.commands.UpdateRaceCommand;
+import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
 import lombok.*;
 
 import java.util.Arrays;

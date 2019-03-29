@@ -37,6 +37,7 @@ public class ScheduledTask {
     public void record(Race race) {
         this.race = race;
         if (race.isRecording()) {
+            LOGGER.info("Started recording !!");
             this.liveTimingParser = LiveTimingParser.forRace(race);
             scrapWebsite();
         } else {

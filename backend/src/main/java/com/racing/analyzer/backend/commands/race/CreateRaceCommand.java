@@ -1,4 +1,4 @@
-package com.racing.analyzer.backend.commands;
+package com.racing.analyzer.backend.commands.race;
 
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.entities.Race;

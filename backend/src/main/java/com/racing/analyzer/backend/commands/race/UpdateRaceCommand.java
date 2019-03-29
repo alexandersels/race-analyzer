@@ -1,5 +1,6 @@
-package com.racing.analyzer.backend.commands;
+package com.racing.analyzer.backend.commands.race;
 
+import com.racing.analyzer.backend.commands.Command;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
 import lombok.Builder;
 import lombok.Getter;

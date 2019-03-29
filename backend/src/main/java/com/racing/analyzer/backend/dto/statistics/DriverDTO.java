@@ -1,4 +1,4 @@
-package com.racing.analyzer.backend.dto;
+package com.racing.analyzer.backend.dto.statistics;
 
 import java.util.Collection;
 

@@ -1,11 +1,9 @@
 package com.racing.analyzer.backend.services;
 
 import com.racing.analyzer.backend.ScheduledTask;
-import com.racing.analyzer.backend.commands.CreateRaceCommand;
-import com.racing.analyzer.backend.commands.UpdateRaceCommand;
-import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
+import com.racing.analyzer.backend.commands.race.CreateRaceCommand;
+import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
-import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.mappers.RaceMapper;
 import com.racing.analyzer.backend.repositories.RaceRepository;

@@ -1,4 +1,4 @@
-package com.racing.analyzer.backend.dto;
+package com.racing.analyzer.backend.dto.statistics;
 
 public class RoundDTO {
 
