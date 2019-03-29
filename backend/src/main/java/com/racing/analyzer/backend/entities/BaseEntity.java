@@ -2,13 +2,17 @@ package com.racing.analyzer.backend.entities;
 
 import com.racing.analyzer.backend.commands.Command;
 import com.racing.analyzer.backend.commands.ICommandHandler;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@MappedSuperclass
 public abstract class BaseEntity {
 
     @Transient
@@ -16,15 +20,11 @@ public abstract class BaseEntity {
 
     @Column(name = "version")
     @Version
-    @NotNull
+    @Getter
     protected int version;
 
     protected BaseEntity() {
         registerCommandHandlers();
-    }
-
-    public int getVersion() {
-        return version;
     }
 
     public void execute(Command command) {
@@ -51,3 +51,4 @@ public abstract class BaseEntity {
     }
 
 }
+

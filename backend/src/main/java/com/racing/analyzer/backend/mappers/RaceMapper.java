@@ -2,19 +2,11 @@ package com.racing.analyzer.backend.mappers;
 
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.entities.Race;
+import org.mapstruct.Mapper;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+@Mapper(componentModel = "spring")
+public interface RaceMapper {
 
-public class RaceMapper {
+    RaceDTO toDto(Race race);
 
-    public static RaceDTO toDto(Race race) {
-        checkNotNull(race);
-
-        return RaceDTO.builder()
-                .id(race.getId())
-                .name(race.getName())
-                .recording(race.isRecording())
-                .url(race.getUrl())
-                .build();
-    }
 }

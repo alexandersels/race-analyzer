@@ -1,6 +1,5 @@
 package com.racing.analyzer.backend.mappers;
 
-import com.racing.analyzer.backend.dto.LiveTimingDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;

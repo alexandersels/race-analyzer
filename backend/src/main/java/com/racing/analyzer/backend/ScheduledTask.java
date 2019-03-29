@@ -21,7 +21,6 @@ public class ScheduledTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTask.class);
 
     private Race race;
-    private boolean enabled = false;
     private LiveTimingParser liveTimingParser;
 
     @Autowired
@@ -29,17 +28,15 @@ public class ScheduledTask {
 
     @Scheduled(fixedRate = 1000)
     public void scrapWebsite() {
-        if (enabled) {
+        if (race != null && race.isRecording()) {
             LOGGER.info("Parsing site: {}", race.getUrl());
             parseSite(race.getUrl());
         }
     }
 
-    public void recordingFor(boolean enabled, Race race) {
-        this.enabled = enabled;
+    public void record(Race race) {
         this.race = race;
-
-        if (enabled) {
+        if (race.isRecording()) {
             this.liveTimingParser = LiveTimingParser.forRace(race);
             scrapWebsite();
         } else {

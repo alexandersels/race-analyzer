@@ -21,15 +21,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "race")
-@Data
-@Builder
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Race extends BaseEntity {
 
     @Id
     @Column(name = "id")
     @Access(AccessType.PROPERTY)
+    @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -44,6 +43,14 @@ public class Race extends BaseEntity {
 
     @OneToMany(mappedBy = "race", fetch = FetchType.LAZY)
     private List<LiveTiming> timings;
+
+    @Builder
+    public Race(long id, String name, boolean recording, String url) {
+        this.id = id;
+        this.name = name;
+        this.recording = recording;
+        this.url = url;
+    }
 
     @Override
     protected Collection<ICommandHandler> getCommandHandlers() {

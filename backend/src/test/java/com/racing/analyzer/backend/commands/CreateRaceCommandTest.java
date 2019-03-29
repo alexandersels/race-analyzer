@@ -9,29 +9,23 @@ public class CreateRaceCommandTest {
 
     @Test
     public void getNameIsCorrect() {
-        CreateRaceCommand command = new CreateRaceCommand("Zolder", true, "url");
+        CreateRaceCommand command = new CreateRaceCommand("Zolder",  "url");
         assertThat(command.getName()).isEqualTo("Zolder");
     }
 
     @Test
     public void getUrlIsCorrect() {
-        CreateRaceCommand command = new CreateRaceCommand("Zolder", true, "url");
+        CreateRaceCommand command = new CreateRaceCommand("Zolder",  "url");
         assertThat(command.getUrl()).isEqualTo("url");
     }
 
     @Test
-    public void isRecordingCorrect() {
-        CreateRaceCommand command = new CreateRaceCommand("Zolder", true, "url");
-        assertThat(command.isRecording());
-    }
-
-    @Test
     public void getEntityToCreateIsCorrect() {
-        CreateRaceCommand command = new CreateRaceCommand("Zolder", true, "url");
+        CreateRaceCommand command = new CreateRaceCommand("Zolder",  "url");
         Race race = command.getEntityToCreate();
 
         assertThat(race.getName()).isEqualTo("Zolder");
         assertThat(race.getUrl()).isEqualTo("url");
-        assertThat(race.isRecording());
+        assertThat(race.isRecording()).isFalse();
     }
 }

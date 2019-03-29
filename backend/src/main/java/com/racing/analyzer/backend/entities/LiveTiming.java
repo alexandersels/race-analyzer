@@ -2,39 +2,24 @@ package com.racing.analyzer.backend.entities;
 
 import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.enums.LiveTimingState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "livetiming")
-@Data
-@Builder
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class LiveTiming extends BaseEntity {
 
     @Id
     @Column(name = "id")
     @Access(AccessType.PROPERTY)
+    @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -81,10 +66,30 @@ public class LiveTiming extends BaseEntity {
     @Column(name = "creation")
     private Timestamp creation;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "race_id")
     private Race race;
+
+    @Builder
+    public LiveTiming(long id, String name, int number, String cls, int position, long lastTime, long bestTime,
+                      String nationality, boolean inPit, String car, LiveTimingState state, long sectorOne,
+                      long sectorTwo, long sectorThree, Race race) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
+        this.cls = cls;
+        this.position = position;
+        this.lastTime = lastTime;
+        this.bestTime = bestTime;
+        this.nationality = nationality;
+        this.inPit = inPit;
+        this.car = car;
+        this.state = state;
+        this.sectorOne = sectorOne;
+        this.sectorTwo = sectorTwo;
+        this.sectorThree = sectorThree;
+        this.race = race;
+    }
 
     public boolean areSectorsFilledIn() {
         return (sectorOne != -1) && (sectorTwo != -1) && (sectorThree != -1);
