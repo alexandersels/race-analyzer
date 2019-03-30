@@ -1,13 +1,14 @@
 package com.racing.analyzer.backend.dto.statistics;
 
 import com.racing.analyzer.backend.enums.LiveTimingState;
-import lombok.Builder;
 import lombok.Data;
-
-import java.util.Collection;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-public class AggregatedDriverDTO {
+@NoArgsConstructor
+@SuperBuilder
+public class DriverDTO {
 
     private int number;
     private String name;
@@ -19,16 +20,14 @@ public class AggregatedDriverDTO {
     private long bestSectorOne;
     private long bestSectorTwo;
     private long bestSectorThree;
-    private Collection<AggregatedRoundDTO> rounds;
+    private long amountOfRounds;
 
-    @Builder
-    public AggregatedDriverDTO(int number, String name, String car, Collection<AggregatedRoundDTO> rounds, int pitStops, long bestLap,
-                               long bestSectorOne, long bestSectorTwo, long bestSectorThree, int lastPosition,
-                               LiveTimingState lastState) {
+    public DriverDTO(int number, String name, String car, int pitStops, long bestLap,
+                     long bestSectorOne, long bestSectorTwo, long bestSectorThree, int lastPosition,
+                     LiveTimingState lastState, long amountOfRounds) {
         this.number = number;
         this.name = name;
         this.car = car;
-        this.rounds = rounds;
         this.pitStops = pitStops;
         this.bestLap = bestLap;
         this.bestSectorOne = bestSectorOne;
@@ -36,5 +35,6 @@ public class AggregatedDriverDTO {
         this.bestSectorThree = bestSectorThree;
         this.lastPosition = lastPosition;
         this.lastState = lastState;
+        this.amountOfRounds = amountOfRounds;
     }
 }

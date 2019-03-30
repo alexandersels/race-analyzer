@@ -1,9 +1,10 @@
 package com.racing.analyzer.backend;
 
-import com.racing.analyzer.backend.dto.statistics.AggregatedRaceDTO;
-import com.racing.analyzer.backend.entities.LiveTiming;
-import com.racing.analyzer.backend.logic.aggregators.RaceDataAggregator;
-import com.racing.analyzer.backend.repositories.LiveTimingRepository;
+import com.racing.analyzer.backend.dto.statistics.DriverDTO;
+import com.racing.analyzer.backend.dto.statistics.RaceOverviewDTO;
+import com.racing.analyzer.backend.entities.Race;
+import com.racing.analyzer.backend.enums.LiveTimingState;
+import com.racing.analyzer.backend.logic.aggregators.RaceOverviewAggregator;
 import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.MySQLContainer;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,17 +37,26 @@ public class ParserIntegrationTest {
     @Autowired
     private RaceRepository raceRepository;
 
-    @Autowired
-    private LiveTimingRepository liveTimingRepository;
-
     @Test
     @Sql({"/RaceDemoData.sql", "/LiveTimingDemoData.sql"})
     public void run() {
-        List<LiveTiming> allTimings = liveTimingRepository.findAll();
-        AggregatedRaceDTO raceData = RaceDataAggregator.aggregate(allTimings);
+        Optional<Race> race = raceRepository.findById(1L);
+        RaceOverviewDTO raceData = RaceOverviewAggregator.aggregate(race.get());
         assertThat(raceData.getAmountOfDrivers()).isEqualTo(32);
         assertThat(raceData.getAmountOfRounds()).isEqualTo(978);
         assertThat(raceData.getAmountOfPitStops()).isEqualTo(35);
+
+        // Verify winner
+        assertThat(raceData.getWinner().getNumber()).isEqualTo(130);
+        assertThat(raceData.getWinner().getAmountOfRounds()).isEqualTo(38);
+        assertThat(raceData.getWinner().getBestLap()).isEqualTo(91125000L);
+        assertThat(raceData.getWinner().getName()).isEqualTo("Versluis-Buurman");
+
+        // Verify random participant
+        DriverDTO ricWood = raceData.getDrivers().stream().filter(driver -> driver.getNumber() == 123).findFirst().get();
+        assertThat(ricWood.getName()).isEqualTo("RIC WOOD");
+        assertThat(ricWood.getLastState()).isEqualTo(LiveTimingState.PIT);
+        assertThat(ricWood.getBestLap()).isEqualTo(94688000L);
     }
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {

@@ -6,6 +6,8 @@ import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
+import com.racing.analyzer.backend.dto.statistics.DriverWithRoundsDTO;
+import com.racing.analyzer.backend.dto.statistics.RaceOverviewDTO;
 import com.racing.analyzer.backend.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
@@ -42,6 +44,24 @@ public class RaceResource extends BaseResource {
         Collection<RaceDTO> races = service.getAll();
         Resources resources = new Resources<>(races, linkTo(methodOn(RaceResource.class).getRaces()).withSelfRel());
         return ResponseEntity.ok().body(resources);
+    }
+
+    @GetMapping("/races/{id}/aggregateRaceData")
+    public RaceOverviewDTO getAggregatedRaceData(@PathVariable long id) {
+        Optional<RaceOverviewDTO> aggregatedRaceData = service.getAggregatedRaceData(id);
+        return aggregatedRaceData.get();
+    }
+
+    @GetMapping("/races/{id}/aggregateDriverData")
+    public Collection<DriverWithRoundsDTO> getAggregatedDriverData(@PathVariable long id) {
+        Collection<DriverWithRoundsDTO> aggregatedDriverData = service.getAggregatedDriverData(id);
+        return aggregatedDriverData;
+    }
+
+    @GetMapping("/races/{id}/aggregateDriverData/{number}")
+    public DriverWithRoundsDTO getAggregatedDriverData(@PathVariable long id, @PathVariable int number) {
+        Optional<DriverWithRoundsDTO> aggregatedDriverData = service.getAggregatedDriverData(id, number);
+        return aggregatedDriverData.get();
     }
 
     @PostMapping("/races")

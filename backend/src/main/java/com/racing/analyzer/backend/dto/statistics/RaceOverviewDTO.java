@@ -2,20 +2,25 @@ package com.racing.analyzer.backend.dto.statistics;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 
 @Data
-public class AggregatedRaceDTO {
+@NoArgsConstructor
+public class RaceOverviewDTO {
+
+    private String name;
 
     private int amountOfDrivers;
     private int amountOfRounds;
     private int amountOfPitStops;
-    private AggregatedDriverDTO winner;
-    private Collection<AggregatedDriverDTO> drivers;
+    private DriverDTO winner;
+    private Collection<DriverDTO> drivers;
 
     @Builder
-    public AggregatedRaceDTO(int amountOfDrivers, int amountOfRounds, int amountOfPitStops, AggregatedDriverDTO winner, Collection<AggregatedDriverDTO> drivers) {
+    public RaceOverviewDTO(String name, int amountOfDrivers, int amountOfRounds, int amountOfPitStops, DriverDTO winner, Collection<DriverDTO> drivers) {
+        this.name = name;
         this.amountOfDrivers = amountOfDrivers;
         this.amountOfRounds = amountOfRounds;
         this.amountOfPitStops = amountOfPitStops;

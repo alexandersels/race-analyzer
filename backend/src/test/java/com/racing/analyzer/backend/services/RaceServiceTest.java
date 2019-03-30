@@ -1,8 +1,8 @@
 package com.racing.analyzer.backend.services;
 
-import com.racing.analyzer.backend.dto.statistics.AggregatedDriverDTO;
+import com.racing.analyzer.backend.dto.statistics.DriverDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
-import com.racing.analyzer.backend.logic.aggregators.DriverDataAggregator;
+import com.racing.analyzer.backend.logic.aggregators.DriverAggregator;
 import com.racing.analyzer.backend.repositories.LiveTimingRepository;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -40,10 +40,10 @@ public class RaceServiceTest {
     @Sql({"/RaceDemoData.sql", "/LiveTimingDemoData.sql"})
     public void test() {
         final List<LiveTiming> liveTimings = repository.findAll();
-        final Collection<AggregatedDriverDTO> driverData = DriverDataAggregator.aggregate(liveTimings);
+        final Collection<DriverDTO> driverData = DriverAggregator.aggregate(liveTimings);
 
         assertThat(driverData.size()).isEqualTo(32);
-        assertThat(driverData.stream().mapToInt(d -> d.getRounds().size()).sum()).isEqualTo(978);
+        assertThat(driverData.stream().mapToInt(d -> (int) d.getAmountOfRounds()).sum()).isEqualTo(978);
         assertThat(driverData.stream().mapToInt(d -> d.getPitStops()).sum()).isEqualTo(35);
     }
 

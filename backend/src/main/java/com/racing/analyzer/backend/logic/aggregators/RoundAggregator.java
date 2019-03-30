@@ -1,13 +1,13 @@
 package com.racing.analyzer.backend.logic.aggregators;
 
-import com.racing.analyzer.backend.dto.statistics.AggregatedRoundDTO;
+import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RoundDataAggregator {
+public class RoundAggregator {
 
     /**
      * Transforms the given live timing data for a specific driver into aggregated round dto objects.
@@ -15,15 +15,15 @@ public class RoundDataAggregator {
      * @param timings the given live timing data for a specific driver.
      * @return the mapped collection of round data for a specific driver.
      */
-    public static Collection<AggregatedRoundDTO> aggregate(Collection<LiveTiming> timings) {
+    public static Collection<RoundDTO> aggregate(Collection<LiveTiming> timings) {
 
-        List<AggregatedRoundDTO> rounds = new ArrayList<>();
+        List<RoundDTO> rounds = new ArrayList<>();
 
         LiveTiming previousTiming = null;
         for (LiveTiming liveTiming : timings) {
 
             if (liveTiming.isInPit()) {
-                if (!previousTiming.isInPit()) {
+                if (previousTiming != null && !previousTiming.isInPit()) {
                     previousTiming = liveTiming;
                     rounds.add(createRoundData(liveTiming));
                 }
@@ -46,8 +46,8 @@ public class RoundDataAggregator {
         return rounds;
     }
 
-    private static AggregatedRoundDTO createRoundData(LiveTiming timing) {
-        return AggregatedRoundDTO.builder()
+    private static RoundDTO createRoundData(LiveTiming timing) {
+        return RoundDTO.builder()
                 .inPit(timing.isInPit())
                 .lapTime(timing.getLastTime())
                 .sectorOneTime(timing.getSectorOne())

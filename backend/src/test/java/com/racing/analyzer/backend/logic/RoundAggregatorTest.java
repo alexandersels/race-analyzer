@@ -1,11 +1,11 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.LiveTimingHelper;
-import com.racing.analyzer.backend.dto.statistics.AggregatedRoundDTO;
+import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.enums.LiveTimingState;
-import com.racing.analyzer.backend.logic.aggregators.RoundDataAggregator;
+import com.racing.analyzer.backend.logic.aggregators.RoundAggregator;
 import com.racing.analyzer.backend.readers.LiveTimingCSVReader;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RoundDataAggregatorTest {
+public class RoundAggregatorTest {
 
     private Collection<LiveTiming> driverData = new ArrayList<>();
 
@@ -32,30 +32,30 @@ public class RoundDataAggregatorTest {
 
     @Test
     public void amountOfRoundsIsCorrect() {
-        Collection<AggregatedRoundDTO> actualSet = RoundDataAggregator.aggregate(driverData);
+        Collection<RoundDTO> actualSet = RoundAggregator.aggregate(driverData);
         assertThat(actualSet.size()).isEqualTo(expectedDataSet().size());
     }
 
     @Test
     public void testFirstLapRegistered() {
-        final Collection<AggregatedRoundDTO> rounds = RoundDataAggregator.aggregate(createFirstLapDataSet());
+        final Collection<RoundDTO> rounds = RoundAggregator.aggregate(createFirstLapDataSet());
 
-        AggregatedRoundDTO expected = new AggregatedRoundDTO(79000L, false, 30000L,
+        RoundDTO expected = new RoundDTO(79000L, false, 30000L,
                 25000L, 24000L, 1, LiveTimingState.RACING);
         assertThat(rounds).containsExactly(expected);
     }
 
     @Test
     public void testConsecutiveLapsRegistered() {
-        final Collection<AggregatedRoundDTO> rounds = RoundDataAggregator.aggregate(createConsecutiveLapDataSet());
+        final Collection<RoundDTO> rounds = RoundAggregator.aggregate(createConsecutiveLapDataSet());
 
-        AggregatedRoundDTO expected = new AggregatedRoundDTO(5L, false, 2L,
+        RoundDTO expected = new RoundDTO(5L, false, 2L,
                 1L, 2L,1, LiveTimingState.RACING);
 
-        AggregatedRoundDTO expectedRoundTwo = new AggregatedRoundDTO(10L, false, 3L,
+        RoundDTO expectedRoundTwo = new RoundDTO(10L, false, 3L,
                 2L, 5L,1, LiveTimingState.RACING);
 
-        AggregatedRoundDTO expectedRoundThree = new AggregatedRoundDTO(14L, false, 4L,
+        RoundDTO expectedRoundThree = new RoundDTO(14L, false, 4L,
                 4L, 6L,1, LiveTimingState.RACING);
 
         assertThat(rounds).containsExactly(expected, expectedRoundTwo, expectedRoundThree);
@@ -63,15 +63,15 @@ public class RoundDataAggregatorTest {
 
     @Test
     public void testConsecutiveLapsWithGapsRegistered() {
-        final Collection<AggregatedRoundDTO> rounds = RoundDataAggregator.aggregate(createConsecutiveLapDataSetWithGap());
+        final Collection<RoundDTO> rounds = RoundAggregator.aggregate(createConsecutiveLapDataSetWithGap());
 
-        AggregatedRoundDTO expectedRoundOne = new AggregatedRoundDTO(5L, false, 2L,
+        RoundDTO expectedRoundOne = new RoundDTO(5L, false, 2L,
                 1L, 2L,1, LiveTimingState.RACING);
 
-        AggregatedRoundDTO expectedRoundTwo = new AggregatedRoundDTO(8L, true, 3L,
+        RoundDTO expectedRoundTwo = new RoundDTO(8L, true, 3L,
                 2L, -1L,1, LiveTimingState.PIT);
 
-        AggregatedRoundDTO expectedRoundThree = new AggregatedRoundDTO(20L, false, -1L,
+        RoundDTO expectedRoundThree = new RoundDTO(20L, false, -1L,
                 5L, 6L,1, LiveTimingState.RACING);
 
         assertThat(rounds).containsExactly(expectedRoundOne, expectedRoundTwo, expectedRoundThree);
