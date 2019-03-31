@@ -1,7 +1,7 @@
 package com.racing.analyzer.backend.logic.aggregators;
 
 import com.google.common.collect.Iterables;
-import com.racing.analyzer.backend.dto.statistics.DriverDTO;
+import com.racing.analyzer.backend.dto.statistics.DetailedDriverDTO;
 import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
@@ -12,29 +12,40 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.stream.Collectors.toList;
 
-public class DriverAggregator {
+public class DetailedDriverAggregator {
 
     /**
      * Creates a collection of aggregated driver data based on a collection of live timing data.
      *
-     * @param race the race to aggregateDetailedInfo.
+     * @param race a given collection of live timing data.
      * @return a collection of aggregated information driver data.
      */
-    public static Collection<DriverDTO> aggregate(Race race) {
-        checkNotNull(race);
+    public static Collection<DetailedDriverDTO> aggregateDetailedInfo(Race race) {
+
         Map<Integer, List<LiveTiming>> timingsPerDriver = race.getTimings().stream().
                 collect(Collectors.groupingBy(LiveTiming::getNumber));
 
         return timingsPerDriver.entrySet().stream()
-                .map(Map.Entry::getValue)
-                .map(timings -> {
-                    Collection<RoundDTO> performedLaps = RoundAggregator.aggregate(timings);
-                    DriverDTO dto = createInitialDto(race);
-                    return aggregateDriverData(dto, timings, performedLaps);
-                })
-                .collect(Collectors.toList());
+                .map(kv -> kv.getValue())
+                .map(timings -> aggregate(race, timings))
+                .collect(toList());
+    }
+
+    public static DetailedDriverDTO aggregateDetailedDriverInfo(Race race, int number) {
+        List<LiveTiming> filteredTimings = race.getTimings().stream()
+                .filter(liveTiming -> liveTiming.getNumber() == number)
+                .collect(toList());
+        return aggregate(race, filteredTimings);
+    }
+
+    private static DetailedDriverDTO aggregate(Race race, Collection<LiveTiming> filteredTimings) {
+        DetailedDriverDTO dto = createInitialDto(race);
+        Collection<RoundDTO> performedLaps = RoundAggregator.aggregate(filteredTimings);
+        dto.setRounds(performedLaps);
+        dto = aggregateDriverData(dto, filteredTimings, performedLaps);
+        return dto;
     }
 
     /**
@@ -43,7 +54,7 @@ public class DriverAggregator {
      * @param timingsPerDriver the timings for the driver.
      * @return the aggregated values for the driver.
      */
-    private static DriverDTO aggregateDriverData(DriverDTO driver, Collection<LiveTiming> timingsPerDriver, Collection<RoundDTO> performedLaps) {
+    private static DetailedDriverDTO aggregateDriverData(DetailedDriverDTO driver, Collection<LiveTiming> timingsPerDriver, Collection<RoundDTO> performedLaps) {
         if (!timingsPerDriver.isEmpty()) {
             LiveTiming firstTiming = timingsPerDriver.stream().findFirst().get();
             driver = setDriverInformation(driver, firstTiming);
@@ -63,9 +74,11 @@ public class DriverAggregator {
      * @param liveTiming the first found live timing.
      * @return the dto with the values assigned.
      */
-    private static DriverDTO setDriverInformation(DriverDTO driver, LiveTiming liveTiming) {
+    private static DetailedDriverDTO setDriverInformation(DetailedDriverDTO driver, LiveTiming liveTiming) {
         driver.setName(liveTiming.getName());
         driver.setNumber(liveTiming.getNumber());
+        driver.setCar(liveTiming.getCar());
+
         return driver;
     }
 
@@ -85,18 +98,21 @@ public class DriverAggregator {
      * @param performedLaps the laps performed by the driver.
      * @return the aggregated driver dto with additional metrics.
      */
-    private static DriverDTO setPerformanceInformation(DriverDTO driver, Collection<RoundDTO> performedLaps) {
+    private static DetailedDriverDTO setPerformanceInformation(DetailedDriverDTO driver, Collection<RoundDTO> performedLaps) {
         long bestLap = -1L;
+        long bestSectorOne = -1L;
+        long bestSectorTwo = -1L;
+        long bestSectorThree = -1L;
         int pitsStops = 0;
         int roundsDone = 0;
-        int position = -1;
-        LiveTimingState state = LiveTimingState.UNKNOWN;
 
         if (!performedLaps.isEmpty()) {
             RoundDTO lastRound = Iterables.getLast(performedLaps);
-            position = lastRound.getPosition();
-            state = lastRound.getState();
+            driver.setLastPosition(lastRound.getPosition());
+            driver.setLastState(lastRound.getState());
+
             for (RoundDTO round : performedLaps) {
+
                 roundsDone++;
                 if (round.getLapTime() < bestLap || bestLap == -1L) {
                     bestLap = round.getLapTime();
@@ -105,26 +121,43 @@ public class DriverAggregator {
                 if (round.isInPit()) {
                     pitsStops++;
                 }
+
+                if (round.getSectorOneTime() < bestSectorOne || bestSectorOne == -1L) {
+                    bestSectorOne = round.getSectorOneTime();
+                }
+
+                if (round.getSectorTwoTime() < bestSectorTwo || bestSectorTwo == -1L) {
+                    bestSectorTwo = round.getSectorTwoTime();
+                }
+
+                if (round.getSectorThreeTime() < bestSectorThree || bestSectorThree == -1L) {
+                    bestSectorThree = round.getSectorThreeTime();
+                }
             }
         }
 
         driver.setAmountOfRounds(roundsDone);
         driver.setPitStops(pitsStops);
         driver.setBestLap(bestLap);
-        driver.setLastPosition(position);
-        driver.setLastState(state);
+        driver.setBestSectorOne(bestSectorOne);
+        driver.setBestSectorTwo(bestSectorTwo);
+        driver.setBestSectorThree(bestSectorThree);
 
         return driver;
     }
 
-    private static DriverDTO createInitialDto(Race race) {
-        return DriverDTO.builder()
+    private static DetailedDriverDTO createInitialDto(Race race) {
+
+        return DetailedDriverDTO.builder()
                 .raceId(race.getId())
+                .amountOfRounds(0)
+                .bestLap(-1L)
+                .bestSectorOne(-1L)
+                .bestSectorTwo(-1L)
+                .bestSectorThree(-1L)
                 .lastPosition(-1)
                 .lastState(LiveTimingState.UNKNOWN)
-                .amountOfRounds(0)
                 .pitStops(0)
-                .bestLap(-1L)
                 .build();
     }
 }

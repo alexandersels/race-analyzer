@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.stream.Collectors.toList;
 
 @Service
-public class RaceService {
+public class RaceOverviewService {
 
     @Autowired
     private RaceRepository repository;
@@ -31,42 +31,8 @@ public class RaceService {
     private ScheduledTask task;
 
     @Transactional
-    public Optional<Race> getById(long id) {
-        return repository.findById(id);
+    public RaceOverviewDTO getRaceOverview(Race race) {
+        return RaceOverviewAggregator.aggregate(race);
     }
 
-    @Transactional
-    public Collection<Race> getAll() {
-        return repository.findAll();
-    }
-
-    @Transactional
-    public Optional<Race> update(UpdateRaceCommand updateRaceCommand) {
-        checkNotNull(updateRaceCommand);
-        Optional<Race> entity = repository.findById(updateRaceCommand.getId());
-        if (!entity.isPresent()) {
-            return Optional.empty();
-        } else {
-            entity.get().execute(updateRaceCommand);
-            Race updatedRace = repository.save(entity.get());
-            updateTask(updatedRace);
-            return Optional.of(updatedRace);
-        }
-    }
-
-    @Transactional
-    public Optional<Race> create(CreateRaceCommand createRaceCommand) {
-        checkNotNull(createRaceCommand);
-        Race createdEntity = repository.save(createRaceCommand.getEntityToCreate());
-        return Optional.of(createdEntity);
-    }
-
-    @Transactional
-    public void delete(long id) {
-        repository.deleteById(id);
-    }
-
-    private void updateTask(Race race) {
-        task.record(race);
-    }
 }

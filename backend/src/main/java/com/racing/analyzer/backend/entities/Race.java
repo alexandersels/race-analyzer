@@ -45,11 +45,12 @@ public class Race extends BaseEntity {
     private List<LiveTiming> timings;
 
     @Builder
-    public Race(long id, String name, boolean recording, String url) {
+    public Race(long id, String name, boolean recording, String url, List<LiveTiming> timings) {
         this.id = id;
         this.name = name;
         this.recording = recording;
         this.url = url;
+        this.timings = timings;
     }
 
     @Override

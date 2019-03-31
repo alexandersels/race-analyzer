@@ -1,106 +1,33 @@
 package com.racing.analyzer.backend.resources;
 
-import com.racing.analyzer.backend.assemblers.RaceAssembler;
-import com.racing.analyzer.backend.commands.race.CreateRaceCommand;
-import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
-import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
-import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
-import com.racing.analyzer.backend.dto.statistics.DriverWithRoundsDTO;
-import com.racing.analyzer.backend.dto.statistics.RaceOverviewDTO;
-import com.racing.analyzer.backend.services.RaceService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import lombok.Getter;
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 
-import java.util.Collection;
-import java.util.Optional;
+@Getter
+@Relation(collectionRelation = "races")
+public class RaceResource extends ResourceSupport {
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+    private final long raceId;
+    private final String name;
+    private final boolean recording;
+    private final String url;
+    private final int version;
 
-@RestController
-public class RaceResource extends BaseResource {
-
-    @Autowired
-    private RaceService service;
-
-    @Autowired
-    private RaceAssembler assembler;
-
-    @GetMapping("/races/{id}")
-    public ResponseEntity<?> getById(@PathVariable long id) {
-        Optional<RaceDTO> race = service.getById(id);
-        return race.map(dto -> {
-            Resource resource = assembler.toResource(dto);
-            return ResponseEntity.ok().body(resource);
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+    private RaceResource(RaceDTO race) {
+        this.raceId = race.getId();
+        this.name = race.getName();
+        this.recording = race.isRecording();
+        this.url = race.getUrl();
+        this.version = race.getVersion();
     }
 
-    @GetMapping("/races")
-    public ResponseEntity<?> getRaces() {
-        Collection<RaceDTO> races = service.getAll();
-        Resources resources = new Resources<>(races, linkTo(methodOn(RaceResource.class).getRaces()).withSelfRel());
-        return ResponseEntity.ok().body(resources);
-    }
-
-    @GetMapping("/races/{id}/aggregateRaceData")
-    public RaceOverviewDTO getAggregatedRaceData(@PathVariable long id) {
-        Optional<RaceOverviewDTO> aggregatedRaceData = service.getAggregatedRaceData(id);
-        return aggregatedRaceData.get();
-    }
-
-    @GetMapping("/races/{id}/aggregateDriverData")
-    public Collection<DriverWithRoundsDTO> getAggregatedDriverData(@PathVariable long id) {
-        Collection<DriverWithRoundsDTO> aggregatedDriverData = service.getAggregatedDriverData(id);
-        return aggregatedDriverData;
-    }
-
-    @GetMapping("/races/{id}/aggregateDriverData/{number}")
-    public DriverWithRoundsDTO getAggregatedDriverData(@PathVariable long id, @PathVariable int number) {
-        Optional<DriverWithRoundsDTO> aggregatedDriverData = service.getAggregatedDriverData(id, number);
-        return aggregatedDriverData.get();
-    }
-
-    @PostMapping("/races")
-    public ResponseEntity<?> create(@RequestBody CreateRaceDTO createRaceDTO) {
-
-        if (createRaceDTO == null) {
-            return ResponseEntity.badRequest().build();
+    public static RaceResource fromDto(RaceDTO dto) {
+        if (dto == null) {
+            return null;
         }
 
-        CreateRaceCommand command = CreateRaceCommand.fromDTO(createRaceDTO);
-        Optional<RaceDTO> created = service.create(command);
-        if (created.isPresent()) {
-            Resource resource = assembler.toResource(created.get());
-            return ResponseEntity.created(createUri(resource)).body(resource);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @PutMapping("/races/")
-    public ResponseEntity<?> update(@RequestBody UpdateRaceDTO updateRaceDTO) {
-
-        if (updateRaceDTO == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        UpdateRaceCommand command = UpdateRaceCommand.fromDto(updateRaceDTO);
-        Optional<RaceDTO> update = service.update(command);
-        if (update.isPresent()) {
-            Resource resource = assembler.toResource(update.get());
-            return ResponseEntity.created(createUri(resource)).body(resource);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/races")
-    public ResponseEntity<?> deleteCustomer(@PathVariable long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+        return new RaceResource(dto);
     }
 }

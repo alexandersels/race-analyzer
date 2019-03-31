@@ -2,8 +2,10 @@ package com.racing.analyzer.backend.services;
 
 import com.racing.analyzer.backend.dto.statistics.DriverDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.logic.aggregators.DriverAggregator;
 import com.racing.analyzer.backend.repositories.LiveTimingRepository;
+import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,13 +36,13 @@ public class RaceServiceTest {
             .withDatabaseName("racing");
 
     @Autowired
-    private LiveTimingRepository repository;
+    private RaceRepository raceRepository;
 
     @Test
     @Sql({"/RaceDemoData.sql", "/LiveTimingDemoData.sql"})
     public void test() {
-        final List<LiveTiming> liveTimings = repository.findAll();
-        final Collection<DriverDTO> driverData = DriverAggregator.aggregate(liveTimings);
+        final Race race = raceRepository.findById(1L).get();
+        final Collection<DriverDTO> driverData = DriverAggregator.aggregate(race);
 
         assertThat(driverData.size()).isEqualTo(32);
         assertThat(driverData.stream().mapToInt(d -> (int) d.getAmountOfRounds()).sum()).isEqualTo(978);

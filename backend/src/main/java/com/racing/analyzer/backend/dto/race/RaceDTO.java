@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 public class RaceDTO {
 
     private long id;
-
     private String name;
     private boolean recording;
     private String url;

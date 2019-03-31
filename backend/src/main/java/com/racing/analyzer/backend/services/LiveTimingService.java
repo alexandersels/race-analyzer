@@ -1,6 +1,8 @@
 package com.racing.analyzer.backend.services;
 
 import com.racing.analyzer.backend.dto.livetiming.LiveTimingDTO;
+import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.mappers.LiveTimingMapper;
 import com.racing.analyzer.backend.repositories.LiveTimingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +20,20 @@ public class LiveTimingService {
     @Autowired
     private LiveTimingRepository repository;
 
-    @Autowired
-    private LiveTimingMapper mapper;
-
     @Transactional
-    public Optional<LiveTimingDTO> getById(long id) {
-        return repository.findById(id)
-                .map(r -> mapper.toDto(r));
+    public Optional<LiveTiming> getById(long id) {
+        return repository.findById(id);
     }
 
     @Transactional
-    public Collection<LiveTimingDTO> getAll() {
-        return repository.findAll().stream()
-                .map(r -> mapper.toDto(r))
+    public Collection<LiveTiming> getAll() {
+        return repository.findAll();
+    }
+
+    @Transactional
+    public Collection<LiveTiming> getTimingsForDriver(Race race, int number) {
+        return race.getTimings().stream()
+                .filter(timing -> timing.getNumber() == number)
                 .collect(toList());
     }
 
