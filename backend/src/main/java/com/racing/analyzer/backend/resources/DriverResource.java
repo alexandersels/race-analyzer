@@ -4,8 +4,10 @@ import com.racing.analyzer.backend.dto.statistics.DriverDTO;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 
 @Getter
+@Relation(collectionRelation = "drivers")
 public class DriverResource extends ResourceSupport {
 
     private final int number;

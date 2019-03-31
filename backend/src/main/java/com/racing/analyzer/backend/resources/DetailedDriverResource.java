@@ -1,20 +1,24 @@
 package com.racing.analyzer.backend.resources;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.racing.analyzer.backend.assemblers.RoundAssembler;
 import com.racing.analyzer.backend.dto.statistics.DetailedDriverDTO;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.core.EmbeddedWrapper;
+import org.springframework.hateoas.core.EmbeddedWrappers;
+import org.springframework.hateoas.core.Relation;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@Relation(collectionRelation = "drivers")
 public class DetailedDriverResource extends ResourceSupport {
-
-    @JsonIgnore
-    private final RoundAssembler assembler;
 
     private final long raceId;
     private final int number;
@@ -28,10 +32,13 @@ public class DetailedDriverResource extends ResourceSupport {
     private final long bestSectorTwo;
     private final long bestSectorThree;
     private final long amountOfRounds;
-    private final Collection<RoundResource> rounds;
+
+    @JsonUnwrapped
+    private final Resources rounds;
 
     private DetailedDriverResource(DetailedDriverDTO dto) {
-        assembler = new RoundAssembler();
+        RoundAssembler assembler = new RoundAssembler();
+        EmbeddedWrappers wrappers = new EmbeddedWrappers(false);
 
         this.raceId = dto.getRaceId();
         this.number = dto.getNumber();
@@ -45,9 +52,11 @@ public class DetailedDriverResource extends ResourceSupport {
         this.bestSectorTwo = dto.getBestSectorTwo();
         this.bestSectorThree = dto.getBestSectorThree();
         this.amountOfRounds = dto.getAmountOfRounds();
-        this.rounds = dto.getRounds().stream()
-                .map(roundDTO -> assembler.toResource(roundDTO))
+        List<EmbeddedWrapper> collect = dto.getRounds().stream()
+                .map(roundDTO -> wrappers.wrap(assembler.toResource(roundDTO)))
                 .collect(Collectors.toList());
+        rounds = new Resources(collect);
+
     }
 
     public static DetailedDriverResource fromDto(DetailedDriverDTO dto) {

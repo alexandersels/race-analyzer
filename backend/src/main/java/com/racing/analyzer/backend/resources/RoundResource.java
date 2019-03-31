@@ -4,8 +4,10 @@ import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.enums.LiveTimingState;
 import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 
 @Getter
+@Relation(collectionRelation = "rounds")
 public class RoundResource extends ResourceSupport {
 
     private final long lapTime;
