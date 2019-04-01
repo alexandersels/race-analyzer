@@ -1,25 +1,24 @@
 package com.racing.analyzer.backend.entities;
 
-import com.racing.analyzer.backend.commands.ICommandHandler;
 import com.racing.analyzer.backend.enums.LiveTimingState;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Collection;
 
 @Entity
 @Table(name = "livetiming")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LiveTiming extends BaseEntity {
 
     @Id
     @Column(name = "id")
-    @Access(AccessType.PROPERTY)
-    @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -66,7 +65,7 @@ public class LiveTiming extends BaseEntity {
     @Column(name = "creation")
     private Timestamp creation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
 
@@ -95,10 +94,6 @@ public class LiveTiming extends BaseEntity {
         return (sectorOne != -1) && (sectorTwo != -1) && (sectorThree != -1);
     }
 
-    @Override
-    protected Collection<ICommandHandler> getCommandHandlers() {
-        return Arrays.asList();
-    }
 }
 
 

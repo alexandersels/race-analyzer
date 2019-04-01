@@ -1,25 +1,32 @@
 package com.racing.analyzer.backend.dto.race;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-public class RaceDTO {
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class RaceDTO implements Serializable {
+
+    @NotNull
     private long id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private boolean recording;
+
+    @NotNull
     private String url;
+
+    @NotNull
     private int version;
 
-    @Builder
-    public RaceDTO(long id, String name, boolean recording, String url, int version) {
-        this.id = id;
-        this.name = name;
-        this.recording = recording;
-        this.url = url;
-        this.version = version;
-    }
 }

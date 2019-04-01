@@ -1,25 +1,18 @@
 package com.racing.analyzer.backend.services;
 
 import com.racing.analyzer.backend.ScheduledTask;
-import com.racing.analyzer.backend.commands.race.CreateRaceCommand;
-import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
-import com.racing.analyzer.backend.dto.statistics.DetailedDriverDTO;
-import com.racing.analyzer.backend.dto.statistics.RaceOverviewDTO;
-import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
+import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
 import com.racing.analyzer.backend.entities.Race;
-import com.racing.analyzer.backend.logic.aggregators.DetailedDriverAggregator;
-import com.racing.analyzer.backend.logic.aggregators.RaceOverviewAggregator;
 import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class RaceService {
@@ -41,24 +34,45 @@ public class RaceService {
     }
 
     @Transactional
-    public Optional<Race> update(UpdateRaceCommand updateRaceCommand) {
-        checkNotNull(updateRaceCommand);
-        Optional<Race> entity = repository.findById(updateRaceCommand.getId());
-        if (!entity.isPresent()) {
+    public Optional<Race> getRaceJoinedWithTimings(long id) {
+        return repository.getRaceJoinedWithTimings(id);
+    }
+
+    @Transactional
+    public Optional<Race> update(UpdateRaceDTO updateRaceDto) {
+        checkNotNull(updateRaceDto);
+        Optional<Race> race = repository.findById(updateRaceDto.getId());
+        if (!race.isPresent()) {
             return Optional.empty();
         } else {
-            entity.get().execute(updateRaceCommand);
-            Race updatedRace = repository.save(entity.get());
-            updateTask(updatedRace);
-            return Optional.of(updatedRace);
+            Race updated = update(race.get(), updateRaceDto);
+            return Optional.of(repository.save(updated));
         }
     }
 
     @Transactional
-    public Optional<Race> create(CreateRaceCommand createRaceCommand) {
-        checkNotNull(createRaceCommand);
-        Race createdEntity = repository.save(createRaceCommand.getEntityToCreate());
-        return Optional.of(createdEntity);
+    public Optional<Race> changeRecordingState(long id, boolean isRecording) {
+        Optional<Race> race = repository.findById(id);
+        if (!race.isPresent()) {
+            return Optional.empty();
+        } else {
+            Race toUpdate = race.get();
+            toUpdate.setRecording(isRecording);
+            repository.save(toUpdate);
+            task.record(toUpdate);
+            return Optional.of(toUpdate);
+        }
+    }
+
+    @Transactional
+    public Optional<Race> create(CreateRaceDTO createRaceDto) {
+        checkNotNull(createRaceDto);
+        Race toCreate = Race.builder()
+                .name(createRaceDto.getName())
+                .url(createRaceDto.getUrl())
+                .recording(false)
+                .build();
+        return Optional.ofNullable(repository.save(toCreate));
     }
 
     @Transactional
@@ -66,7 +80,16 @@ public class RaceService {
         repository.deleteById(id);
     }
 
-    private void updateTask(Race race) {
-        task.record(race);
+    private Race update(Race race, UpdateRaceDTO updateRaceDTO) {
+        if (!race.getName().equals(updateRaceDTO.getName())) {
+            race.setName(updateRaceDTO.getName());
+        }
+
+        if (!race.getUrl().equals(updateRaceDTO.getUrl())) {
+            race.setUrl(updateRaceDTO.getUrl());
+        }
+        return race;
+
     }
+
 }

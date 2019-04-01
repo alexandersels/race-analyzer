@@ -28,7 +28,7 @@ public class RaceOverviewController {
 
     @GetMapping("/races/{id}/overview")
     public ResponseEntity<?> getRaceOverview(@PathVariable long id) {
-        Optional<Race> race = raceService.getById(id);
+        Optional<Race> race = raceService.getRaceJoinedWithTimings(id);
         if (!race.isPresent()) {
             return ResponseEntity.notFound().build();
         } else {

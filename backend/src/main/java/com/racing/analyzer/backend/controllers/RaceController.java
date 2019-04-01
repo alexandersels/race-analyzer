@@ -1,8 +1,6 @@
 package com.racing.analyzer.backend.controllers;
 
 import com.racing.analyzer.backend.assemblers.RaceAssembler;
-import com.racing.analyzer.backend.commands.race.CreateRaceCommand;
-import com.racing.analyzer.backend.commands.race.UpdateRaceCommand;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
@@ -66,7 +64,7 @@ public class RaceController {
             return ResponseEntity.badRequest().build();
         }
 
-        Optional<Race> created = service.create(CreateRaceCommand.fromDTO(createRaceDTO));
+        Optional<Race> created = service.create(createRaceDTO);
         if (created.isPresent()) {
             RaceResource resource = raceAssembler.toResource(mapper.toDto(created.get()));
             return ResponseEntity
@@ -83,7 +81,7 @@ public class RaceController {
             return ResponseEntity.badRequest().build();
         }
 
-        Optional<Race> update = service.update(UpdateRaceCommand.fromDto(updateRaceDTO));
+        Optional<Race> update = service.update(updateRaceDTO);
         if (update.isPresent()) {
             RaceResource resource = raceAssembler.toResource(mapper.toDto(update.get()));
             return ResponseEntity
@@ -94,9 +92,31 @@ public class RaceController {
         }
     }
 
+    @PutMapping("/races/{id}/start-recording")
+    public ResponseEntity<?> startRecording(@PathVariable long id)  {
+        return changeRecordingState(id, true);
+    }
+
+    @PutMapping("/races/{id}/stop-recording")
+    public ResponseEntity<?> stopRecording(@PathVariable long id)  {
+        return changeRecordingState(id, false);
+    }
+
     @DeleteMapping("/races")
     public ResponseEntity<?> delete(@PathVariable long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private ResponseEntity<?> changeRecordingState(long id, boolean isRecording)  {
+        Optional<Race> updated = service.changeRecordingState(id, isRecording);
+        if (updated.isPresent()) {
+            RaceResource resource = raceAssembler.toResource(mapper.toDto(updated.get()));
+            return ResponseEntity
+                    .created(URI.create(resource.getId().expand().getHref()))
+                    .body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
