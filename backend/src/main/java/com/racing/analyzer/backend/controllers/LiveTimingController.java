@@ -64,11 +64,6 @@ public class LiveTimingController {
     @GetMapping("/races/{id}/livetimings")
     public ResponseEntity<?> getTimingsForRace(@PathVariable long id) {
         Collection<LiveTimingDTO> timings = timingService.getTimingsForRace(id);
-        Optional<RaceDTO> race = raceService.getById(id);
-        if (!race.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
         Collection<LiveTimingResource> timingResources = timings.stream()
                                                                 .map(dto -> assembler.toResource(dto))
                                                                 .collect(toList());

@@ -2,6 +2,7 @@ package com.racing.analyzer.backend.controllers;
 
 import com.racing.analyzer.backend.assemblers.RaceAssembler;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.mappers.RaceMapper;
@@ -40,9 +41,8 @@ public class RaceController {
 
     @GetMapping("/races/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-        return service.getById(id)
-                      .map(race -> ResponseEntity.ok().body(raceAssembler.toResource(race)))
-                      .orElseGet(() -> ResponseEntity.notFound().build());
+        RaceDTO race = service.getById(id);
+        return ResponseEntity.ok().body(raceAssembler.toResource(race));
     }
 
     @GetMapping("/races")

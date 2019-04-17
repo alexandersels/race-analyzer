@@ -35,7 +35,7 @@ public class DetailedDriverController {
                 .stream()
                 .map(dto -> detailedDriverAssembler.toResource(dto))
                 .collect(toList());
-        Resources resources = new Resources(detailedDriverResources);
+        Resources resources = new Resources<>(detailedDriverResources);
         return ResponseEntity.ok().body(resources);
 
     }

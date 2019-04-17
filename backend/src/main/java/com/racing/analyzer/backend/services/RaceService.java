@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -30,8 +31,9 @@ public class RaceService {
     private RaceMapper mapper;
 
     @Transactional
-    public Optional<RaceDTO> getById(long id) {
-        return repository.findById(id).map(race -> mapper.toDto(race));
+    public RaceDTO getById(long id) {
+        return repository.findById(id).map(race -> mapper.toDto(race))
+                         .orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional
