@@ -2,8 +2,8 @@ package com.racing.analyzer.backend.controllers;
 
 import com.racing.analyzer.backend.assemblers.LiveTimingAssembler;
 import com.racing.analyzer.backend.dto.livetiming.LiveTimingDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
-import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.mappers.LiveTimingMapper;
 import com.racing.analyzer.backend.resources.LiveTimingResource;
 import com.racing.analyzer.backend.services.LiveTimingService;
@@ -53,8 +53,8 @@ public class LiveTimingController {
     public ResponseEntity<?> getTimings() {
         Collection<LiveTiming> liveTimings = timingService.getAll();
         List<LiveTimingResource> timingResources = liveTimings.stream().map(timing -> mapper.toDto(timing))
-                .map(dto -> assembler.toResource(dto))
-                .collect(toList());
+                                                              .map(dto -> assembler.toResource(dto))
+                                                              .collect(toList());
 
         Resources resources = new Resources<>(timingResources);
         resources.add(linkTo(methodOn(LiveTimingController.class).getTimings()).withSelfRel());
@@ -63,14 +63,15 @@ public class LiveTimingController {
 
     @GetMapping("/races/{id}/livetimings")
     public ResponseEntity<?> getTimingsForRace(@PathVariable long id) {
-        Optional<Race> race = raceService.getById(id);
+        Collection<LiveTimingDTO> timings = timingService.getTimingsForRace(id);
+        Optional<RaceDTO> race = raceService.getById(id);
         if (!race.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
-        Collection<LiveTimingResource> timingResources = race.get().getTimings().stream().map(timing -> mapper.toDto(timing))
-                .map(dto -> assembler.toResource(dto))
-                .collect(toList());
+        Collection<LiveTimingResource> timingResources = timings.stream()
+                                                                .map(dto -> assembler.toResource(dto))
+                                                                .collect(toList());
         Resources resources = new Resources(timingResources);
         resources.add(linkTo(methodOn(LiveTimingController.class).getTimings()).withRel("allTimings"));
         return ResponseEntity.ok().body(resources);
@@ -78,16 +79,10 @@ public class LiveTimingController {
 
     @GetMapping("/races/{id}/livetimings/driver/{number}")
     public ResponseEntity<?> getTimingsForRaceAndDriver(@PathVariable long id, @PathVariable int number) {
-        Optional<Race> race = raceService.getById(id);
-        if (!race.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Collection<LiveTiming> timingsForDriver = timingService.getTimingsForDriver(race.get(), number);
+        Collection<LiveTimingDTO> timingsForDriver = timingService.getTimingsForDriver(id, number);
         List<LiveTimingResource> timingResources = timingsForDriver.stream()
-                .map(timing -> mapper.toDto(timing))
-                .map(dto -> assembler.toResource(dto))
-                .collect(toList());
+                                                                   .map(dto -> assembler.toResource(dto))
+                                                                   .collect(toList());
 
         Resources resources = new Resources(timingResources);
         resources.add(linkTo(methodOn(LiveTimingController.class).getTimingsForRace(id)).withSelfRel());

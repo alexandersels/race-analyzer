@@ -1,6 +1,5 @@
 package com.racing.analyzer.backend.resources;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.racing.analyzer.backend.assemblers.RoundAssembler;
 import com.racing.analyzer.backend.dto.statistics.DetailedDriverDTO;
@@ -12,9 +11,10 @@ import org.springframework.hateoas.core.EmbeddedWrapper;
 import org.springframework.hateoas.core.EmbeddedWrappers;
 import org.springframework.hateoas.core.Relation;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Getter
 @Relation(collectionRelation = "drivers")
@@ -53,17 +53,14 @@ public class DetailedDriverResource extends ResourceSupport {
         this.bestSectorThree = dto.getBestSectorThree();
         this.amountOfRounds = dto.getAmountOfRounds();
         List<EmbeddedWrapper> collect = dto.getRounds().stream()
-                .map(roundDTO -> wrappers.wrap(assembler.toResource(roundDTO)))
-                .collect(Collectors.toList());
+                                           .map(roundDTO -> wrappers.wrap(assembler.toResource(roundDTO)))
+                                           .collect(Collectors.toList());
         rounds = new Resources(collect);
 
     }
 
     public static DetailedDriverResource fromDto(DetailedDriverDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
+        checkNotNull(dto);
         return new DetailedDriverResource(dto);
     }
 }

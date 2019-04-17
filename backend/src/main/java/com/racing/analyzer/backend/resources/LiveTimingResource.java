@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Getter
 @Relation(collectionRelation = "livetimings")
 public class LiveTimingResource extends ResourceSupport {
@@ -43,9 +45,7 @@ public class LiveTimingResource extends ResourceSupport {
     }
 
     public static LiveTimingResource fromDto(LiveTimingDTO dto) {
-        if(dto == null) {
-            return null;
-        }
+        checkNotNull(dto);
         return new LiveTimingResource(dto);
     }
 }

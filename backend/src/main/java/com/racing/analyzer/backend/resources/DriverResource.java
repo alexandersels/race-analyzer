@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Getter
 @Relation(collectionRelation = "drivers")
 public class DriverResource extends ResourceSupport {
@@ -29,10 +31,7 @@ public class DriverResource extends ResourceSupport {
     }
 
     public static DriverResource fromDto(DriverDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
+        checkNotNull(dto);
         return new DriverResource(dto);
     }
 }

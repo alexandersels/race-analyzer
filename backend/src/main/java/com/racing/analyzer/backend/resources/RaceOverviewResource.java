@@ -11,6 +11,7 @@ import org.springframework.hateoas.core.EmbeddedWrappers;
 
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.stream.Collectors.toList;
 
 @Getter
@@ -34,17 +35,14 @@ public class RaceOverviewResource extends ResourceSupport {
         amountOfPitStops = dto.getAmountOfPitStops();
         winner = DriverResource.fromDto(dto.getWinner());
         List<EmbeddedWrapper> collect = dto.getDrivers().stream()
-                .map(driverDTO -> wrapper.wrap(driverAssembler.toResource(driverDTO)))
-                .collect(toList());
+                                           .map(driverDTO -> wrapper.wrap(driverAssembler.toResource(driverDTO)))
+                                           .collect(toList());
         drivers = new Resources(collect);
 
     }
 
     public static RaceOverviewResource fromDto(RaceOverviewDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
+        checkNotNull(dto);
         return new RaceOverviewResource(dto);
     }
 }

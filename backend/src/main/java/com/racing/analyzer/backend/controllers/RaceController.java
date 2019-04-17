@@ -2,7 +2,6 @@ package com.racing.analyzer.backend.controllers;
 
 import com.racing.analyzer.backend.assemblers.RaceAssembler;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
-import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.mappers.RaceMapper;
@@ -11,11 +10,16 @@ import com.racing.analyzer.backend.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
@@ -36,25 +40,18 @@ public class RaceController {
 
     @GetMapping("/races/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-        Optional<Race> race = service.getById(id);
-        if (!race.isPresent()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            RaceDTO dto = mapper.toDto(race.get());
-            return ResponseEntity.ok().body(raceAssembler.toResource(dto));
-        }
+        return service.getById(id)
+                      .map(race -> ResponseEntity.ok().body(raceAssembler.toResource(race)))
+                      .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/races")
     public ResponseEntity<?> getRaces() {
-        Collection<RaceResource> raceResources = service.getAll().stream()
-                .map(race -> mapper.toDto(race))
-                .map(dto -> raceAssembler.toResource(dto))
-                .collect(toList());
+        Resources<RaceResource> resources = new Resources<>(service.getAll().stream()
+                                                                   .map(race -> raceAssembler.toResource(race))
+                                                                   .collect(toList()));
 
-        Resources resources = new Resources(raceResources);
         resources.add(linkTo(methodOn(RaceController.class).getRaces()).withSelfRel());
-
         return ResponseEntity.ok().body(resources);
     }
 
@@ -93,12 +90,12 @@ public class RaceController {
     }
 
     @PutMapping("/races/{id}/start-recording")
-    public ResponseEntity<?> startRecording(@PathVariable long id)  {
+    public ResponseEntity<?> startRecording(@PathVariable long id) {
         return changeRecordingState(id, true);
     }
 
     @PutMapping("/races/{id}/stop-recording")
-    public ResponseEntity<?> stopRecording(@PathVariable long id)  {
+    public ResponseEntity<?> stopRecording(@PathVariable long id) {
         return changeRecordingState(id, false);
     }
 
@@ -108,7 +105,7 @@ public class RaceController {
         return ResponseEntity.noContent().build();
     }
 
-    private ResponseEntity<?> changeRecordingState(long id, boolean isRecording)  {
+    private ResponseEntity<?> changeRecordingState(long id, boolean isRecording) {
         Optional<Race> updated = service.changeRecordingState(id, isRecording);
         if (updated.isPresent()) {
             RaceResource resource = raceAssembler.toResource(mapper.toDto(updated.get()));

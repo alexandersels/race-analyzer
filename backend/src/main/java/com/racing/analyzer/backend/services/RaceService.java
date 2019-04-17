@@ -2,17 +2,20 @@ package com.racing.analyzer.backend.services;
 
 import com.racing.analyzer.backend.ScheduledTask;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
+import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
 import com.racing.analyzer.backend.entities.Race;
+import com.racing.analyzer.backend.mappers.RaceMapper;
 import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
+import javax.transaction.Transactional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class RaceService {
@@ -23,19 +26,24 @@ public class RaceService {
     @Autowired
     private ScheduledTask task;
 
+    @Autowired
+    private RaceMapper mapper;
+
     @Transactional
-    public Optional<Race> getById(long id) {
-        return repository.findById(id);
+    public Optional<RaceDTO> getById(long id) {
+        return repository.findById(id).map(race -> mapper.toDto(race));
     }
 
     @Transactional
-    public Collection<Race> getAll() {
-        return repository.findAll();
+    public Collection<RaceDTO> getAll() {
+        return repository.findAll().stream()
+                         .map(race -> mapper.toDto(race))
+                         .collect(toList());
     }
 
     @Transactional
-    public Optional<Race> getRaceJoinedWithTimings(long id) {
-        return repository.getRaceJoinedWithTimings(id);
+    public Optional<RaceDTO> getRaceJoinedWithTimings(long id) {
+        return repository.getRaceJoinedWithTimings(id).map(race -> mapper.toDto(race));
     }
 
     @Transactional
@@ -68,10 +76,10 @@ public class RaceService {
     public Optional<Race> create(CreateRaceDTO createRaceDto) {
         checkNotNull(createRaceDto);
         Race toCreate = Race.builder()
-                .name(createRaceDto.getName())
-                .url(createRaceDto.getUrl())
-                .recording(false)
-                .build();
+                            .name(createRaceDto.getName())
+                            .url(createRaceDto.getUrl())
+                            .recording(false)
+                            .build();
         return Optional.ofNullable(repository.save(toCreate));
     }
 
