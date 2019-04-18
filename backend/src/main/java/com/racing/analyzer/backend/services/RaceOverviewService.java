@@ -1,6 +1,5 @@
 package com.racing.analyzer.backend.services;
 
-import com.racing.analyzer.backend.ScheduledTask;
 import com.racing.analyzer.backend.dto.statistics.RaceOverviewDTO;
 import com.racing.analyzer.backend.logic.aggregators.RaceOverviewAggregator;
 import com.racing.analyzer.backend.repositories.RaceRepository;
@@ -14,9 +13,6 @@ public class RaceOverviewService {
 
     @Autowired
     private RaceRepository raceRepository;
-
-    @Autowired
-    private ScheduledTask task;
 
     @Transactional
     public RaceOverviewDTO getRaceOverview(long raceId) {

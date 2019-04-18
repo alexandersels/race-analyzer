@@ -23,9 +23,6 @@ public class DetailedDriverController {
     private DetailedDriverService detailedDriverService;
 
     @Autowired
-    private RaceService raceService;
-
-    @Autowired
     private DetailedDriverAssembler detailedDriverAssembler;
 
     @GetMapping("/races/{id}/detailedDriverData")

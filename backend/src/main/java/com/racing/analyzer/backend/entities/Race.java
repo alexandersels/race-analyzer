@@ -1,7 +1,10 @@
 package com.racing.analyzer.backend.entities;
 
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,5 +39,14 @@ public class Race extends BaseEntity {
         this.recording = recording;
         this.url = url;
         this.timings = timings;
+    }
+
+    public void update(UpdateRaceDTO updateRaceDTO) {
+        if (!name.equals(updateRaceDTO.getName())) {
+            name = updateRaceDTO.getName();
+        }
+        if (!url.equals(updateRaceDTO.getUrl())) {
+            url = updateRaceDTO.getUrl();
+        }
     }
 }

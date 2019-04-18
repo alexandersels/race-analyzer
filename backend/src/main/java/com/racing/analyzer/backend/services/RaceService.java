@@ -5,15 +5,15 @@ import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
 import com.racing.analyzer.backend.entities.Race;
+import com.racing.analyzer.backend.exceptions.RaceEntityNotFoundException;
 import com.racing.analyzer.backend.mappers.RaceMapper;
 import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.stream.Collectors.toList;
@@ -22,84 +22,64 @@ import static java.util.stream.Collectors.toList;
 public class RaceService {
 
     @Autowired
-    private RaceRepository repository;
+    private RaceRepository raceRepository;
 
     @Autowired
     private ScheduledTask task;
 
     @Autowired
-    private RaceMapper mapper;
+    private RaceMapper raceMapper;
 
     @Transactional
-    public RaceDTO getById(long id) {
-        return repository.findById(id).map(race -> mapper.toDto(race))
-                         .orElseThrow(EntityNotFoundException::new);
+    public RaceDTO getById(long raceId) {
+        return raceRepository.findById(raceId).map(race -> raceMapper.toDto(race))
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional
     public Collection<RaceDTO> getAll() {
-        return repository.findAll().stream()
-                         .map(race -> mapper.toDto(race))
-                         .collect(toList());
+        return raceRepository.findAll().stream()
+                .map(race -> raceMapper.toDto(race))
+                .collect(toList());
     }
 
     @Transactional
-    public Optional<RaceDTO> getRaceJoinedWithTimings(long id) {
-        return repository.getRaceJoinedWithTimings(id).map(race -> mapper.toDto(race));
-    }
-
-    @Transactional
-    public Optional<Race> update(UpdateRaceDTO updateRaceDto) {
+    public RaceDTO update(UpdateRaceDTO updateRaceDto) {
         checkNotNull(updateRaceDto);
-        Optional<Race> race = repository.findById(updateRaceDto.getId());
-        if (!race.isPresent()) {
-            return Optional.empty();
-        } else {
-            Race updated = update(race.get(), updateRaceDto);
-            return Optional.of(repository.save(updated));
-        }
+        return raceRepository.findById(updateRaceDto.getId())
+                .map(race -> {
+                    race.update(updateRaceDto);
+                    return raceMapper.toDto(raceRepository.save(race));
+                })
+                .orElseThrow(RaceEntityNotFoundException::new);
     }
 
     @Transactional
-    public Optional<Race> changeRecordingState(long id, boolean isRecording) {
-        Optional<Race> race = repository.findById(id);
-        if (!race.isPresent()) {
-            return Optional.empty();
-        } else {
-            Race toUpdate = race.get();
-            toUpdate.setRecording(isRecording);
-            repository.save(toUpdate);
-            task.record(toUpdate);
-            return Optional.of(toUpdate);
-        }
+    public RaceDTO changeRecordingState(long raceId, boolean isRecording) {
+        return raceRepository.findById(raceId)
+                .map(race -> {
+                    race.setRecording(isRecording);
+                    task.record(race);
+                    return raceMapper.toDto(raceRepository.save(race));
+                })
+                .orElseThrow(RaceEntityNotFoundException::new);
     }
 
     @Transactional
-    public Optional<Race> create(CreateRaceDTO createRaceDto) {
+    public RaceDTO create(CreateRaceDTO createRaceDto) {
         checkNotNull(createRaceDto);
         Race toCreate = Race.builder()
-                            .name(createRaceDto.getName())
-                            .url(createRaceDto.getUrl())
-                            .recording(false)
-                            .build();
-        return Optional.ofNullable(repository.save(toCreate));
+                .name(createRaceDto.getName())
+                .url(createRaceDto.getUrl())
+                .recording(false)
+                .build();
+        return raceMapper.toDto(raceRepository.save(toCreate));
     }
 
     @Transactional
     public void delete(long id) {
-        repository.deleteById(id);
+        raceRepository.deleteById(id);
     }
 
-    private Race update(Race race, UpdateRaceDTO updateRaceDTO) {
-        if (!race.getName().equals(updateRaceDTO.getName())) {
-            race.setName(updateRaceDTO.getName());
-        }
-
-        if (!race.getUrl().equals(updateRaceDTO.getUrl())) {
-            race.setUrl(updateRaceDTO.getUrl());
-        }
-        return race;
-
-    }
 
 }

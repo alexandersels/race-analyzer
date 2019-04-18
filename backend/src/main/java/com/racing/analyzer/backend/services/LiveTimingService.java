@@ -1,17 +1,16 @@
 package com.racing.analyzer.backend.services;
 
-import com.google.common.collect.ImmutableList;
 import com.racing.analyzer.backend.dto.livetiming.LiveTimingDTO;
-import com.racing.analyzer.backend.entities.LiveTiming;
+import com.racing.analyzer.backend.exceptions.LiveTimingNotFoundException;
+import com.racing.analyzer.backend.exceptions.RaceEntityNotFoundException;
 import com.racing.analyzer.backend.mappers.LiveTimingMapper;
 import com.racing.analyzer.backend.repositories.LiveTimingRepository;
 import com.racing.analyzer.backend.repositories.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Optional;
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 import static java.util.stream.Collectors.toList;
 
@@ -28,31 +27,34 @@ public class LiveTimingService {
     private LiveTimingMapper liveTimingMapper;
 
     @Transactional
-    public Optional<LiveTiming> getById(long id) {
-        return liveTimingRepository.findById(id);
+    public LiveTimingDTO getById(long liveTimingId) {
+        return liveTimingRepository.findById(liveTimingId).map(liveTiming -> liveTimingMapper.toDto(liveTiming))
+                .orElseThrow(LiveTimingNotFoundException::new);
     }
 
     @Transactional
-    public Collection<LiveTiming> getAll() {
-        return liveTimingRepository.findAll();
+    public Collection<LiveTimingDTO> getAll() {
+        return liveTimingRepository.findAll().stream()
+                .map(liveTiming -> liveTimingMapper.toDto(liveTiming))
+                .collect(toList());
     }
 
     @Transactional
     public Collection<LiveTimingDTO> getTimingsForDriver(long raceId, int number) {
         return raceRepository.findById(raceId)
-                             .map(race -> race.getTimings().stream()
-                                              .filter(timing -> timing.getNumber() == number)
-                                              .map(x -> liveTimingMapper.toDto(x))
-                                              .collect(toList()))
-                             .orElse(ImmutableList.of());
+                .map(race -> race.getTimings().stream()
+                        .filter(timing -> timing.getNumber() == number)
+                        .map(liveTiming -> liveTimingMapper.toDto(liveTiming))
+                        .collect(toList()))
+                .orElseThrow(RaceEntityNotFoundException::new);
     }
 
     @Transactional
     public Collection<LiveTimingDTO> getTimingsForRace(long raceId) {
         return raceRepository.findById(raceId)
-                             .map(race -> race.getTimings().stream()
-                                              .map(timing -> liveTimingMapper.toDto(timing))
-                                              .collect(toList()))
-                             .orElse(ImmutableList.of());
+                .map(race -> race.getTimings().stream()
+                        .map(timing -> liveTimingMapper.toDto(timing))
+                        .collect(toList()))
+                .orElseThrow(RaceEntityNotFoundException::new);
     }
 }

@@ -16,12 +16,12 @@ public class RaceOverviewController {
     private RaceOverviewService raceOverviewService;
 
     @Autowired
-    private RaceOverviewAssembler assembler;
+    private RaceOverviewAssembler raceOverviewAssembler;
 
     @GetMapping("/races/{id}/overview")
     public ResponseEntity<?> getRaceOverview(@PathVariable long id) {
         RaceOverviewDTO dto = raceOverviewService.getRaceOverview(id);
-        return ResponseEntity.ok().body(assembler.toResource(dto));
+        return ResponseEntity.ok().body(raceOverviewAssembler.toResource(dto));
 
     }
 }
