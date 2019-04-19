@@ -2,6 +2,7 @@ package com.racing.analyzer.backend.logic.aggregators;
 
 import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;

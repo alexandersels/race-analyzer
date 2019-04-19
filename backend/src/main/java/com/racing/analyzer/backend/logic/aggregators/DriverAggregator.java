@@ -6,6 +6,7 @@ import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.enums.LiveTimingState;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;

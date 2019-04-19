@@ -1,6 +1,7 @@
 package com.racing.analyzer.backend.logic;
 
 import com.racing.analyzer.backend.entities.LiveTiming;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;

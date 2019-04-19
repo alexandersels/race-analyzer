@@ -1,7 +1,7 @@
 package com.racing.analyzer.backend.assemblers;
 
-import com.racing.analyzer.backend.controllers.RaceController;
-import com.racing.analyzer.backend.controllers.RaceOverviewController;
+import com.racing.analyzer.backend.controllers.impl.RaceControllerImp;
+import com.racing.analyzer.backend.controllers.impl.RaceOverviewControllerImpl;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.resources.RaceResource;
 import org.springframework.hateoas.ResourceAssembler;
@@ -16,19 +16,19 @@ public class RaceAssembler implements ResourceAssembler<RaceDTO, RaceResource> {
     @Override
     public RaceResource toResource(RaceDTO raceDTO) {
         RaceResource resource = RaceResource.fromDto(raceDTO);
-        resource.add(linkTo(methodOn(RaceController.class)
+        resource.add(linkTo(methodOn(RaceControllerImp.class)
                 .getById(raceDTO.getId()))
                 .withSelfRel());
-        resource.add(linkTo(methodOn(RaceController.class)
+        resource.add(linkTo(methodOn(RaceControllerImp.class)
                 .getRaces())
                 .withRel("allRaces"));
-        resource.add(linkTo(methodOn(RaceController.class)
+        resource.add(linkTo(methodOn(RaceControllerImp.class)
                 .startRecording(raceDTO.getId()))
                 .withRel("start-recording"));
-        resource.add(linkTo(methodOn(RaceController.class)
+        resource.add(linkTo(methodOn(RaceControllerImp.class)
                 .stopRecording(raceDTO.getId()))
                 .withRel("stop-recording"));
-        resource.add(linkTo(methodOn(RaceOverviewController.class)
+        resource.add(linkTo(methodOn(RaceOverviewControllerImpl.class)
                 .getRaceOverview(raceDTO.getId()))
                 .withRel("statistics"));
         return resource;
