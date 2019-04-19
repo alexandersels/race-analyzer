@@ -1,7 +1,7 @@
 package com.racing.analyzer.backend.assemblers;
 
-import com.racing.analyzer.backend.controllers.impl.DetailedDriverControllerImpl;
-import com.racing.analyzer.backend.controllers.impl.LiveTimingControllerImpl;
+import com.racing.analyzer.backend.controllers.DetailedDriverController;
+import com.racing.analyzer.backend.controllers.LiveTimingController;
 import com.racing.analyzer.backend.dto.statistics.DriverDTO;
 import com.racing.analyzer.backend.resources.DriverResource;
 import org.springframework.hateoas.ResourceAssembler;
@@ -16,10 +16,10 @@ public class DriverAssembler implements ResourceAssembler<DriverDTO, DriverResou
     @Override
     public DriverResource toResource(DriverDTO driverDTO) {
         DriverResource resource = DriverResource.fromDto(driverDTO);
-        resource.add(linkTo(methodOn(DetailedDriverControllerImpl.class)
+        resource.add(linkTo(methodOn(DetailedDriverController.class)
                 .getDetailedDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
                 .withRel("driverDetails"));
-        resource.add(linkTo(methodOn(LiveTimingControllerImpl.class)
+        resource.add(linkTo(methodOn(LiveTimingController.class)
                 .getTimingsForRaceAndDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
                 .withRel("timings"));
         return resource;
