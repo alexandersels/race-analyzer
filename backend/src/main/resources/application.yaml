@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: @activatedProperties@
+---
+spring:
+  profiles:
+    dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/racing?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8080
+---
+spring:
+  profiles:
+    release
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:4000/racing?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8080
