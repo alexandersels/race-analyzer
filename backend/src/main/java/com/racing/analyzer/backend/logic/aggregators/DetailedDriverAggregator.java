@@ -6,6 +6,7 @@ import com.racing.analyzer.backend.dto.statistics.RoundDTO;
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
 import com.racing.analyzer.backend.enums.LiveTimingState;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+
 
 public class DetailedDriverAggregator {
 

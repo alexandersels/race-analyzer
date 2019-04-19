@@ -1,85 +1,22 @@
 package com.racing.analyzer.backend.services;
 
-import com.racing.analyzer.backend.ScheduledTask;
 import com.racing.analyzer.backend.dto.race.CreateRaceDTO;
 import com.racing.analyzer.backend.dto.race.RaceDTO;
 import com.racing.analyzer.backend.dto.race.UpdateRaceDTO;
-import com.racing.analyzer.backend.entities.Race;
-import com.racing.analyzer.backend.exceptions.RaceEntityNotFoundException;
-import com.racing.analyzer.backend.mappers.RaceMapper;
-import com.racing.analyzer.backend.repositories.RaceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.Collection;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.stream.Collectors.toList;
+public interface RaceService {
+    RaceDTO getById(long raceId);
 
-@Service
-public class RaceService {
+    Collection<RaceDTO> getAll();
 
-    @Autowired
-    private RaceRepository raceRepository;
+    RaceDTO update(UpdateRaceDTO updateRaceDto);
 
-    @Autowired
-    private ScheduledTask task;
+    RaceDTO changeRecordingState(long raceId, boolean isRecording);
 
-    @Autowired
-    private RaceMapper raceMapper;
+    RaceDTO create(CreateRaceDTO createRaceDto);
 
-    @Transactional
-    public RaceDTO getById(long raceId) {
-        return raceRepository.findById(raceId).map(race -> raceMapper.toDto(race))
-                .orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Transactional
-    public Collection<RaceDTO> getAll() {
-        return raceRepository.findAll().stream()
-                .map(race -> raceMapper.toDto(race))
-                .collect(toList());
-    }
-
-    @Transactional
-    public RaceDTO update(UpdateRaceDTO updateRaceDto) {
-        checkNotNull(updateRaceDto);
-        return raceRepository.findById(updateRaceDto.getId())
-                .map(race -> {
-                    race.update(updateRaceDto);
-                    return raceMapper.toDto(raceRepository.save(race));
-                })
-                .orElseThrow(RaceEntityNotFoundException::new);
-    }
-
-    @Transactional
-    public RaceDTO changeRecordingState(long raceId, boolean isRecording) {
-        return raceRepository.findById(raceId)
-                .map(race -> {
-                    race.setRecording(isRecording);
-                    task.record(race);
-                    return raceMapper.toDto(raceRepository.save(race));
-                })
-                .orElseThrow(RaceEntityNotFoundException::new);
-    }
-
-    @Transactional
-    public RaceDTO create(CreateRaceDTO createRaceDto) {
-        checkNotNull(createRaceDto);
-        Race toCreate = Race.builder()
-                .name(createRaceDto.getName())
-                .url(createRaceDto.getUrl())
-                .recording(false)
-                .build();
-        return raceMapper.toDto(raceRepository.save(toCreate));
-    }
-
-    @Transactional
-    public void delete(long id) {
-        raceRepository.deleteById(id);
-    }
-
+    void delete(long id);
 
 }

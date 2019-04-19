@@ -1,7 +1,7 @@
 package com.racing.analyzer.backend.assemblers;
 
-import com.racing.analyzer.backend.controllers.LiveTimingController;
-import com.racing.analyzer.backend.controllers.RaceController;
+import com.racing.analyzer.backend.controllers.impl.LiveTimingControllerImpl;
+import com.racing.analyzer.backend.controllers.impl.RaceControllerImp;
 import com.racing.analyzer.backend.dto.livetiming.LiveTimingDTO;
 import com.racing.analyzer.backend.resources.LiveTimingResource;
 import org.springframework.hateoas.ResourceAssembler;
@@ -16,8 +16,8 @@ public class LiveTimingAssembler implements ResourceAssembler<LiveTimingDTO, Liv
     @Override
     public LiveTimingResource toResource(LiveTimingDTO liveTimingDTO) {
         LiveTimingResource resource = LiveTimingResource.fromDto(liveTimingDTO);
-        resource.add(linkTo(methodOn(LiveTimingController.class).getById(liveTimingDTO.getId())).withSelfRel());
-        resource.add(linkTo(methodOn(RaceController.class).getById(liveTimingDTO.getRace())).withRel("race"));
+        resource.add(linkTo(methodOn(LiveTimingControllerImpl.class).getById(liveTimingDTO.getId())).withSelfRel());
+        resource.add(linkTo(methodOn(RaceControllerImp.class).getById(liveTimingDTO.getRace())).withRel("race"));
         return resource;
     }
 }

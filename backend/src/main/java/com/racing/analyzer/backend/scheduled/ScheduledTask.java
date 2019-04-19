@@ -1,4 +1,4 @@
-package com.racing.analyzer.backend;
+package com.racing.analyzer.backend.scheduled;
 
 import com.racing.analyzer.backend.entities.LiveTiming;
 import com.racing.analyzer.backend.entities.Race;
