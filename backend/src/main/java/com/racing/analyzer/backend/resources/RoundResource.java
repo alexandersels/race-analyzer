@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Getter
 @Relation(collectionRelation = "rounds")
 public class RoundResource extends ResourceSupport {
@@ -29,9 +31,7 @@ public class RoundResource extends ResourceSupport {
     }
 
     public static RoundResource fromDto(RoundDTO dto) {
-        if(dto == null) {
-            return null;
-        }
+        checkNotNull(dto);
         return new RoundResource(dto);
     }
 }

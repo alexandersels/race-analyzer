@@ -45,9 +45,7 @@ public class LiveTimingResource extends ResourceSupport {
     }
 
     public static LiveTimingResource fromDto(LiveTimingDTO dto) {
-        if(dto == null) {
-            return null;
-        }
+        checkNotNull(dto);
         return new LiveTimingResource(dto);
     }
 }

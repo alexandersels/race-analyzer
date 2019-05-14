@@ -31,9 +31,7 @@ public class DriverResource extends ResourceSupport {
     }
 
     public static DriverResource fromDto(DriverDTO dto) {
-        if(dto == null) {
-            return null;
-        }
+        checkNotNull(dto);
         return new DriverResource(dto);
     }
 }

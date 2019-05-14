@@ -16,8 +16,10 @@ public class LiveTimingAssembler implements ResourceAssembler<LiveTimingDTO, Liv
     @Override
     public LiveTimingResource toResource(LiveTimingDTO liveTimingDTO) {
         LiveTimingResource resource = LiveTimingResource.fromDto(liveTimingDTO);
-        resource.add(linkTo(methodOn(LiveTimingController.class).getById(liveTimingDTO.getId())).withSelfRel());
-        resource.add(linkTo(methodOn(RaceController.class).getById(liveTimingDTO.getRace())).withRel("race"));
+        if (liveTimingDTO != null) {
+            resource.add(linkTo(methodOn(LiveTimingController.class).getById(liveTimingDTO.getId())).withSelfRel());
+            resource.add(linkTo(methodOn(RaceController.class).getById(liveTimingDTO.getRace())).withRel("race"));
+        }
         return resource;
     }
 }

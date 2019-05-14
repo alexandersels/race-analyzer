@@ -13,9 +13,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
 server:
   port: 8080
+parsing:
+  loggingEnabled: true
+  createSnapshots: true
 ---
 spring:
   profiles:
@@ -28,6 +31,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
 server:
   port: 8080
+parsing:
+    loggingEnabled: false
+    createSnapshots: false

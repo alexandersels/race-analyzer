@@ -11,6 +11,8 @@ public interface RaceService {
 
     Collection<RaceDTO> getAll();
 
+    Collection<RaceDTO> getRecordingRaces();
+
     RaceDTO update(UpdateRaceDTO updateRaceDto);
 
     RaceDTO changeRecordingState(long raceId, boolean isRecording);

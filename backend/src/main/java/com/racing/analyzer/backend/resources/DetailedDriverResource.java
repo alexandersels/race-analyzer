@@ -60,9 +60,7 @@ public class DetailedDriverResource extends ResourceSupport {
     }
 
     public static DetailedDriverResource fromDto(DetailedDriverDTO dto) {
-        if(dto == null) {
-            return null;
-        }
+        checkNotNull(dto);
         return new DetailedDriverResource(dto);
     }
 }

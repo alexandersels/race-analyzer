@@ -9,8 +9,13 @@ import com.racing.analyzer.backend.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,10 +42,20 @@ public class RaceController {
     @GetMapping("/races")
     public ResponseEntity<?> getRaces() {
         Resources<RaceResource> resources = new Resources<>(raceService.getAll().stream()
-                .map(race -> raceAssembler.toResource(race))
-                .collect(toList()));
+                                                                       .map(raceAssembler::toResource)
+                                                                       .collect(toList()));
 
         resources.add(linkTo(methodOn(RaceController.class).getRaces()).withSelfRel());
+        return ResponseEntity.ok().body(resources);
+    }
+
+    @GetMapping("/races/recording")
+    public ResponseEntity<?> getRecordingRaces() {
+        Resources<RaceResource> resources = new Resources<>(raceService.getRecordingRaces().stream()
+                                                                       .map(raceAssembler::toResource)
+                                                                       .collect(toList()));
+
+        resources.add(linkTo(methodOn(RaceController.class).getRecordingRaces()).withSelfRel());
         return ResponseEntity.ok().body(resources);
     }
 
