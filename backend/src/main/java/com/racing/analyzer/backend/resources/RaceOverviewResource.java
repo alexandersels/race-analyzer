@@ -42,7 +42,9 @@ public class RaceOverviewResource extends ResourceSupport {
     }
 
     public static RaceOverviewResource fromDto(RaceOverviewDTO dto) {
-        checkNotNull(dto);
+        if(dto == null) {
+            return null;
+        }
         return new RaceOverviewResource(dto);
     }
 }

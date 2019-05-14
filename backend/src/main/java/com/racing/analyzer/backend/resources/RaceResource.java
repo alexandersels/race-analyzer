@@ -27,7 +27,6 @@ public class RaceResource extends ResourceSupport {
         if (dto == null) {
             return null;
         }
-
         return new RaceResource(dto);
     }
 }
