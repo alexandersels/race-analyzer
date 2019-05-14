@@ -33,7 +33,7 @@ public class ScheduledTask {
             "Version/9.1.2 Safari/601.7.7";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTask.class);
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("HHmmss");
 
     private final HashMap<Long, LiveTimingParser> raceCache = new HashMap<>();
     private boolean isStartingUp = true;
@@ -70,9 +70,11 @@ public class ScheduledTask {
                 }
 
                 // Check if snapshots of the site should be saved.
+                // Ubuntu files are on /tmp/
+                // Windows C:\Users\AlexanderSE\AppData\Local\Temp\
                 if (parsingConfig.isCreateSnapshots()) {
                     final LocalTime time = LocalTime.now();
-                    File temp = File.createTempFile("race_" + race.getId() + "_" + DATE_FORMAT.format(time),".txt");
+                    File temp = File.createTempFile("racing_snapshots/race_" + 1 + "_" + DATE_FORMAT.format(time),".txt");
                     BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
                     bw.write(document.toString());
                     bw.close();
