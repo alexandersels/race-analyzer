@@ -10,8 +10,7 @@ public class RoundAssembler implements ResourceAssembler<RoundDTO, RoundResource
 
     @Override
     public RoundResource toResource(RoundDTO roundDto) {
-        RoundResource resource = RoundResource.fromDto(roundDto);
-        return resource;
+        return RoundResource.fromDto(roundDto).orElse(null);
     }
 }
 

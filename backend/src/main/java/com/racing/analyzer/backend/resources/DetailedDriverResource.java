@@ -12,9 +12,8 @@ import org.springframework.hateoas.core.EmbeddedWrappers;
 import org.springframework.hateoas.core.Relation;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Getter
 @Relation(collectionRelation = "drivers")
@@ -59,8 +58,10 @@ public class DetailedDriverResource extends ResourceSupport {
 
     }
 
-    public static DetailedDriverResource fromDto(DetailedDriverDTO dto) {
-        checkNotNull(dto);
-        return new DetailedDriverResource(dto);
+    public static Optional<DetailedDriverResource> fromDto(DetailedDriverDTO dto) {
+        if (dto == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new DetailedDriverResource(dto));
     }
 }

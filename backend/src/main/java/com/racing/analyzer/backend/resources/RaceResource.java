@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Optional;
 
 @Getter
 @Relation(collectionRelation = "races")
@@ -25,8 +25,10 @@ public class RaceResource extends ResourceSupport {
         this.version = race.getVersion();
     }
 
-    public static RaceResource fromDto(RaceDTO dto) {
-        checkNotNull(dto);
-        return new RaceResource(dto);
+    public static Optional<RaceResource> fromDto(RaceDTO dto) {
+        if (dto == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new RaceResource(dto));
     }
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
+import java.util.Optional;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Getter
@@ -44,8 +46,10 @@ public class LiveTimingResource extends ResourceSupport {
         this.raceId = dto.getRace();
     }
 
-    public static LiveTimingResource fromDto(LiveTimingDTO dto) {
-        checkNotNull(dto);
-        return new LiveTimingResource(dto);
+    public static Optional<LiveTimingResource> fromDto(LiveTimingDTO dto) {
+        if (dto == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new LiveTimingResource(dto));
     }
 }

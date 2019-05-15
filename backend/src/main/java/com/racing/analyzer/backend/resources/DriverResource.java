@@ -6,7 +6,7 @@ import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Optional;
 
 @Getter
 @Relation(collectionRelation = "drivers")
@@ -30,8 +30,10 @@ public class DriverResource extends ResourceSupport {
         this.amountOfRounds = dto.getAmountOfRounds();
     }
 
-    public static DriverResource fromDto(DriverDTO dto) {
-        checkNotNull(dto);
-        return new DriverResource(dto);
+    public static Optional<DriverResource> fromDto(DriverDTO dto) {
+        if (dto == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new DriverResource(dto));
     }
 }

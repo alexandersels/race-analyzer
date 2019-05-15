@@ -16,17 +16,18 @@ public class RaceOverviewAssembler implements ResourceAssembler<RaceOverviewDTO,
 
     @Override
     public RaceOverviewResource toResource(RaceOverviewDTO raceOverviewDTO) {
-        RaceOverviewResource resource = RaceOverviewResource.fromDto(raceOverviewDTO);
-        resource.add(linkTo(methodOn(RaceController.class).
-                getById(raceOverviewDTO.getId()))
-                .withRel("race"));
-        resource.add(linkTo(methodOn(LiveTimingController.class).
-                getTimingsForRace(raceOverviewDTO.getId()))
-                .withRel("timings"));
-        resource.add(linkTo(methodOn(RaceOverviewController.class)
-                .getRaceOverview(raceOverviewDTO.getId()))
-                .withSelfRel());
-        return resource;
+        return RaceOverviewResource.fromDto(raceOverviewDTO).map(resource -> {
+            resource.add(linkTo(methodOn(RaceController.class)
+                                        .getById(raceOverviewDTO.getId()))
+                                 .withRel("race"));
+            resource.add(linkTo(methodOn(LiveTimingController.class)
+                                        .getTimingsForRace(raceOverviewDTO.getId()))
+                                 .withRel("timings"));
+            resource.add(linkTo(methodOn(RaceOverviewController.class)
+                                        .getRaceOverview(raceOverviewDTO.getId()))
+                                 .withSelfRel());
+            return resource;
+        }).orElse(null);
     }
 }
 

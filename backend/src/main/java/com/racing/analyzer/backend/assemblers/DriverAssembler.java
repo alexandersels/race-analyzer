@@ -15,14 +15,15 @@ public class DriverAssembler implements ResourceAssembler<DriverDTO, DriverResou
 
     @Override
     public DriverResource toResource(DriverDTO driverDTO) {
-        DriverResource resource = DriverResource.fromDto(driverDTO);
-        resource.add(linkTo(methodOn(DetailedDriverController.class)
-                .getDetailedDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
-                .withRel("driverDetails"));
-        resource.add(linkTo(methodOn(LiveTimingController.class)
-                .getTimingsForRaceAndDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
-                .withRel("timings"));
-        return resource;
+        return DriverResource.fromDto(driverDTO).map(resource -> {
+            resource.add(linkTo(methodOn(DetailedDriverController.class)
+                                        .getDetailedDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
+                                 .withRel("driverDetails"));
+            resource.add(linkTo(methodOn(LiveTimingController.class)
+                                        .getTimingsForRaceAndDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
+                                 .withRel("timings"));
+            return resource;
+        }).orElse(null);
     }
 
 }

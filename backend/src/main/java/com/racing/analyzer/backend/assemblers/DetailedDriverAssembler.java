@@ -14,11 +14,12 @@ public class DetailedDriverAssembler implements ResourceAssembler<DetailedDriver
 
     @Override
     public DetailedDriverResource toResource(DetailedDriverDTO driverDTO) {
-        DetailedDriverResource resource = DetailedDriverResource.fromDto(driverDTO);
-        resource.add(linkTo(methodOn(LiveTimingController.class)
-                .getTimingsForRaceAndDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
-                .withRel("timings"));
-        return resource;
+        return DetailedDriverResource.fromDto(driverDTO).map(resource -> {
+            resource.add(linkTo(methodOn(LiveTimingController.class)
+                                        .getTimingsForRaceAndDriver(driverDTO.getRaceId(), driverDTO.getNumber()))
+                                 .withRel("timings"));
+            return resource;
+        }).orElse(null);
     }
 
 }
