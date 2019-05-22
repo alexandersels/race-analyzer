@@ -110,7 +110,7 @@ public class LiveTimingParser {
         data = stripInvalidCharacter(data);
         String[] split = data.split(",");
         long parsedLong = Long.parseLong(split[2]);
-        if (parsedLong == MAX_LONG) {
+        if (parsedLong == MAX_LONG || parsedLong == 0) {
             return -1;
         } else {
             return parsedLong;
